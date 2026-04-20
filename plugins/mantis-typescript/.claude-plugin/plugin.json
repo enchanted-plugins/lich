@@ -1,0 +1,19 @@
+{
+  "name": "mantis-typescript",
+  "description": "TypeScript / JavaScript language adapter for Mantis. Maps biome rule IDs (~423 rules) into M-engine outputs and contributes TS-specific idiom rules (React hooks exhaustive deps, JSX a11y, narrow-type-guards, any-avoidance). At launch: ~80 of biome's 423 rules mapped; remaining tagged as Phase 2 coverage gap.",
+  "version": "0.1.0",
+  "author": {
+    "name": "enchanted-plugins"
+  },
+  "license": "MIT",
+  "keywords": [
+    "typescript",
+    "javascript",
+    "language-adapter",
+    "biome",
+    "idiom"
+  ],
+  "skills": [
+    "./skills/mantis-typescript/"
+  ]
+}

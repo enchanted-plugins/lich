@@ -1,0 +1,18 @@
+{
+  "name": "mantis-python",
+  "description": "Python language adapter for Mantis. Maps ruff rule IDs (~900 rules) into M-engine outputs and contributes Python-specific idiom rules (pyupgrade modernization, typing, async-await patterns, list/dict comprehensions). At launch: ~120 of ruff's 900 rules mapped; remaining tagged as Phase 2 coverage gap.",
+  "version": "0.1.0",
+  "author": {
+    "name": "enchanted-plugins"
+  },
+  "license": "MIT",
+  "keywords": [
+    "python",
+    "language-adapter",
+    "ruff",
+    "idiom"
+  ],
+  "skills": [
+    "./skills/mantis-python/"
+  ]
+}

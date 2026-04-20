@@ -1,0 +1,4 @@
+{
+  "description": "mantis-python adapter hooks — advisory-only. Activated by mantis-core's dispatcher when target file is .py. See @shared/conduct/hooks.md.",
+  "hooks": {}
+}
