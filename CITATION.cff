@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "Mantis"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - alias: klaiderman
+    affiliation: "enchanted-plugins"
+repository-code: "https://github.com/enchanted-plugins/mantis"
+url: "https://github.com/enchanted-plugins/mantis"
+license: MIT
+version: "0.1.0"
+date-released: "2026-04-20"
+abstract: "Code review for AI-assisted development that catches runtime failures compile-time checks miss. Interval propagation, structural diff, bounded-subprocess dry-run, Bayesian per-developer preference, pairwise rubric."
+keywords:
+  - claude-code
+  - enchanted-plugins
+  - code-review
+  - static-analysis
+  - fuzzing
+  - llm

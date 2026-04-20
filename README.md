@@ -6,6 +6,7 @@
   <img alt="5 engines" src="https://img.shields.io/badge/Engines-M1%E2%80%93M7-58a6ff?style=for-the-badge">
   <img alt="3 agents" src="https://img.shields.io/badge/Agents-3-d29922?style=for-the-badge">
   <img alt="Phase 3 #6" src="https://img.shields.io/badge/Phase-3%20%236-f0883e?style=for-the-badge">
+  <a href="https://www.repostatus.org/#wip"><img alt="Project Status: WIP" src="https://www.repostatus.org/badges/latest/wip.svg"></a>
 </p>
 
 > **An @enchanted-plugins product — algorithm-driven, agent-managed, self-learning.**
@@ -26,19 +27,35 @@ Mantis takes its name from the **Mantis Lords of Hollow Knight** — gate-review
 
 The question this plugin answers: *Is this code good?*
 
+## Who this is for
+
+- Teams who've accepted that LLMs ship runtime bugs no type checker catches (`x / n` with `n ∈ [?, ?]`) and want an automated reviewer that *actually runs the code*.
+- Reviewers tired of style-noise from Copilot / Cursor / Qodo who want the tool to learn their preferences, not flood them.
+- Engineers who care about the signal-to-noise ratio staying above 1 after six months of reviews, not just week one.
+
+Not for:
+
+- One-off scripts, experimental notebooks, or throwaway prototypes — Mantis's sandbox runner costs time you won't save.
+- Teams already satisfied with their linter / type-checker combo who don't have runtime-bug incidents in their retros.
+
 ## Contents
 
 - [How It Works](#how-it-works)
 - [What Makes Mantis Different](#what-makes-mantis-different)
 - [The Full Lifecycle](#the-full-lifecycle)
 - [Install](#install)
+- [Quickstart](#quickstart)
 - [6 Sub-Plugins, 3 Agents, 5 Engines](#6-sub-plugins-3-agents-5-engines)
 - [What You Get Per Review](#what-you-get-per-review)
+- [Roadmap](#roadmap)
 - [The Science Behind Mantis](#the-science-behind-mantis)
 - [vs Everything Else](#vs-everything-else)
 - [Agent Conduct (10 Modules)](#agent-conduct-10-modules)
 - [Architecture](#architecture)
+- [Acknowledgments](#acknowledgments)
+- [Versioning & release cadence](#versioning--release-cadence)
 - [Contributing](#contributing)
+- [Citation](#citation)
 - [License](#license)
 
 ## How It Works
@@ -117,6 +134,18 @@ Claude Code resolves the dependency list and installs all 6 sub-plugins. Verify 
 
 **Want to cherry-pick?** Individual sub-plugins are still installable — e.g. `/plugin install mantis-core@mantis` if you only want the M1+M2 static surface. Sandbox-less / preference-less modes degrade gracefully; Mantis falls back to rules-only verdicts when an engine is missing.
 
+## Quickstart
+
+Once v0.1.0 ships, a first review is a single command. Sixty seconds:
+
+```
+/plugin install full@mantis
+# ...stage or open a PR...
+/mantis-review
+```
+
+Expected: one finding per surviving suspicion, each with M1 interval, M2 diff class, M5 sandbox outcome, M7 rubric score, and M6 per-developer prior. Verdicts are advisory; accept / reject feeds M6 so the next run is quieter. See [docs/getting-started.md](docs/getting-started.md) for the full guided first run once the release lands.
+
 ## 6 Sub-Plugins, 3 Agents, 5 Engines
 
 | Sub-plugin | Owns | Trigger | Agent |
@@ -174,6 +203,10 @@ plugins/mantis-rubric/state/
 ```
 
 Every review produces a JSONL row in `mantis-rubric/state/verdicts.jsonl` with the 5-axis rubric scores (Robustness, Specificity, Clarity, Failure Resilience, Determinism), the Cohen's Kappa reliability number, and the final verdict (DEPLOY / HOLD / FAIL).
+
+## Roadmap
+
+Tracked in [docs/ROADMAP.md](docs/ROADMAP.md) and the shared [ecosystem map](https://github.com/enchanted-plugins/flux/blob/main/docs/ecosystem.md). For upcoming work specific to Mantis, see issues tagged [roadmap](https://github.com/enchanted-plugins/mantis/labels/roadmap).
 
 ## The Science Behind Mantis
 
@@ -234,9 +267,40 @@ Interactive architecture explorer with sub-plugin diagrams, agent cards, and dat
 
 Architecture diagrams are auto-generated from source-of-truth (`plugin.json`, `hooks.json`, `SKILL.md` frontmatter). Never hand-edited. The full synthesized architecture is at [docs/architecture/mantis-architecture.md](docs/architecture/mantis-architecture.md).
 
+## Acknowledgments
+
+Mantis builds on foundations laid by others:
+
+- **[Claude Code](https://github.com/anthropics/claude-code)** (Anthropic) — the plugin surface this work extends.
+- **[Keep a Changelog](https://keepachangelog.com/)** — CHANGELOG convention.
+- **[Semantic Versioning](https://semver.org/)** — versioning contract.
+- **[Contributor Covenant](https://www.contributor-covenant.org/)** — Code of Conduct.
+- **[repostatus.org](https://www.repostatus.org/)** — status badge.
+- **[Citation File Format](https://citation-file-format.github.io/)** — citation metadata.
+- **[Conventional Commits](https://www.conventionalcommits.org/)** — commit convention.
+
+## Versioning & release cadence
+
+Mantis follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Breaking changes land on major bumps only; the [CHANGELOG](CHANGELOG.md) flags them explicitly. Release cadence is opportunistic — tags land when accumulated fixes or features justify a cut, not on a fixed schedule. Migration notes between majors live in [docs/upgrading.md](docs/upgrading.md).
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Citation
+
+If you use this project in research or derivative work, please cite it:
+
+```bibtex
+@software{mantis_2026,
+  title = {Mantis},
+  author = {{Klaiderman}},
+  year = {2026},
+  url = {https://github.com/enchanted-plugins/mantis}
+}
+```
+
+See [CITATION.cff](CITATION.cff) for additional formats (APA, MLA, EndNote).
 
 ## License
 
