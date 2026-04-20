@@ -9,6 +9,9 @@
 plugins/*/state/*
 !plugins/*/state/.gitkeep
 
+# Test fixture outputs (M1 flags, M7 scores, verdicts — regenerated per run)
+tests/fixtures/**/output/
+
 # OS files
 .DS_Store
 Thumbs.db
