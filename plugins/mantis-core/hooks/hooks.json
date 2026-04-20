@@ -1,0 +1,17 @@
+{
+  "description": "mantis-core hooks — advisory-only, never blocking. PostToolUse on file-writing tools triggers the M1 + M2 analysis pass. See @shared/conduct/hooks.md for the contract.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" mantis-analyze",
+            "timeout": 10000
+          }
+        ]
+      }
+    ]
+  }
+}

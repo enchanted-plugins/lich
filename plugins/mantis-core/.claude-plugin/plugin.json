@@ -1,0 +1,19 @@
+{
+  "name": "mantis-core",
+  "description": "M1 Cousot Interval Propagation + M2 Falleri Structural Diff. The static-analysis substrate that flags division-by-zero, null deref, OOB, overflow via abstract interpretation, and isolates semantic edits via GumTree AST diffing. Paired with mantis-sandbox (M5) for confirmation.",
+  "version": "0.1.0",
+  "author": {
+    "name": "enchanted-plugins"
+  },
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "static-analysis",
+    "abstract-interpretation",
+    "ast-diff"
+  ],
+  "skills": [
+    "./skills/mantis-review/"
+  ],
+  "agents": "./agents/"
+}
