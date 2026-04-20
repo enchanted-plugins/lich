@@ -1,0 +1,62 @@
+---
+title: Mantis seven-subplugin architecture
+config:
+  look: neo
+  theme: dark
+  flowchart:
+    curve: basis
+    padding: 18
+    nodeSpacing: 44
+    rankSpacing: 54
+    htmlLabels: true
+    subGraphTitleMargin:
+      top: 14
+      bottom: 18
+---
+flowchart TB
+    TitleBlock["<div style='font-family:ui-monospace,SFMono-Regular,Consolas,monospace;text-align:center;min-width:940px;padding:6px 10px;line-height:1.8'><div style='color:#58a6ff;font-size:15px;letter-spacing:6px;border-bottom:1px solid #1e3a5f;padding-bottom:10px;margin-bottom:10px'>MANTIS &nbsp;·&nbsp; CODE&nbsp;REVIEW &nbsp;·&nbsp; ARCHITECTURE</div><div style='display:flex;gap:40px;justify-content:center;font-size:11px;color:#8b949e;letter-spacing:2px'><span>DWG&nbsp;&nbsp;<b style='color:#e6edf3'>MNT-001</b></span><span>REV&nbsp;&nbsp;<b style='color:#e6edf3'>A.1</b></span><span>SCALE&nbsp;&nbsp;<b style='color:#e6edf3'>1:1</b></span><span>ENGINES&nbsp;&nbsp;<b style='color:#e6edf3'>M1&nbsp;·&nbsp;M2&nbsp;·&nbsp;M5&nbsp;·&nbsp;M6&nbsp;·&nbsp;M7</b></span><span>SHEET&nbsp;&nbsp;<b style='color:#e6edf3'>01&nbsp;/&nbsp;01</b></span></div></div>"]
+
+    Input(["<div style='text-align:center;line-height:1.8;padding:4px 12px'><b style='letter-spacing:1.5px'>INPUT&nbsp;·&nbsp;HORNET&nbsp;CHANGE&nbsp;CLASSIFIED</b><br/><em style='color:#8b949e;font-size:13px;font-weight:400'>V1 semantic diff + V2 Bayesian trust consumed (never reclassified)</em></div>"])
+
+    subgraph Core["<div style='text-align:center;min-width:940px;line-height:2'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>SUB-PLUGIN&nbsp;01</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>MANTIS-CORE</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#58a6ff;letter-spacing:1px'>M1&nbsp;+&nbsp;M2</span></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>ROLE&nbsp;·&nbsp;static&nbsp;suspicion&nbsp;&nbsp;·&nbsp;&nbsp;Cousot&nbsp;Interval&nbsp;Propagation&nbsp;(M1)&nbsp;+&nbsp;Falleri&nbsp;Structural&nbsp;Diff&nbsp;(M2)</div></div>"]
+        direction LR
+        intervals["<div style='text-align:center;line-height:1.7;padding:2px 4px'>INTERVAL<br/>PROPAGATE&nbsp;(M1)<br/><small style='color:#6e7681;letter-spacing:1px'>lattice&nbsp;·&nbsp;widen&nbsp;N=3</small></div>"] --> astdiff["<div style='text-align:center;line-height:1.7;padding:2px 4px'>AST<br/>DIFF&nbsp;(M2)<br/><small style='color:#6e7681;letter-spacing:1px'>GumTree&nbsp;2-phase</small></div>"] --> flag["<div style='text-align:center;line-height:1.7;padding:2px 4px'>FLAG<br/>SUSPICIONS<br/><small style='color:#6e7681;letter-spacing:1px'>divide-by-zero&nbsp;·&nbsp;null-deref</small></div>"]
+    end
+
+    subgraph Sandbox["<div style='text-align:center;min-width:940px;line-height:2'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>SUB-PLUGIN&nbsp;02</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>MANTIS-SANDBOX</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#d75952;letter-spacing:1px'>M5</span></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>ROLE&nbsp;·&nbsp;sandboxed&nbsp;confirmation&nbsp;&nbsp;·&nbsp;&nbsp;Bounded&nbsp;Subprocess&nbsp;Dry-Run&nbsp;·&nbsp;&nbsp;resource.setrlimit&nbsp;+&nbsp;signal.alarm</div></div>"]
+        direction LR
+        gen["<div style='text-align:center;line-height:1.7;padding:2px 4px'>SYNTHESIZE<br/>WITNESS<br/><small style='color:#6e7681;letter-spacing:1px'>M1&nbsp;→&nbsp;minimal&nbsp;repro</small></div>"] --> run["<div style='text-align:center;line-height:1.7;padding:2px 4px'>RUN<br/>BOUNDED<br/><small style='color:#6e7681;letter-spacing:1px'>CPU&nbsp;·&nbsp;AS&nbsp;·&nbsp;NOFILE&nbsp;·&nbsp;FSIZE</small></div>"] --> verify["<div style='text-align:center;line-height:1.7;padding:2px 4px'>CONFIRM<br/>OR&nbsp;DISCARD<br/><small style='color:#6e7681;letter-spacing:1px'>crash&nbsp;→&nbsp;HIGH&nbsp;confidence</small></div>"]
+    end
+
+    subgraph Prefs["<div style='text-align:center;min-width:940px;line-height:2'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>SUB-PLUGINS&nbsp;03&nbsp;·&nbsp;04</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>MANTIS-PREFERENCE&nbsp;&nbsp;·&nbsp;&nbsp;MANTIS-RUBRIC</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#bc8cff;letter-spacing:1px'>M6&nbsp;+&nbsp;M7</span></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>Bayesian&nbsp;Preference&nbsp;Accumulation&nbsp;(M6&nbsp;·&nbsp;5%&nbsp;floor)&nbsp;&nbsp;·&nbsp;&nbsp;Zheng&nbsp;Pairwise&nbsp;Rubric&nbsp;Judgment&nbsp;(M7&nbsp;·&nbsp;position-swap&nbsp;debias)</div></div>"]
+        direction LR
+        post["<div style='text-align:center;line-height:1.7;padding:2px 4px'>POSTERIOR<br/>BETA&nbsp;(M6)<br/><small style='color:#6e7681;letter-spacing:1px'>α,&nbsp;β&nbsp;per&nbsp;(dev,&nbsp;rule)</small></div>"] --> sample["<div style='text-align:center;line-height:1.7;padding:2px 4px'>THOMPSON<br/>SAMPLE<br/><small style='color:#6e7681;letter-spacing:1px'>floor&nbsp;max(0.05,&nbsp;θ)</small></div>"] --> rubric["<div style='text-align:center;line-height:1.7;padding:2px 4px'>RUBRIC<br/>JUDGE&nbsp;(M7)<br/><small style='color:#6e7681;letter-spacing:1px'>5-axis&nbsp;+&nbsp;Cohen's&nbsp;κ</small></div>"]
+    end
+
+    subgraph Adapters["<div style='text-align:center;min-width:940px;line-height:2'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>SUB-PLUGINS&nbsp;05&nbsp;·&nbsp;06</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>MANTIS-PYTHON&nbsp;&nbsp;·&nbsp;&nbsp;MANTIS-TYPESCRIPT</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#3fb950;letter-spacing:1px'>language&nbsp;adapters</span></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>language-specific&nbsp;M1&nbsp;rules&nbsp;(None-deref,&nbsp;undefined,&nbsp;any-cast)&nbsp;·&nbsp;no&nbsp;runtime&nbsp;deps&nbsp;beyond&nbsp;ast/tsc&nbsp;subprocess</div></div>"]
+        direction LR
+        py["<div style='text-align:center;line-height:1.7;padding:2px 4px'>PYTHON<br/>AST<br/><small style='color:#6e7681;letter-spacing:1px'>stdlib&nbsp;ast&nbsp;+&nbsp;interval</small></div>"] --> ts["<div style='text-align:center;line-height:1.7;padding:2px 4px'>TYPESCRIPT<br/>TSC<br/><small style='color:#6e7681;letter-spacing:1px'>subprocess&nbsp;tsc&nbsp;--noEmit</small></div>"]
+    end
+
+    subgraph Verdict["<div style='text-align:center;min-width:940px;line-height:2'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>SUB-PLUGIN&nbsp;07</span>&nbsp;&nbsp;·&nbsp;&nbsp;<b style='letter-spacing:2px'>MANTIS-VERDICT</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#d29922;letter-spacing:1px'>synthesizer</span></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>cross-engine&nbsp;verdict&nbsp;router&nbsp;·&nbsp;DEPLOY&nbsp;/&nbsp;HOLD&nbsp;/&nbsp;FAIL&nbsp;·&nbsp;emits&nbsp;mantis.review.verdict</div></div>"]
+        direction LR
+        merge["<div style='text-align:center;line-height:1.7;padding:2px 4px'>MERGE<br/>SIGNALS<br/><small style='color:#6e7681;letter-spacing:1px'>M1&nbsp;·&nbsp;M5&nbsp;·&nbsp;M6&nbsp;·&nbsp;M7</small></div>"] --> decide["<div style='text-align:center;line-height:1.7;padding:2px 4px'>DECIDE<br/>VERDICT<br/><small style='color:#6e7681;letter-spacing:1px'>M5&nbsp;confirm&nbsp;→&nbsp;FAIL</small></div>"] --> emit["<div style='text-align:center;line-height:1.7;padding:2px 4px'>EMIT<br/>EVENT<br/><small style='color:#6e7681;letter-spacing:1px'>mantis.review.verdict</small></div>"]
+    end
+
+    Peers["<div style='text-align:center;min-width:940px;line-height:1.8;padding:6px 10px'><b style='letter-spacing:1.5px;color:#79c0ff'>PEERS&nbsp;SUBSCRIBE</b><br/><em style='color:#8b949e;font-size:13px;font-weight:400'>Weaver gates merge on FAIL &nbsp;·&nbsp; Nook attributes review spend &nbsp;·&nbsp; Reaper keeps CWE exclusivity</em></div>"]
+
+    Input --> Core
+    Core --> Sandbox
+    Core --> Prefs
+    Adapters --> Core
+    Sandbox --> Verdict
+    Prefs --> Verdict
+    Verdict --> Peers
+
+    classDef titleBlock fill:#0d1117,stroke:#1e3a5f,stroke-width:1px,color:#e6edf3
+    classDef session fill:#161b22,stroke:#30363d,stroke-width:1px,color:#e6edf3
+    classDef peers fill:#161b22,stroke:#1e3a5f,stroke-width:1px,color:#e6edf3
+
+    class TitleBlock titleBlock
+    class Input session
+    class Peers peers

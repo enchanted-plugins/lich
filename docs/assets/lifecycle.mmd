@@ -1,0 +1,47 @@
+---
+title: Mantis review lifecycle
+config:
+  look: neo
+  theme: dark
+  flowchart:
+    curve: basis
+    padding: 18
+    nodeSpacing: 44
+    rankSpacing: 50
+    htmlLabels: true
+    subGraphTitleMargin:
+      top: 14
+      bottom: 18
+---
+flowchart TB
+    TitleBlock["<div style='font-family:ui-monospace,SFMono-Regular,Consolas,monospace;text-align:center;min-width:940px;padding:6px 10px;line-height:1.8'><div style='color:#58a6ff;font-size:15px;letter-spacing:6px;border-bottom:1px solid #1e3a5f;padding-bottom:10px;margin-bottom:10px'>MANTIS &nbsp;·&nbsp; CODE&nbsp;REVIEW &nbsp;·&nbsp; REVIEW&nbsp;LIFECYCLE</div><div style='display:flex;gap:40px;justify-content:center;font-size:11px;color:#8b949e;letter-spacing:2px'><span>DWG&nbsp;&nbsp;<b style='color:#e6edf3'>MNT-002</b></span><span>REV&nbsp;&nbsp;<b style='color:#e6edf3'>A.1</b></span><span>SCALE&nbsp;&nbsp;<b style='color:#e6edf3'>1:1</b></span><span>STAGES&nbsp;&nbsp;<b style='color:#e6edf3'>n&nbsp;=&nbsp;5</b></span><span>SHEET&nbsp;&nbsp;<b style='color:#e6edf3'>01&nbsp;/&nbsp;01</b></span></div></div>"]
+
+    A["<div style='text-align:center;min-width:940px;line-height:2;padding:4px 8px'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>STAGE&nbsp;01&nbsp;·&nbsp;INTAKE&nbsp;(PER&nbsp;WRITE|EDIT|MULTIEDIT)</span></div><div style='line-height:1.8'><b style='letter-spacing:2px'>POST&nbsp;TOOL&nbsp;USE</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#58a6ff'>Sonnet</span>&nbsp;&nbsp;·&nbsp;&nbsp;<code style='color:#e6edf3'>mantis-core&nbsp;(M1&nbsp;+&nbsp;M2)</code></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>consume&nbsp;Hornet&nbsp;V1/V2&nbsp;classification&nbsp;&nbsp;·&nbsp;&nbsp;Cousot&nbsp;interval&nbsp;propagation&nbsp;·&nbsp;&nbsp;GumTree&nbsp;structural&nbsp;diff</div><div style='border-top:1px solid #1e3a5f;margin-top:6px;padding-top:6px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px'><span style='color:#8b949e'>ARTIFACT</span>&nbsp;&nbsp;<span style='color:#d2a8ff'>flagged&nbsp;call&nbsp;sites&nbsp;+&nbsp;structural&nbsp;change&nbsp;list</span></div></div>"]
+
+    B["<div style='text-align:center;min-width:940px;line-height:2;padding:4px 8px'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>STAGE&nbsp;02&nbsp;·&nbsp;CONFIRMATION&nbsp;(ON&nbsp;M1&nbsp;FLAGS,&nbsp;UNIX&nbsp;ONLY)</span></div><div style='line-height:1.8'><b style='letter-spacing:2px'>SANDBOX&nbsp;DRY-RUN</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#d75952'>Sonnet</span>&nbsp;&nbsp;·&nbsp;&nbsp;<code style='color:#e6edf3'>mantis-sandbox&nbsp;(M5)</code></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>synthesize&nbsp;minimal&nbsp;repro&nbsp;·&nbsp;&nbsp;resource.setrlimit&nbsp;(CPU&nbsp;·&nbsp;AS&nbsp;·&nbsp;NOFILE&nbsp;·&nbsp;FSIZE)&nbsp;+&nbsp;signal.alarm&nbsp;·&nbsp;&nbsp;subprocess&nbsp;crash&nbsp;→&nbsp;HIGH&nbsp;confidence</div><div style='border-top:1px solid #1e3a5f;margin-top:6px;padding-top:6px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px'><span style='color:#8b949e'>ARTIFACT</span>&nbsp;&nbsp;<span style='color:#ff7b72'>confirmed-runtime-bug&nbsp;findings</span></div></div>"]
+
+    C["<div style='text-align:center;min-width:940px;line-height:2;padding:4px 8px'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>STAGE&nbsp;03&nbsp;·&nbsp;PREFERENCE&nbsp;FILTER</span></div><div style='line-height:1.8'><b style='letter-spacing:2px'>BAYESIAN&nbsp;PREFERENCE</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#bc8cff'>Sonnet</span>&nbsp;&nbsp;·&nbsp;&nbsp;<code style='color:#e6edf3'>mantis-preference&nbsp;(M6)</code></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>Beta-Binomial&nbsp;Thompson&nbsp;sampling&nbsp;per&nbsp;(developer,&nbsp;rule)&nbsp;&nbsp;·&nbsp;&nbsp;5%&nbsp;minimum&nbsp;surfacing&nbsp;floor&nbsp;&nbsp;·&nbsp;&nbsp;quarterly&nbsp;auto-reprompt</div><div style='border-top:1px solid #1e3a5f;margin-top:6px;padding-top:6px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px'><span style='color:#8b949e'>ARTIFACT</span>&nbsp;&nbsp;<span style='color:#79c0ff'>posterior-gated&nbsp;finding&nbsp;list</span></div></div>"]
+
+    D["<div style='text-align:center;min-width:940px;line-height:2;padding:4px 8px'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>STAGE&nbsp;04&nbsp;·&nbsp;RUBRIC&nbsp;JUDGMENT</span></div><div style='line-height:1.8'><b style='letter-spacing:2px'>PAIRWISE&nbsp;RUBRIC</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#3fb950'>Sonnet</span>&nbsp;&nbsp;·&nbsp;&nbsp;<code style='color:#e6edf3'>mantis-rubric&nbsp;(M7)</code></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>5-axis&nbsp;rubric&nbsp;·&nbsp;&nbsp;position-swap&nbsp;debiasing&nbsp;·&nbsp;&nbsp;Cohen's&nbsp;κ&nbsp;inter-judge&nbsp;reliability</div><div style='border-top:1px solid #1e3a5f;margin-top:6px;padding-top:6px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px'><span style='color:#8b949e'>ARTIFACT</span>&nbsp;&nbsp;<span style='color:#7ee787'>per-axis&nbsp;scores&nbsp;+&nbsp;kappa&nbsp;reliability</span></div></div>"]
+
+    E["<div style='text-align:center;min-width:940px;line-height:2;padding:4px 8px'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>STAGE&nbsp;05&nbsp;·&nbsp;VERDICT&nbsp;SYNTHESIS&nbsp;(END&nbsp;OF&nbsp;PR)</span></div><div style='line-height:1.8'><b style='letter-spacing:2px'>VERDICT&nbsp;ROUTER</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#d29922'>Opus</span>&nbsp;&nbsp;·&nbsp;&nbsp;<code style='color:#e6edf3'>mantis-verdict</code></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>merge&nbsp;M1&nbsp;·&nbsp;M5&nbsp;·&nbsp;M6&nbsp;·&nbsp;M7&nbsp;signals&nbsp;&nbsp;·&nbsp;&nbsp;M5-confirmed&nbsp;→&nbsp;FAIL&nbsp;·&nbsp;&nbsp;emits&nbsp;mantis.review.completed</div><div style='border-top:1px solid #1e3a5f;margin-top:6px;padding-top:6px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px'><span style='color:#8b949e'>ARTIFACT</span>&nbsp;&nbsp;<span style='color:#ffa657'>DEPLOY&nbsp;/&nbsp;HOLD&nbsp;/&nbsp;FAIL&nbsp;verdict&nbsp;+&nbsp;bus&nbsp;event</span></div></div>"]
+
+    Query["<div style='text-align:center;min-width:940px;line-height:2;padding:4px 8px'><div><span style='font-family:ui-monospace,monospace;color:#8b949e;font-size:11px;letter-spacing:3px'>ORTHOGONAL&nbsp;·&nbsp;SKILL-INVOKED&nbsp;SURFACE</span></div><div style='line-height:1.8'><b style='letter-spacing:2px'>DEVELOPER&nbsp;COMMANDS</b>&nbsp;&nbsp;·&nbsp;&nbsp;<span style='color:#d75952'>on&nbsp;demand</span>&nbsp;&nbsp;·&nbsp;&nbsp;<code style='color:#e6edf3'>/mantis-{review,explain,disable}</code></div><div style='color:#6e7681;font-size:11px;font-family:ui-monospace,monospace;letter-spacing:1.2px'>/mantis-review&nbsp;deep-scope&nbsp;·&nbsp;&nbsp;/mantis-explain&nbsp;finding&nbsp;walkthrough&nbsp;·&nbsp;&nbsp;/mantis-disable&nbsp;rule-suppress&nbsp;with&nbsp;quarterly&nbsp;reprompt</div><div style='border-top:1px solid #1e3a5f;margin-top:6px;padding-top:6px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1px'><span style='color:#8b949e'>ARTIFACT</span>&nbsp;&nbsp;<span style='color:#ff7b72'>plain-text&nbsp;findings&nbsp;·&nbsp;rule&nbsp;rationale&nbsp;·&nbsp;suppression&nbsp;config</span></div></div>"]
+
+    TitleBlock --> A
+    A -->|"M1 flags present"| B
+    A -->|"no M1 flags"| C
+    B --> C
+    C --> D
+    D -->|"end of PR"| E
+    A -.->|"on demand"| Query
+    C -.->|"on demand"| Query
+    E -.->|"on demand"| Query
+
+    classDef titleBlock fill:#0d1117,stroke:#1e3a5f,stroke-width:1px,color:#e6edf3
+    classDef stage fill:#161b22,stroke:#30363d,stroke-width:1px,color:#e6edf3
+    classDef query fill:#161b22,stroke:#1e3a5f,stroke-width:1px,color:#e6edf3
+
+    class TitleBlock titleBlock
+    class A,B,C,D,E stage
+    class Query query

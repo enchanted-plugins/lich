@@ -50,27 +50,19 @@ Mantis runs a five-engine pipeline that treats code review as *static suspicion 
 
 Mantis addresses both: the M1 static flagger feeds the M5 sandboxed confirmer (catches the first); M6 Bayesian preference accumulation per `(developer, rule)` (addresses the second). No existing reviewer ships either at zero-external-dep weight; both together is genuinely novel.
 
-```
-                  ┌─────────────────────────────────┐
-                  │           Mantis                │
-                  │    Phase 3 · Plugin #6          │
-                  │   "Is this code good?"          │
-                  └──────────────┬──────────────────┘
-                                 │
-    ┌────────┬────────┬──────────┼──────────┬────────┬────────┐
-    │        │        │          │          │        │        │
-┌───▼────┐ ┌─▼──────┐ ┌▼─────────▼┐ ┌───────▼┐ ┌─────▼──┐ ┌───▼────┐
-│mantis- │ │mantis- │ │  mantis-  │ │mantis- │ │mantis- │ │mantis- │
-│ core   │ │sandbox │ │preference │ │rubric  │ │python  │ │type-   │
-│(M1+M2) │ │ (M5)   │ │  (M6)     │ │ (M7)   │ │(adapt) │ │script  │
-└────────┘ └────────┘ └───────────┘ └────────┘ └────────┘ └────────┘
-                                 │
-                         ┌───────▼────────┐
-                         │ mantis-verdict │
-                         │ (DEPLOY/HOLD/  │
-                         │  FAIL router)  │
-                         └────────────────┘
-```
+<p align="center">
+  <a href="docs/assets/pipeline.mmd" title="View pipeline source (Mermaid)">
+    <img src="docs/assets/pipeline.svg"
+         alt="Mantis seven-subplugin architecture blueprint — Hornet change classification input, mantis-core (M1 Cousot Interval Propagation + M2 Falleri Structural Diff) as static-suspicion layer, mantis-sandbox (M5 Bounded Subprocess Dry-Run) as confirmation layer, mantis-preference + mantis-rubric (M6 Bayesian Preference Accumulation + M7 Zheng Pairwise Rubric Judgment) as preference and judgment layers, mantis-python + mantis-typescript language adapters, mantis-verdict cross-engine DEPLOY/HOLD/FAIL router, and peer-plugin subscription legend"
+         width="100%" style="max-width: 1100px;">
+  </a>
+</p>
+
+<sub align="center">
+
+Source: [docs/assets/pipeline.mmd](docs/assets/pipeline.mmd) · Regeneration command in [docs/assets/README.md](docs/assets/README.md).
+
+</sub>
 
 ## What Makes Mantis Different
 
@@ -92,35 +84,21 @@ Mantis defers security-lane findings to Reaper (CWE classification, pattern data
 
 ## The Full Lifecycle
 
-A review flows left to right through five stages. **M1 Cousot Interval Propagation** (mantis-core) propagates abstract ranges over the changed hunks, flagging suspicious assignments and divisions. **M2 Falleri Structural Diff** (mantis-core) clusters the changes by AST edit distance, so a 200-line rename collapses to one finding. **M5 Bounded Subprocess Dry-Run** (mantis-sandbox) sandbox-executes each flagged hunk and observes runtime behavior. **M6 Bayesian Preference Accumulation** (mantis-preference) weights findings by this developer's per-rule posterior. **M7 Zheng Pairwise Rubric Judgment** (mantis-rubric) scores the aggregate along a 5-axis rubric and routes the verdict through `mantis-verdict` (DEPLOY / HOLD / FAIL).
+A review flows top-to-bottom through five stages. **M1 Cousot Interval Propagation** (mantis-core) propagates abstract ranges over the changed hunks, flagging suspicious assignments and divisions. **M2 Falleri Structural Diff** (mantis-core) clusters the changes by AST edit distance, so a 200-line rename collapses to one finding. **M5 Bounded Subprocess Dry-Run** (mantis-sandbox) sandbox-executes each flagged hunk and observes runtime behavior. **M6 Bayesian Preference Accumulation** (mantis-preference) weights findings by this developer's per-rule posterior. **M7 Zheng Pairwise Rubric Judgment** (mantis-rubric) scores the aggregate along a 5-axis rubric and routes the verdict through `mantis-verdict` (DEPLOY / HOLD / FAIL).
 
-```
-Session Start
-     │
-     ▼
-┌──────────┐  ┌──────────┐  ┌──────────┐
-│  Reaper  │─▶│  Hornet  │─▶│  Mantis  │
-│ security │  │ changes  │  │  quality │
-└──────────┘  └──────────┘  └────┬─────┘
-                                 │
-                            ┌────▼──────┐
-                            │  Weaver   │
-                            │ git flow  │
-                            └───────────┘
-                                 │
-                            ┌────▼──────┐
-                            │   Nook    │
-                            │  cost     │
-                            └───────────┘
+<p align="center">
+  <a href="docs/assets/lifecycle.mmd" title="View lifecycle source (Mermaid)">
+    <img src="docs/assets/lifecycle.svg"
+         alt="Mantis review lifecycle blueprint — 5 stages: PostToolUse intake (mantis-core M1 + M2), sandbox dry-run (mantis-sandbox M5), Bayesian preference filter (mantis-preference M6), pairwise rubric judgment (mantis-rubric M7), verdict synthesis (mantis-verdict DEPLOY/HOLD/FAIL), plus orthogonal developer-invoked /mantis-review, /mantis-explain, /mantis-disable commands"
+         width="100%" style="max-width: 1100px;">
+  </a>
+</p>
 
-Five Questions Answered:
-  "What did I say?"     → Flux    (prompts)
-  "What did I spend?"   → Allay   (tokens)
-  "What just happened?" → Hornet  (changes)
-  "Is it safe?"         → Reaper  (security)
-  "What did it cost?"   → Nook    (spend)
-  "Is it good?"         → Mantis  (quality)     ← you are here
-```
+<sub align="center">
+
+Source: [docs/assets/lifecycle.mmd](docs/assets/lifecycle.mmd) · Regeneration command in [docs/assets/README.md](docs/assets/README.md).
+
+</sub>
 
 Every stage is autonomous; the developer surface is pull (`/mantis-review`), not push.
 
@@ -185,9 +163,9 @@ Every review produces a JSONL row in `mantis-rubric/state/verdicts.jsonl` with t
 
 Every Mantis engine is built on a formal mathematical model. Full derivations in [`docs/science/README.md`](docs/science/README.md).
 
-$$\text{M1: } \text{Int}_v = [\text{lo}, \text{hi}] \sqcup \text{Null}(v) \sqcup \text{Shape}(v), \quad \text{widen after } N=3 \text{ iterations}$$
+<p align="center"><img src="docs/assets/math/m1-interval.svg" alt="M1: Int_v = [lo, hi] join Null(v) join Shape(v); widen after N=3 iterations"></p>
 
-$$\text{M6: } P(\text{surface rule } r \mid \text{dev } d) = \max\left(0.05,\ \theta \sim \text{Beta}(\alpha_{d,r},\ \beta_{d,r})\right)$$
+<p align="center"><img src="docs/assets/math/m6-preference.svg" alt="M6: P(surface rule r | dev d) = max(0.05, theta ~ Beta(alpha_{d,r}, beta_{d,r}))"></p>
 
 | ID | Name | Plugin | Algorithm |
 |----|------|--------|-----------|

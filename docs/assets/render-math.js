@@ -33,73 +33,30 @@ fs.mkdirSync(OUT, { recursive: true });
 
 // [filename, TeX source]
 const EQUATIONS = [
-  // README.md science section
-  ["gauss-sigma",
-   String.raw`\sigma(P) = \sqrt{\dfrac{\sum_{i=1}^{5}\bigl(S_i(P) - 10\bigr)^2}{5}}`],
-  ["gauss-transform",
-   String.raw`P_{n+1} = T_{k^\ast}(P_n) \qquad \text{where} \qquad k^\ast = \arg\min_i \, S_i(P_n)`],
-  ["sat-deploy",
-   String.raw`\text{DEPLOY}(P) \;\iff\; \sigma(P) < \tau \;\wedge\; \bigwedge_{j=1}^{8} A_j(P)`],
-  ["adapt-signature",
-   String.raw`T : \; (P,\, M_s) \;\longrightarrow\; (P',\, M_t)`],
-  ["adapt-constraints",
-   String.raw`\text{Semantic}(P') = \text{Semantic}(P) \;\wedge\; \text{Techniques}(P') \cap \text{AntiPatterns}(M_t) = \emptyset`],
-  ["robust-omega",
-   String.raw`\Omega(P) = \dfrac{\bigl|\{\, k : \delta(P,\alpha(c_k)) = \text{RESIST} \,\}\bigr|}{|C|}`],
-  ["robust-hardened",
-   String.raw`P_{\text{hardened}} = \arg\max_{P'} \, \Omega(P') \qquad \text{s.t.} \qquad S(P') \geq S(P) - \varepsilon`],
-  ["verified",
-   String.raw`\text{VERIFIED}(P) \;\iff\; \sigma(P) < \tau \;\wedge\; \text{PassRate}(P, T) = 1.0`],
-  ["accumulation",
-   String.raw`K_n = K_{n-1} \cup \bigl\{\, (k^\ast,\, \Delta\sigma,\, \text{outcome}) \,\bigr\}`],
+  // M1 Cousot Interval Propagation — lattice domain + widening
+  ["m1-interval",
+   String.raw`\text{Int}_v = [\text{lo},\, \text{hi}] \;\sqcup\; \text{Null}(v) \;\sqcup\; \text{Shape}(v), \qquad \text{widen after } N=3 \text{ iterations}`],
 
-  // docs/science/README.md additional
-  ["sci-argmin-only",
-   String.raw`k^\ast = \arg\min_i \, S_i(P_n)`],
-  ["sci-transform-only",
-   String.raw`P_{n+1} = T_{k^\ast}(P_n)`],
-  ["sci-accept",
-   String.raw`\text{Accept}\; P_{n+1} \;\iff\; \sigma(P_{n+1}) < \sigma(P_n)`],
-  ["sci-convergence",
-   String.raw`\text{DEPLOY}:\; \sigma(P) < 0.45 \qquad \text{PLATEAU}:\; \sigma(P_n) = \sigma(P_{n-1}) = \sigma(P_{n-2}) \qquad \text{MAX}:\; n \geq 100`],
-  ["sci-adapt-composition",
-   String.raw`P' = A_{M_t} \circ T_{M_t} \circ F_{M_s \to M_t}(P)`],
-  ["sci-passrate",
-   String.raw`\text{PassRate}(P, T) = \dfrac{\bigl|\{\, i : \forall s \in E_i,\; s \subseteq \text{Output}(P, x_i) \,\}\bigr|}{|T|}`],
+  // M2 Falleri Structural Diff — GumTree two-phase AST matching
+  ["m2-ast-diff",
+   String.raw`\text{match}(T_1,\, T_2) = \text{top-down-hash}(T_1,\, T_2) \;\cup\; \text{bottom-up-dice}(T_1,\, T_2,\, \theta_{\text{sim}})`],
 
-  // Allay context-health equations
-  ["allay-readloop",
-   String.raw`P(\text{read\ loop}) = 1 \quad \text{if} \quad \text{count}\bigl(\text{read}(f, h)\bigr) \geq 3 \;\wedge\; \nexists\, \text{write}(f)`],
-  ["allay-editrevert",
-   String.raw`P(\text{edit\ revert}) = 1 \quad \text{if} \quad h\bigl(\text{write}_n(f)\bigr) = h\bigl(\text{write}_{n-2}(f)\bigr)`],
-  ["allay-testfail",
-   String.raw`P(\text{test\ fail}) = 1 \quad \text{if} \quad \text{count}\bigl(\text{bash}(\text{cmd},\, \text{exit} \neq 0)\bigr) \geq 3`],
-  ["allay-alert",
-   String.raw`\text{Alert}(t) = 1 \;\iff\; P(\text{drift}) = 1 \;\wedge\; t - t_{\text{last}} > \tau`],
-  ["allay-forecast",
-   String.raw`\hat{\mu} = \dfrac{1}{N}\sum_{i=1}^{N} \text{tokens}_i \qquad \text{runway} = \left\lfloor \dfrac{\text{remaining}}{\hat{\mu}} \right\rfloor`],
-  ["allay-ci",
-   String.raw`\text{CI} = t_{\alpha/2} \cdot \dfrac{s}{\sqrt{N}}`],
-  ["allay-compression",
-   String.raw`O \;\longrightarrow\; O' \qquad \text{s.t.} \qquad H(O') \geq \theta \cdot H(O) \;\wedge\; |O'| < |O|`],
-  ["allay-cr",
-   String.raw`\text{CR}(O) = 1 - \dfrac{|O'|}{|O|}`],
-  ["allay-checkpoint-size",
-   String.raw`\bigl|\text{Checkpoint}(t)\bigr| \leq 50\,\text{KB}`],
-  ["allay-atomic",
-   String.raw`\text{write}(f.\text{tmp}) \;\to\; \text{validate}(f.\text{tmp}) \;\to\; \text{rename}(f.\text{tmp},\, f)`],
-  ["allay-sha",
-   String.raw`h_t = \text{SHA256}\bigl(\text{content}(f, t)\bigr)`],
-  ["allay-decision",
-   String.raw`\text{Decision}(f, t) = \begin{cases} \text{BLOCK} & \text{cache}[f].h = h_t \\ \text{ALLOW} & \text{cache}[f].h \neq h_t \\ \text{ALLOW} & t - \text{cache}[f].t > \text{TTL} \end{cases}`],
+  // M5 Bounded Subprocess Dry-Run — resource limits + timeout
+  ["m5-sandbox",
+   String.raw`\text{verdict}(w) = \begin{cases} \text{CONFIRM} & \text{subprocess crashes within limits} \\ \text{DISCARD} & \text{exceeds rlimit or alarm} \\ \text{UNKNOWN} & \text{otherwise} \end{cases}`],
+
+  // M6 Bayesian Preference Accumulation — posterior + Thompson sample + floor
+  ["m6-preference",
+   String.raw`P(\text{surface rule } r \mid \text{dev } d) = \max\bigl(0.05,\; \theta \sim \text{Beta}(\alpha_{d,r},\, \beta_{d,r})\bigr)`],
+
+  // M7 Zheng Pairwise Rubric Judgment — inter-judge agreement via Cohen's kappa
+  ["m7-rubric",
+   String.raw`\kappa = \dfrac{p_o - p_e}{1 - p_e}, \qquad \text{swap-debiased over } (a,\, b) \text{ and } (b,\, a) \text{ orderings}`],
 ];
 
 function render(name, source) {
   const node = html.convert(source, { display: true, em: 16, ex: 8, containerWidth: 1200 });
   let svgStr = adaptor.innerHTML(node);
-  // Force visible ink. MathJax uses currentColor by default, which on mobile
-  // GitHub (image opened in isolation) falls back to black — invisible on our
-  // dark page. Bake a fixed fill so the SVG is self-contained.
   svgStr = svgStr.replace(/currentColor/g, FG);
   svgStr = `<?xml version="1.0" encoding="UTF-8"?>\n` + svgStr;
   const outPath = path.join(OUT, `${name}.svg`);
