@@ -1,0 +1,52 @@
+{
+  "rubric_version": "1.0",
+  "axes": [
+    {
+      "id": "clarity",
+      "scale": 5,
+      "definition": "Can a reviewer summarize this function's purpose in one sentence after 30 seconds?"
+    },
+    {
+      "id": "correctness_at_glance",
+      "scale": 5,
+      "definition": "Are the guards (null checks, boundary checks, error handling) visible without tracing?"
+    },
+    {
+      "id": "idiom_fit",
+      "scale": 5,
+      "definition": "Does the code match this language's conventions and this repo's established patterns?"
+    },
+    {
+      "id": "testability",
+      "scale": 5,
+      "definition": "Are there seams for unit tests without mocking the universe?"
+    },
+    {
+      "id": "simplicity",
+      "scale": 5,
+      "definition": "Is the solution the simplest that solves the stated problem?"
+    }
+  ],
+  "scoring_scale": {
+    "min": 1,
+    "max": 5,
+    "half_points": false
+  },
+  "position_swap": {
+    "enabled": true,
+    "runs": 2,
+    "escalate_if_delta_gte": 1.5
+  },
+  "kappa": {
+    "report_per_axis": true,
+    "unstable_threshold": 0.4,
+    "action_on_unstable": "flag_in_pdf"
+  },
+  "judge_model_tiers": {
+    "default": "claude-sonnet-4-6",
+    "under_budget_pressure": "claude-haiku-4-5-20251001",
+    "adjudication": "claude-opus-4-7"
+  },
+  "prompt_template_ref": "plugins/mantis-rubric/skills/mantis-explain/rubric-prompt.md",
+  "_note": "Rubric version bump requires a migration skill. Axis changes are semantic — a new v2 cannot be loaded unless downstream (M6 posterior, verdict threshold) is updated in the same PR."
+}
