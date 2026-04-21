@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "language": "polyglot",
+  "upstream_linter": {
+    "name": "semgrep",
+    "version_range": ">=1.80.0",
+    "homepage": "https://semgrep.dev/"
+  },
+  "note": "Phase 1 seed, 50 rules across Django, FastAPI, React, Next.js, and Express — Semgrep community registry. Framework-layer detections complement per-language linters. Security-framed semgrep rules are the largest bucket and all defer to Reaper R3.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Framework correctness pitfalls — wrong lifecycle hook placement, missing await, mis-configured serializer. Routed to M1 / M5.",
+      "rule_ids": [
+        "python.django.correctness.missing-migration",
+        "python.django.correctness.model-field-renamed-without-migration",
+        "python.fastapi.correctness.background-task-missing-await",
+        "python.fastapi.correctness.response-model-missing",
+        "javascript.react.correctness.missing-dependency-array",
+        "javascript.react.correctness.setstate-in-render",
+        "javascript.react.correctness.direct-state-mutation",
+        "javascript.next.correctness.getserversideprops-fetch-loop",
+        "javascript.next.correctness.client-component-missing-use-client",
+        "javascript.express.correctness.async-error-not-forwarded",
+        "javascript.express.correctness.response-without-return"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Framework idiom — prefer framework-native constructs over hand-rolled ones. Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "python.django.idiom.use-get-or-create",
+        "python.django.idiom.use-filter-exists",
+        "python.fastapi.idiom.use-depends-for-shared-state",
+        "python.fastapi.idiom.use-response-model-over-manual-dict",
+        "javascript.react.idiom.use-functional-components",
+        "javascript.react.idiom.prefer-hooks-over-hoc",
+        "javascript.next.idiom.use-image-component",
+        "javascript.next.idiom.use-link-component",
+        "javascript.express.idiom.use-router-over-app-for-routes"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Framework-shaped complexity — oversized view functions, deeply nested middleware chains. Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "python.django.complexity.oversized-view-function",
+        "python.django.complexity.nested-queryset-chaining",
+        "python.fastapi.complexity.too-many-path-parameters",
+        "javascript.react.complexity.too-many-props",
+        "javascript.react.complexity.deeply-nested-jsx",
+        "javascript.express.complexity.middleware-chain-too-long"
+      ]
+    },
+    "naming_m7": {
+      "description": "Framework naming conventions — URL-reverse names, serializer class names, component file names. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "python.django.naming.url-name-convention",
+        "python.django.naming.serializer-class-suffix",
+        "javascript.react.naming.component-pascalcase",
+        "javascript.react.naming.hook-use-prefix",
+        "javascript.next.naming.page-file-convention"
+      ]
+    },
+    "testability_m7": {
+      "description": "Framework-layer testability — fixtures, factory boys, supertest patterns. Routed to M7 (Testability).",
+      "rule_ids": [
+        "python.django.testability.test-client-missing-setup",
+        "python.fastapi.testability.missing-test-dependency-override",
+        "javascript.react.testability.missing-testid-on-interactive",
+        "javascript.express.testability.app-not-exported-for-supertest"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "Semgrep community security rules — Reaper R3 owns these (CWE lane, 98 patterns / 2,011 signatures). Listed here for provenance; never mapped.",
+      "rule_ids": [
+        "python.django.security.injection.formatted-sql-query",
+        "python.django.security.injection.command-injection-os-system",
+        "python.django.security.audit.xss.mark-safe-on-user-input",
+        "python.django.security.csrf.csrf-exempt",
+        "python.fastapi.security.audit.hardcoded-jwt-secret",
+        "python.fastapi.security.audit.cors-wildcard-origin",
+        "javascript.react.security.dangerouslysetinnerhtml-user-input",
+        "javascript.next.security.eval-detected",
+        "javascript.next.security.audit.ssrf-unvalidated-fetch",
+        "javascript.express.security.audit.express-open-redirect",
+        "javascript.express.security.audit.express-missing-helmet",
+        "javascript.express.security.audit.eval-injection",
+        "javascript.express.security.audit.res-sendfile-path-traversal",
+        "javascript.express.security.cookie-missing-httponly",
+        "javascript.express.security.cookie-missing-secure"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 35,
+    "total": 2500,
+    "phase_2_gap": true
+  }
+}

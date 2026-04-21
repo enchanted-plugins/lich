@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "language": "yaml",
+  "upstream_linter": {
+    "name": "yamllint",
+    "version_range": ">=1.35.0,<2.0.0",
+    "homepage": "https://github.com/adrienverge/yamllint"
+  },
+  "note": "Phase 1 seed covering yamllint's full public rule set (23 rules as of v1.38.0, Jan 2026). yamllint emits a 'parsable' format (file:line:col: [level] message (rule-name)) that is stdlib-regex-parseable without any JSON dependency. yamllint has no security-framed rules; the security_defer_to_reaper bucket is present but empty by design. YAML secrets/IaC-security findings live in Reaper's R3 via semgrep-community and Trivy, never yamllint.",
+  "categories": {
+    "correctness_m1": {
+      "description": "YAML structural-failure candidates — duplicates that will silently collapse under parsing, truthy values that round-trip wrong across parsers, empty-values that produce null where a value was expected. M1 widens on document-level key-set invariants; M5 can confirm parse outcome when a Python stdlib yaml.safe_load is available.",
+      "rule_ids": [
+        "key-duplicates",
+        "empty-values",
+        "truthy",
+        "octal-values",
+        "float-values",
+        "anchors"
+      ]
+    },
+    "idiom_m7": {
+      "description": "YAML idiom — prefer the canonical marker, quoting discipline, and document boundaries. Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "document-start",
+        "document-end",
+        "quoted-strings",
+        "comments"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Structural-shape complexity — line-length and empty-lines as readability / git-diff-size proxies. Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "line-length",
+        "empty-lines"
+      ]
+    },
+    "naming_m7": {
+      "description": "Key ordering and identifier conventions. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "key-ordering"
+      ]
+    },
+    "testability_m7": {
+      "description": "Phase 2 gap — yamllint does not surface test-fixture-specific shape checks. Seeded empty.",
+      "rule_ids": []
+    },
+    "security_defer_to_reaper": {
+      "description": "yamllint ships no security-framed rules. Bucket present for schema-compliance; empty by design. Reaper R3 owns YAML-secrets and IaC-misconfiguration taxonomy via semgrep + Trivy.",
+      "rule_ids": [],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 13,
+    "total": 23,
+    "phase_2_gap": true
+  }
+}

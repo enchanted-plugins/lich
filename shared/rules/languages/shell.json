@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "language": "shell",
+  "upstream_linter": {
+    "name": "shellcheck",
+    "version_range": ">=0.10.0",
+    "homepage": "https://www.shellcheck.net/"
+  },
+  "note": "Phase 1 seed. Shellcheck codes are SC2xxx (shell issues) and SC1xxx (parser issues). Most shell bugs live in the correctness lane — quoting, splitting, misuse of expansion. Naming/testability are sparse for shell; complexity is approximated via shellmetrics.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Runtime-failure candidates in shell — unquoted expansions, subshell-scope confusion, array misuse. Routed to M1 / M5 (dry-run in bounded subprocess).",
+      "rule_ids": [
+        "SC2046",
+        "SC2086",
+        "SC2068",
+        "SC2155",
+        "SC2181",
+        "SC2128",
+        "SC2219",
+        "SC2053",
+        "SC2015",
+        "SC2164",
+        "SC2199"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Shell idiom / modernization — use of $() over backticks, [[ ]] over [ ], read -r. Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "SC2006",
+        "SC2003",
+        "SC2162",
+        "SC2196",
+        "SC2197",
+        "SC2230"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Function length / nesting depth via shellmetrics. Routed to M7 (Simplicity). Phase 1 seed; shellcheck itself has no complexity cops.",
+      "rule_ids": [
+        "shellmetrics::lloc",
+        "shellmetrics::cyclomatic",
+        "shellmetrics::nest-depth"
+      ]
+    },
+    "naming_m7": {
+      "description": "Variable naming — uppercase env vs. lowercase local. Routed to M7 (Clarity). Phase 1 seed.",
+      "rule_ids": [
+        "SC2034",
+        "SC2154"
+      ]
+    },
+    "testability_m7": {
+      "description": "Bats / shunit2 test-structure signals. Routed to M7 (Testability). Phase 1 seed.",
+      "rule_ids": [
+        "bats::missing-assertion",
+        "bats::run-without-status-check",
+        "shunit2::test-function-naming"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "Shellcheck codes with security framing (unquoted user input, eval, insecure temp file) — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+      "rule_ids": [
+        "SC2001",
+        "SC2089",
+        "SC2090",
+        "SC2229",
+        "SC2294",
+        "SC2013"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 25,
+    "total": 250,
+    "phase_2_gap": true
+  }
+}

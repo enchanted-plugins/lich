@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mantis.local/schemas/rule-map-1.0.json",
+  "title": "Mantis Rule Map",
+  "description": "Canonical schema for shared/rules/<scope>/<slug>.json — maps upstream linter/framework rule IDs to Mantis M-engine buckets. Security-framed rules are routed to security_defer_to_reaper with never_mapped:true; Reaper R3 owns the CWE lane.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "language",
+    "upstream_linter",
+    "categories",
+    "coverage_stats"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "v1.1 is draft (see docs/rfcs/0001-rules-schema-v1.1.md); only 1.0 validates today."
+    },
+    "language": {
+      "type": "string",
+      "description": "Language slug (e.g. python, typescript, go) or 'polyglot' for cross-language framework maps."
+    },
+    "upstream_linter": {
+      "type": "object",
+      "required": ["name", "version_range", "homepage"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "version_range": { "type": "string" },
+        "homepage": { "type": "string", "format": "uri" }
+      }
+    },
+    "note": {
+      "type": "string",
+      "description": "Optional free-text note on mapping provenance or phase coverage."
+    },
+    "categories": {
+      "type": "object",
+      "required": [
+        "correctness_m1",
+        "idiom_m7",
+        "complexity_m7",
+        "naming_m7",
+        "testability_m7",
+        "security_defer_to_reaper"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "correctness_m1": { "$ref": "#/definitions/mappedCategory" },
+        "idiom_m7": { "$ref": "#/definitions/mappedCategory" },
+        "complexity_m7": { "$ref": "#/definitions/mappedCategory" },
+        "naming_m7": { "$ref": "#/definitions/mappedCategory" },
+        "testability_m7": { "$ref": "#/definitions/mappedCategory" },
+        "security_defer_to_reaper": { "$ref": "#/definitions/deferredCategory" }
+      }
+    },
+    "coverage_stats": {
+      "type": "object",
+      "required": ["mapped", "total", "phase_2_gap"],
+      "additionalProperties": false,
+      "properties": {
+        "mapped": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 0 },
+        "phase_2_gap": { "type": "boolean" }
+      }
+    }
+  },
+  "definitions": {
+    "mappedCategory": {
+      "type": "object",
+      "required": ["description", "rule_ids"],
+      "additionalProperties": false,
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "rule_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "deferredCategory": {
+      "type": "object",
+      "required": ["description", "rule_ids", "never_mapped"],
+      "additionalProperties": false,
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "rule_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "never_mapped": { "type": "boolean", "const": true }
+      }
+    }
+  }
+}

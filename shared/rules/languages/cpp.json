@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "language": "cpp",
+  "upstream_linter": {
+    "name": "clang-tidy",
+    "version_range": ">=17.0",
+    "homepage": "https://clang.llvm.org/extra/clang-tidy/"
+  },
+  "note": "Phase 1 seed. Clang-tidy checks are grouped by prefix: bugprone-* (correctness), readability-* (idiom/clarity), modernize-* (idiom), performance-* (perf), cppcoreguidelines-* (mixed), cert-* (security subset). The cert-* and clang-analyzer security checks defer to Reaper R3.",
+  "categories": {
+    "correctness_m1": {
+      "description": "bugprone-* and clang-analyzer.core — undefined behavior, lifetime, and resource bugs. Routed to M1 / M5.",
+      "rule_ids": [
+        "bugprone-use-after-move",
+        "bugprone-infinite-loop",
+        "bugprone-integer-division",
+        "bugprone-null-check-after-dereference",
+        "bugprone-dangling-handle",
+        "bugprone-unchecked-optional-access",
+        "clang-analyzer-core.NullDereference",
+        "clang-analyzer-core.DivideByZero",
+        "clang-analyzer-core.UndefinedBinaryOperatorResult"
+      ]
+    },
+    "idiom_m7": {
+      "description": "readability-* and modernize-* — modern C++ idiom. Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "readability-braces-around-statements",
+        "readability-else-after-return",
+        "readability-redundant-smartptr-get",
+        "readability-simplify-boolean-expr",
+        "modernize-use-nullptr",
+        "modernize-use-override",
+        "modernize-use-auto",
+        "modernize-use-emplace",
+        "modernize-make-unique"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Function / class complexity. Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "readability-function-cognitive-complexity",
+        "readability-function-size",
+        "google-readability-function-size",
+        "cppcoreguidelines-function-size"
+      ]
+    },
+    "naming_m7": {
+      "description": "Identifier-naming conventions. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "readability-identifier-naming",
+        "readability-identifier-length",
+        "readability-named-parameter",
+        "google-readability-namespace-comments"
+      ]
+    },
+    "testability_m7": {
+      "description": "gtest / gmock anti-patterns and untested-API hints. Routed to M7 (Testability). Phase 1 seed.",
+      "rule_ids": [
+        "google-runtime-int",
+        "cppcoreguidelines-avoid-non-const-global-variables",
+        "readability-convert-member-functions-to-static",
+        "bugprone-assert-side-effect"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "cert-* and clang-analyzer.security — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+      "rule_ids": [
+        "cert-env33-c",
+        "cert-err34-c",
+        "cert-flp30-c",
+        "cert-msc50-cpp",
+        "cert-msc51-cpp",
+        "cert-oop58-cpp",
+        "clang-analyzer-security.insecureAPI.strcpy",
+        "clang-analyzer-security.insecureAPI.gets",
+        "clang-analyzer-security.insecureAPI.rand",
+        "bugprone-unsafe-functions"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 30,
+    "total": 450,
+    "phase_2_gap": true
+  }
+}

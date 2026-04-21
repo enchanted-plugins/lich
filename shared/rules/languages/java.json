@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "language": "java",
+  "upstream_linter": {
+    "name": "spotbugs",
+    "version_range": ">=4.8.0",
+    "homepage": "https://spotbugs.github.io/"
+  },
+  "note": "Phase 1 seed. SpotBugs codes use bug-pattern prefixes (NP = null-pointer, DLS = dead local store, NM = naming, UC = useless code). Reaper R3 owns the SECURITY category and find-sec-bugs plugin output.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Null-path, concurrency, numeric, and resource-leak bug patterns. Routed to M1 / M5.",
+      "rule_ids": [
+        "NP_NULL_ON_SOME_PATH",
+        "NP_ALWAYS_NULL",
+        "NP_NULL_PARAM_DEREF",
+        "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
+        "DLS_DEAD_LOCAL_STORE",
+        "DMI_INVOKING_TOSTRING_ON_ARRAY",
+        "EQ_COMPARETO_USE_OBJECT_EQUALS",
+        "IL_INFINITE_LOOP"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Java idiom / best-practice signals (useless code, redundant operations). Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "UC_USELESS_CONDITION",
+        "UC_USELESS_OBJECT",
+        "UC_USELESS_VOID_METHOD",
+        "RV_RETURN_VALUE_IGNORED",
+        "SBSC_USE_STRINGBUFFER_CONCATENATION"
+      ]
+    },
+    "complexity_m7": {
+      "description": "PMD/checkstyle-side complexity signals (cyclomatic, NPath, too-many-methods). Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "CyclomaticComplexity",
+        "CognitiveComplexity",
+        "NPathComplexity",
+        "TooManyMethods",
+        "ExcessiveClassLength",
+        "ExcessiveParameterList"
+      ]
+    },
+    "naming_m7": {
+      "description": "SpotBugs NM-series naming-convention violations. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "NM_METHOD_NAMING_CONVENTION",
+        "NM_CLASS_NAMING_CONVENTION",
+        "NM_FIELD_NAMING_CONVENTION",
+        "NM_CONFUSING",
+        "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS"
+      ]
+    },
+    "testability_m7": {
+      "description": "JUnit / test-structure anti-patterns (missing assertions, ignored tests, static mocks). Routed to M7 (Testability). Phase 1 seed.",
+      "rule_ids": [
+        "IJU_ASSERT_METHOD_INVOKED_FROM_RUN_METHOD",
+        "IJU_BAD_SUITE_METHOD",
+        "IJU_NO_TESTS",
+        "IJU_SETUP_NO_SUPER",
+        "IJU_TEARDOWN_NO_SUPER"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "find-sec-bugs + SpotBugs SECURITY category — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+      "rule_ids": [
+        "SQL_INJECTION_JDBC",
+        "SQL_INJECTION_JPA",
+        "XSS_REQUEST_PARAMETER_TO_SEND_ERROR",
+        "XSS_SERVLET",
+        "PATH_TRAVERSAL_IN",
+        "COMMAND_INJECTION",
+        "WEAK_HASH",
+        "HARD_CODE_PASSWORD",
+        "PREDICTABLE_RANDOM",
+        "LDAP_INJECTION",
+        "XXE_SAXPARSER"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 29,
+    "total": 400,
+    "phase_2_gap": true
+  }
+}

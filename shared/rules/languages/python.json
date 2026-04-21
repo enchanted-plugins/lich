@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "language": "python",
+  "upstream_linter": {
+    "name": "ruff",
+    "version_range": ">=0.5.0,<1.0.0",
+    "homepage": "https://github.com/astral-sh/ruff"
+  },
+  "note": "Normalized from plugins/mantis-python/config/ruff-rule-map.json. Phase 1 covers ~120 of ruff's ~900 rules. Security rules in the S-series (bandit-derived) are deliberately NOT mapped — Reaper R3 owns the CWE lane. Listed here as S-prefix families for provenance.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Rules that flag runtime-failure candidates — routed through M1 (abstract interpretation validates) and potentially M5 (sandbox confirms).",
+      "rule_ids": [
+        "F401", "F811", "F841",
+        "E501",
+        "B001", "B002", "B006", "B008", "B011", "B012", "B013",
+        "A001", "A002",
+        "RUF001", "RUF002", "RUF005", "RUF010",
+        "PLE0001", "PLE0100", "PLE0101", "PLE0116"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Style and idiom rules — routed through M7 rubric (Idiom-fit axis).",
+      "rule_ids": [
+        "UP001", "UP003", "UP004", "UP006", "UP007", "UP008", "UP009", "UP010", "UP011", "UP012", "UP013", "UP015", "UP018", "UP019", "UP020", "UP021", "UP022", "UP023", "UP024", "UP025", "UP026", "UP027", "UP028", "UP029", "UP030", "UP031", "UP032", "UP033", "UP034", "UP035", "UP036", "UP037", "UP038", "UP039", "UP040",
+        "SIM001", "SIM002", "SIM101", "SIM102", "SIM103", "SIM105", "SIM107", "SIM108", "SIM109", "SIM110", "SIM111", "SIM112", "SIM114", "SIM115", "SIM116", "SIM117", "SIM118", "SIM201", "SIM202", "SIM208", "SIM210", "SIM211", "SIM212", "SIM220", "SIM221", "SIM222", "SIM223", "SIM300", "SIM401"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Cyclomatic/cognitive complexity → M7 rubric (Simplicity axis).",
+      "rule_ids": [
+        "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0914", "PLR0915", "PLR0916", "PLR0917"
+      ]
+    },
+    "naming_m7": {
+      "description": "Naming convention rules → M7 rubric (Clarity axis).",
+      "rule_ids": [
+        "N801", "N802", "N803", "N804", "N805", "N806", "N807", "N811", "N812", "N813", "N814", "N815", "N816", "N817", "N818"
+      ]
+    },
+    "testability_m7": {
+      "description": "Rules that signal untestable or fixture-hostile code shapes (pytest-style anti-patterns) → M7 rubric (Testability axis). Phase 1 seed; expand via ruff PT-series coverage.",
+      "rule_ids": [
+        "PT001", "PT002", "PT003", "PT006", "PT007", "PT011", "PT012", "PT013", "PT015", "PT017", "PT018", "PT019", "PT020", "PT021", "PT022", "PT023", "PT026"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "Security rules — Reaper R3 owns these (98 CWEs / 2,011 patterns). Mantis detects the rule fired but does NOT emit a finding; boosts M6 attention weight on the file instead. Listed as S-prefix families for provenance; never mapped to any M-bucket.",
+      "rule_ids": [
+        "S1**", "S3**", "S5**", "S6**", "S7**",
+        "S101", "S102", "S103", "S104", "S105", "S106", "S107", "S108", "S110", "S112", "S113",
+        "S201", "S202",
+        "S301", "S302", "S303", "S304", "S305", "S306", "S307", "S308", "S310", "S311", "S312", "S313", "S314", "S315", "S316", "S317", "S318", "S319", "S320", "S321", "S324",
+        "S401", "S402", "S403", "S404", "S405", "S406", "S407", "S408", "S409", "S411", "S412", "S413", "S415",
+        "S501", "S502", "S503", "S504", "S505", "S506", "S507", "S508", "S509",
+        "S601", "S602", "S603", "S604", "S605", "S606", "S607", "S608", "S609", "S610", "S611", "S612",
+        "S701", "S702"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 125,
+    "total": 900,
+    "phase_2_gap": true
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "language": "dockerfile",
+  "upstream_linter": {
+    "name": "hadolint",
+    "version_range": ">=2.12.0,<3.0.0",
+    "homepage": "https://github.com/hadolint/hadolint"
+  },
+  "note": "Phase 1 seed covering hadolint's DL3000/DL4000 series (Dockerfile correctness + idiom). SC-prefixed rules are passed through from embedded ShellCheck and are already covered by shared/rules/languages/shell.json — not re-mapped here. Security-framed Docker concerns (hardcoded secrets, privileged FROM, curl|sh patterns) are NOT hadolint's remit; Reaper R3 owns container-image CWE taxonomy. DL3002 (final user is root) and DL3004 (sudo usage) are defense-in-depth posture signals that sit adjacent to security — routed to security_defer_to_reaper to preserve the non-duplication contract with Reaper.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Rules flagging Dockerfile runtime-failure candidates: invalid instruction combinations, unreachable stage references, unpinned dependencies that will break reproducibility. M1 widens on COPY/FROM graph; M5 cannot witness container-build at zero-dep, so these stay at static confidence.",
+      "rule_ids": [
+        "DL3000",
+        "DL3003",
+        "DL3011",
+        "DL3012",
+        "DL3021",
+        "DL3022",
+        "DL3023",
+        "DL3024",
+        "DL3029",
+        "DL3043",
+        "DL3044",
+        "DL3045",
+        "DL3048",
+        "DL3049",
+        "DL3051",
+        "DL3052",
+        "DL3053",
+        "DL3054",
+        "DL3055",
+        "DL3056",
+        "DL3058",
+        "DL3061",
+        "DL4003",
+        "DL4004",
+        "DL4006"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Dockerfile idiom — prefer the canonical construct over the hand-rolled one (ADD vs COPY, JSON-form CMD, --no-cache variants). Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "DL3006",
+        "DL3007",
+        "DL3008",
+        "DL3010",
+        "DL3013",
+        "DL3014",
+        "DL3015",
+        "DL3016",
+        "DL3018",
+        "DL3019",
+        "DL3020",
+        "DL3025",
+        "DL3027",
+        "DL3028",
+        "DL3030",
+        "DL3032",
+        "DL3033",
+        "DL3034",
+        "DL3035",
+        "DL3036",
+        "DL3037",
+        "DL3038",
+        "DL3040",
+        "DL3041",
+        "DL3042",
+        "DL3046",
+        "DL3047",
+        "DL3050",
+        "DL3057",
+        "DL3060",
+        "DL3062",
+        "DL4000",
+        "DL4001",
+        "DL4005"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Layer/step complexity — consolidating RUN layers, avoiding commands unsuitable for image builds. Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "DL3001",
+        "DL3059"
+      ]
+    },
+    "naming_m7": {
+      "description": "Dockerfile label and alias naming conventions. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "DL1001",
+        "DL3026"
+      ]
+    },
+    "testability_m7": {
+      "description": "Phase 2 gap — hadolint does not flag testability concerns for Dockerfiles directly. Seeded empty; revisit when hadolint emits image-scan-friendly checks.",
+      "rule_ids": []
+    },
+    "security_defer_to_reaper": {
+      "description": "Posture rules adjacent to container security (root user, sudo escalation). Reaper R3 owns CWE-250 / CWE-269 / image-layer CVE surfaces. Mantis records the hadolint fire but does NOT emit a finding — boosts M6 attention weight on the Dockerfile instead.",
+      "rule_ids": [
+        "DL3002",
+        "DL3004"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 63,
+    "total": 70,
+    "phase_2_gap": true
+  }
+}

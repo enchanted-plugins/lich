@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "language": "ruby",
+  "upstream_linter": {
+    "name": "rubocop",
+    "version_range": ">=1.60",
+    "homepage": "https://rubocop.org/"
+  },
+  "note": "Phase 1 seed. Rubocop cops partition by department: Lint (correctness), Style (idiom), Naming (clarity), Metrics (complexity), Security (deferred). The rubocop-rspec and rubocop-minitest gems contribute the testability_m7 cops.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Lint/* cops — runtime-failure candidates (useless assignment, shadowed arg, unreachable). Routed to M1 / M5.",
+      "rule_ids": [
+        "Lint/UselessAssignment",
+        "Lint/ShadowingOuterLocalVariable",
+        "Lint/UnreachableCode",
+        "Lint/DuplicateMethods",
+        "Lint/DuplicateHashKey",
+        "Lint/EachWithObjectArgument",
+        "Lint/FloatComparison",
+        "Lint/NestedMethodDefinition",
+        "Lint/NonLocalExitFromIterator",
+        "Lint/Void"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Style/* cops — Ruby idiom. Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "Style/StringLiterals",
+        "Style/FrozenStringLiteralComment",
+        "Style/HashSyntax",
+        "Style/Lambda",
+        "Style/GuardClause",
+        "Style/IfUnlessModifier",
+        "Style/Next",
+        "Style/RedundantReturn",
+        "Style/SymbolArray",
+        "Style/WordArray"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Metrics/* cops — size and complexity. Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "Metrics/AbcSize",
+        "Metrics/BlockLength",
+        "Metrics/ClassLength",
+        "Metrics/CyclomaticComplexity",
+        "Metrics/MethodLength",
+        "Metrics/ModuleLength",
+        "Metrics/ParameterLists",
+        "Metrics/PerceivedComplexity"
+      ]
+    },
+    "naming_m7": {
+      "description": "Naming/* cops — naming conventions. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "Naming/AccessorMethodName",
+        "Naming/ClassAndModuleCamelCase",
+        "Naming/ConstantName",
+        "Naming/FileName",
+        "Naming/MethodName",
+        "Naming/PredicateName",
+        "Naming/VariableName"
+      ]
+    },
+    "testability_m7": {
+      "description": "rubocop-rspec and rubocop-minitest cops — test-structure signals. Routed to M7 (Testability).",
+      "rule_ids": [
+        "RSpec/DescribeClass",
+        "RSpec/ExampleLength",
+        "RSpec/MultipleExpectations",
+        "RSpec/NestedGroups",
+        "RSpec/LetSetup",
+        "Minitest/AssertEmptyLiteral",
+        "Minitest/GlobalExpectations"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "Security/* cops and brakeman findings — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+      "rule_ids": [
+        "Security/Eval",
+        "Security/JSONLoad",
+        "Security/MarshalLoad",
+        "Security/Open",
+        "Security/YAMLLoad",
+        "Security/IoMethods",
+        "Security/CompoundHash",
+        "Brakeman/SQL",
+        "Brakeman/XSS",
+        "Brakeman/CommandInjection"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 42,
+    "total": 500,
+    "phase_2_gap": true
+  }
+}

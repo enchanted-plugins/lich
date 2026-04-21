@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "language": "rust",
+  "upstream_linter": {
+    "name": "clippy",
+    "version_range": ">=0.1.75",
+    "homepage": "https://doc.rust-lang.org/clippy/"
+  },
+  "note": "Phase 1 seed. Clippy ships ~600 lints grouped into correctness, style, complexity, perf, pedantic, nursery, suspicious, restriction. Mantis uses the stable clippy name as rule_id (e.g. clippy::unwrap_used). Suspicious/restriction security framings (e.g. clippy::mem_forget with unsafe context) defer to Reaper.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Clippy correctness lints — panic / UB / logical bug candidates. Routed to M1 / M5.",
+      "rule_ids": [
+        "clippy::unwrap_used",
+        "clippy::expect_used",
+        "clippy::indexing_slicing",
+        "clippy::integer_overflow",
+        "clippy::out_of_bounds_indexing",
+        "clippy::panic",
+        "clippy::unreachable"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Clippy style lints — idiomatic Rust. Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "clippy::needless_return",
+        "clippy::redundant_closure",
+        "clippy::single_match",
+        "clippy::map_unwrap_or",
+        "clippy::option_map_unit_fn",
+        "clippy::manual_map"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Clippy complexity lints — oversized signatures, deeply nested control flow. Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "clippy::too_many_arguments",
+        "clippy::too_many_lines",
+        "clippy::cognitive_complexity",
+        "clippy::type_complexity",
+        "clippy::cyclomatic_complexity"
+      ]
+    },
+    "naming_m7": {
+      "description": "Clippy naming / case lints. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "clippy::module_name_repetitions",
+        "clippy::similar_names",
+        "clippy::enum_variant_names",
+        "non_snake_case",
+        "non_camel_case_types"
+      ]
+    },
+    "testability_m7": {
+      "description": "Rules flagging test-hostile shapes (hidden state, non-deterministic ordering, missing #[test] coverage). Routed to M7 (Testability). Phase 1 seed.",
+      "rule_ids": [
+        "clippy::tests_outside_test_module",
+        "clippy::assertions_on_constants",
+        "clippy::eq_op",
+        "clippy::bool_assert_comparison"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "Security-framed clippy + rustsec advisories — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+      "rule_ids": [
+        "clippy::mem_forget",
+        "clippy::unsound_collection_transmute",
+        "clippy::cast_ptr_alignment",
+        "clippy::transmute_ptr_to_ref",
+        "clippy::unsafe_derive_deserialize",
+        "clippy::undocumented_unsafe_blocks",
+        "rustsec"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 27,
+    "total": 600,
+    "phase_2_gap": true
+  }
+}

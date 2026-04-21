@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0",
+  "language": "typescript",
+  "upstream_linter": {
+    "name": "biome",
+    "version_range": ">=1.8.0,<2.0.0",
+    "homepage": "https://github.com/biomejs/biome"
+  },
+  "note": "Normalized from plugins/mantis-typescript/config/biome-rule-map.json. Biome ships ~423 rules across v1.8-v2.x; Phase 1 covers ~90. A11y rules are folded into naming_m7 (clarity-adjacent). Security-framed rules under suspicious/* are deferred to Reaper R3.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Rules that flag runtime-failure candidates — routed through M1 and potentially M5.",
+      "rule_ids": [
+        "correctness/noConstAssign",
+        "correctness/noConstantCondition",
+        "correctness/noEmptyPattern",
+        "correctness/noGlobalObjectCalls",
+        "correctness/noInnerDeclarations",
+        "correctness/noInvalidConstructorSuper",
+        "correctness/noInvalidNewBuiltin",
+        "correctness/noNewSymbol",
+        "correctness/noNonoctalDecimalEscape",
+        "correctness/noPrecisionLoss",
+        "correctness/noSelfAssign",
+        "correctness/noSetterReturn",
+        "correctness/noStringCaseMismatch",
+        "correctness/noSwitchDeclarations",
+        "correctness/noUndeclaredVariables",
+        "correctness/noUnnecessaryContinue",
+        "correctness/noUnreachable",
+        "correctness/noUnreachableSuper",
+        "correctness/noUnsafeFinally",
+        "correctness/noUnsafeOptionalChaining",
+        "correctness/noUnusedLabels",
+        "correctness/noUnusedPrivateClassMembers",
+        "correctness/noUnusedVariables",
+        "correctness/noVoidElementsWithChildren",
+        "correctness/noVoidTypeReturn",
+        "correctness/useExhaustiveDependencies",
+        "correctness/useHookAtTopLevel",
+        "correctness/useIsNan",
+        "correctness/useValidForDirection",
+        "correctness/useYield"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Style rules and modernization suggestions → M7 rubric (Idiom-fit axis).",
+      "rule_ids": [
+        "style/useArrowFunction",
+        "style/useBlockStatements",
+        "style/useCollapsedElseIf",
+        "style/useConst",
+        "style/useDefaultParameterLast",
+        "style/useEnumInitializers",
+        "style/useExponentiationOperator",
+        "style/useForOf",
+        "style/useFragmentSyntax",
+        "style/useImportType",
+        "style/useLiteralEnumMembers",
+        "style/useNumericLiterals",
+        "style/useShorthandArrayType",
+        "style/useShorthandAssign",
+        "style/useSingleCaseStatement",
+        "style/useSingleVarDeclarator",
+        "style/useTemplate",
+        "style/useWhile"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Cognitive complexity → M7 rubric (Simplicity axis).",
+      "rule_ids": [
+        "complexity/noExcessiveCognitiveComplexity",
+        "complexity/noExcessiveNestedTestSuites",
+        "complexity/noForEach",
+        "complexity/noMultipleSpacesInRegularExpressionLiterals",
+        "complexity/noStaticOnlyClass",
+        "complexity/noUselessCatch",
+        "complexity/noUselessConstructor",
+        "complexity/noUselessEmptyExport",
+        "complexity/noUselessFragments",
+        "complexity/noUselessLabel",
+        "complexity/noUselessLoneBlockStatements",
+        "complexity/noUselessRename",
+        "complexity/noUselessSwitchCase",
+        "complexity/noUselessTernary",
+        "complexity/noUselessThisAlias",
+        "complexity/noUselessTypeConstraint"
+      ]
+    },
+    "naming_m7": {
+      "description": "Naming-convention and JSX a11y clarity rules → M7 rubric (Clarity axis). A11y is folded here since accessible labels/roles are a clarity signal.",
+      "rule_ids": [
+        "style/useNamingConvention",
+        "a11y/noAccessKey",
+        "a11y/noAriaUnsupportedElements",
+        "a11y/noAutofocus",
+        "a11y/noBlankTarget",
+        "a11y/noDistractingElements",
+        "a11y/noHeaderScope",
+        "a11y/noNoninteractiveElementToInteractiveRole",
+        "a11y/noPositiveTabindex",
+        "a11y/noRedundantAlt",
+        "a11y/useAltText",
+        "a11y/useAnchorContent",
+        "a11y/useAriaPropsForRole",
+        "a11y/useButtonType",
+        "a11y/useHeadingContent",
+        "a11y/useHtmlLang",
+        "a11y/useIframeTitle",
+        "a11y/useKeyWithClickEvents",
+        "a11y/useKeyWithMouseEvents",
+        "a11y/useMediaCaption",
+        "a11y/useValidAnchor",
+        "a11y/useValidAriaProps",
+        "a11y/useValidAriaValues",
+        "a11y/useValidLang"
+      ]
+    },
+    "testability_m7": {
+      "description": "Test-structure anti-patterns → M7 rubric (Testability axis). Phase 1 seed; expand as biome grows its test-dedicated rules.",
+      "rule_ids": [
+        "suspicious/noFocusedTests",
+        "suspicious/noSkippedTests",
+        "suspicious/noDuplicateTestHooks",
+        "suspicious/noExportsInTest",
+        "suspicious/noMisplacedAssertion"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "Security-framed suspicious/* rules — Reaper R3 owns these. Mantis detects the rule fired but does NOT emit a finding; boosts M6 attention weight on the file instead.",
+      "rule_ids": [
+        "suspicious/noCatchAssign",
+        "suspicious/noConsole",
+        "suspicious/noControlCharactersInRegex",
+        "suspicious/noDebugger",
+        "suspicious/noEmptyBlockStatements",
+        "suspicious/noEmptyInterface",
+        "suspicious/noExplicitAny",
+        "suspicious/noExtraNonNullAssertion",
+        "suspicious/noFallthroughSwitchClause",
+        "suspicious/noGlobalIsFinite",
+        "suspicious/noGlobalIsNan",
+        "suspicious/noMisleadingInstantiator",
+        "suspicious/noMisrefactoredShorthandAssign",
+        "suspicious/noPrototypeBuiltins",
+        "suspicious/noRedeclare",
+        "suspicious/noShadowRestrictedNames",
+        "suspicious/noSparseArray",
+        "suspicious/noUnsafeDeclarationMerging",
+        "suspicious/noUnsafeNegation"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 93,
+    "total": 423,
+    "phase_2_gap": true
+  }
+}

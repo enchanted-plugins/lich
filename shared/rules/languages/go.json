@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "language": "go",
+  "upstream_linter": {
+    "name": "staticcheck",
+    "version_range": ">=2024.1.0",
+    "homepage": "https://staticcheck.dev/"
+  },
+  "note": "Phase 1 seed. Staticcheck checks partition by prefix: SA (correctness), S (simple), ST (stylecheck), U (unused), QF (quickfix). Reaper R3 owns CWE-tagged security lanes — any SA-rule with an overt injection/crypto framing belongs to Reaper.",
+  "categories": {
+    "correctness_m1": {
+      "description": "Staticcheck SA-series — runtime-failure candidates (nil deref, invalid args, misuse of sync primitives). Routed to M1 / M5.",
+      "rule_ids": [
+        "SA1000",
+        "SA1001",
+        "SA1012",
+        "SA1019",
+        "SA4006",
+        "SA5000",
+        "SA5001",
+        "SA5011",
+        "SA9003"
+      ]
+    },
+    "idiom_m7": {
+      "description": "Staticcheck ST-series — idiomatic Go style. Routed to M7 (Idiom-fit).",
+      "rule_ids": [
+        "ST1003",
+        "ST1005",
+        "ST1008",
+        "ST1012",
+        "ST1016",
+        "ST1020"
+      ]
+    },
+    "complexity_m7": {
+      "description": "Cyclomatic / cognitive complexity signals from companion linters (gocyclo, cyclop, cocognit). Routed to M7 (Simplicity).",
+      "rule_ids": [
+        "gocyclo",
+        "cyclop",
+        "cocognit",
+        "gocognit",
+        "funlen"
+      ]
+    },
+    "naming_m7": {
+      "description": "Naming-convention subset of ST-series. Routed to M7 (Clarity).",
+      "rule_ids": [
+        "ST1003",
+        "ST1006",
+        "ST1023"
+      ]
+    },
+    "testability_m7": {
+      "description": "Test-structure signals (missing t.Helper, mis-scoped subtests, untested exported APIs). Routed to M7 (Testability). Phase 1 seed.",
+      "rule_ids": [
+        "thelper",
+        "tparallel",
+        "paralleltest",
+        "testpackage"
+      ]
+    },
+    "security_defer_to_reaper": {
+      "description": "gosec G-series and staticcheck crypto/auth rules — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+      "rule_ids": [
+        "G101",
+        "G102",
+        "G104",
+        "G201",
+        "G202",
+        "G301",
+        "G304",
+        "G401",
+        "G402",
+        "G501",
+        "G502",
+        "G503",
+        "G504",
+        "G505",
+        "G601",
+        "SA1018"
+      ],
+      "never_mapped": true
+    }
+  },
+  "coverage_stats": {
+    "mapped": 27,
+    "total": 150,
+    "phase_2_gap": true
+  }
+}
