@@ -1,0 +1,205 @@
+{
+  "axes": [
+    "clarity",
+    "correctness_at_glance",
+    "idiom_fit",
+    "testability",
+    "simplicity"
+  ],
+  "corpus_dir": "tests/fixtures/rubric-corpus",
+  "files": {
+    "b01.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "b02.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "b03.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "b04.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "h01.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "h02.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "h03.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "h04.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "m01.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "m02.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "m03.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    },
+    "m04.py": {
+      "pass1": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      },
+      "pass2": {
+        "clarity": null,
+        "correctness_at_glance": null,
+        "idiom_fit": null,
+        "simplicity": null,
+        "testability": null
+      }
+    }
+  },
+  "rubric_version": "1.0"
+}

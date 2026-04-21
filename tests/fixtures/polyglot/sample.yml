@@ -1,0 +1,11 @@
+# Polyglot fixture — non-unique keys (YAML duplicate-key violation).
+# Both `timeout:` entries are parsed; the second silently wins. yamllint would flag.
+# Semgrep has no built-in YAML rule family for this — file is a placeholder per the
+# fixture contract: dispatcher routes .yml to semgrep (polyglot only), adapter
+# returns [] cleanly when tool is absent. Verifies routing, not detection.
+
+service:
+  name: mantis
+  timeout: 10
+  timeout: 30
+  retries: 3
