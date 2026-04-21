@@ -18,8 +18,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" mantis-verdict-session-rollup",
-            "timeout": 10000
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" mantis-verdict-compose",
+            "timeout": 5000
           }
         ]
       }
