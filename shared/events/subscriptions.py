@@ -10,7 +10,7 @@ helpers keep their exact signatures; only ``bus.subscribe`` changes
 underneath.
 
 Contract (per root CLAUDE.md):
-  * ``check_for_raven_boost(file)`` — Crow's V1 trust-score is the
+  * ``check_for_crow_boost(file)`` — Crow's V1 trust-score is the
     authoritative change classifier. Lich consumes, never re-classifies.
   * ``check_for_hydra_context(file)`` — Hydra owns CWE taxonomy.
     Lich attaches context, never re-reports.
@@ -39,7 +39,7 @@ except ImportError:
 # ---------------------------------------------------------------------------
 
 
-def check_for_raven_boost(file: str,
+def check_for_crow_boost(file: str,
                             bus_path: Optional[Path] = None) -> Optional[float]:
     """Return trust-score delta from the most recent Crow event for this file.
 
