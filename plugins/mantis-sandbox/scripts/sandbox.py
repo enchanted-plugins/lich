@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — orchestrator.
+"""Lich M5 sandbox — orchestrator.
 
 Reads M1's review-flags.jsonl, synthesizes witnesses, dispatches to the
 platform-appropriate runner (POSIX / WSL / unsupported), classifies each
@@ -18,10 +18,10 @@ Per-flag accounting:
                                                  single no-bug-found record".
 
 CLI:
-    python plugins/mantis-sandbox/scripts/sandbox.py [flags.jsonl]
+    python plugins/lich-sandbox/scripts/sandbox.py [flags.jsonl]
 
-Default input:  plugins/mantis-core/state/review-flags.jsonl
-Default output: plugins/mantis-sandbox/state/run-log.jsonl
+Default input:  plugins/lich-core/state/review-flags.jsonl
+Default output: plugins/lich-sandbox/state/run-log.jsonl
 """
 
 from __future__ import annotations
@@ -33,9 +33,9 @@ import traceback
 from pathlib import Path
 
 # Repo-root-relative imports. We support two invocation shapes:
-#   (a) package import:  from plugins.mantis_sandbox.scripts import sandbox
+#   (a) package import:  from plugins.lich_sandbox.scripts import sandbox
 #       — fails because the directory is hyphenated. Not the primary path.
-#   (b) script run:      python plugins/mantis-sandbox/scripts/sandbox.py
+#   (b) script run:      python plugins/lich-sandbox/scripts/sandbox.py
 #       — we sys.path-augment to the scripts/ dir and import bare names.
 _SCRIPTS_DIR = Path(__file__).resolve().parent
 if str(_SCRIPTS_DIR) not in sys.path:
@@ -68,9 +68,9 @@ except Exception:  # pragma: no cover — advisory
 # Paths
 # -------------------------------------------------------------------------
 
-_REPO_ROOT = _SCRIPTS_DIR.parents[2]   # plugins/mantis-sandbox/scripts/ -> repo root
-_DEFAULT_INPUT = _REPO_ROOT / "plugins" / "mantis-core" / "state" / "review-flags.jsonl"
-_DEFAULT_OUTPUT = _REPO_ROOT / "plugins" / "mantis-sandbox" / "state" / "run-log.jsonl"
+_REPO_ROOT = _SCRIPTS_DIR.parents[2]   # plugins/lich-sandbox/scripts/ -> repo root
+_DEFAULT_INPUT = _REPO_ROOT / "plugins" / "lich-core" / "state" / "review-flags.jsonl"
+_DEFAULT_OUTPUT = _REPO_ROOT / "plugins" / "lich-sandbox" / "state" / "run-log.jsonl"
 
 
 # -------------------------------------------------------------------------
@@ -277,12 +277,12 @@ def _process_flag(
                 if str(_shared) not in _sys.path:
                     _sys.path.insert(0, str(_shared))
                 from events.bus import publish as _publish  # type: ignore
-                _publish("mantis.sandbox.failed", {
+                _publish("lich.sandbox.failed", {
                     "file": flag.get("file", ""),
                     "function": flag.get("function", ""),
                     "error_class": "RunnerException",
                     "duration_ms": 0,
-                }, source="mantis-sandbox")
+                }, source="lich-sandbox")
             except Exception:
                 pass
             continue
@@ -332,12 +332,12 @@ def _process_flag(
                     if str(_shared) not in _sys.path:
                         _sys.path.insert(0, str(_shared))
                     from events.bus import publish as _publish  # type: ignore
-                    _publish("mantis.sandbox.failed", {
+                    _publish("lich.sandbox.failed", {
                         "file": flag.get("file", ""),
                         "function": flag.get("function", ""),
                         "error_class": error_class,
                         "duration_ms": result.duration_ms,
-                    }, source="mantis-sandbox")
+                    }, source="lich-sandbox")
                 except Exception:
                     pass
 
@@ -345,7 +345,7 @@ def _process_flag(
             if status == "confirmed-bug" and _learnings is not None:
                 try:
                     _learnings.safe_emit(
-                        plugin="mantis-sandbox",
+                        plugin="lich-sandbox",
                         code="F06",
                         axis=flag_class or "unknown",
                         hypothesis="M1 flag confirmed with witness",

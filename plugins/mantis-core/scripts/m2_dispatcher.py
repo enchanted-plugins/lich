@@ -1,4 +1,4 @@
-"""Mantis M2 Dispatcher — route by language to the right M2 tier.
+"""Lich M2 Dispatcher — route by language to the right M2 tier.
 
 Honest dispatcher that mirrors M5's ``platform-unsupported`` pattern:
 
@@ -44,7 +44,7 @@ from m2_structural_diff import DiffResult
 _TIER1_EXTS = frozenset({".py"})
 
 # Tier-2: token-diff fallback. Maps extension → family hint accepted by
-# m2_token_diff.diff. Mantis-core owns this whitelist; new extensions
+# m2_token_diff.diff. Lich-core owns this whitelist; new extensions
 # graduate in here after the regex patterns are verified to not
 # mis-parse representative fixtures.
 _TIER2_EXT_TO_FAMILY: dict[str, str] = {
@@ -157,7 +157,7 @@ def _result_to_json(result: DiffResult) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(
-        description="Mantis M2 dispatcher — routes by file extension to Tier-1 AST "
+        description="Lich M2 dispatcher — routes by file extension to Tier-1 AST "
         "(Python) or Tier-2 token-diff fallback (TS/Go/Rust/Java/C/Ruby/Shell)."
     )
     ap.add_argument("--old-file", required=True, help="Path to old source")

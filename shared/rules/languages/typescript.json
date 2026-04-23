@@ -6,7 +6,7 @@
     "version_range": ">=1.8.0,<2.0.0",
     "homepage": "https://github.com/biomejs/biome"
   },
-  "note": "Normalized from plugins/mantis-typescript/config/biome-rule-map.json. Biome ships ~423 rules across v1.8-v2.x; Phase 1 covers ~90. A11y rules are folded into naming_m7 (clarity-adjacent). Security-framed rules under suspicious/* are deferred to Reaper R3.",
+  "note": "Normalized from plugins/lich-typescript/config/biome-rule-map.json. Biome ships ~423 rules across v1.8-v2.x; Phase 1 covers ~90. A11y rules are folded into naming_m7 (clarity-adjacent). Security-framed rules under suspicious/* are deferred to Hydra R3.",
   "categories": {
     "correctness_m1": {
       "description": "Rules that flag runtime-failure candidates — routed through M1 and potentially M5.",
@@ -126,8 +126,8 @@
         "suspicious/noMisplacedAssertion"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "Security-framed suspicious/* rules — Reaper R3 owns these. Mantis detects the rule fired but does NOT emit a finding; boosts M6 attention weight on the file instead.",
+    "security_defer_to_hydra": {
+      "description": "Security-framed suspicious/* rules — Hydra R3 owns these. Lich detects the rule fired but does NOT emit a finding; boosts M6 attention weight on the file instead.",
       "rule_ids": [
         "suspicious/noCatchAssign",
         "suspicious/noConsole",

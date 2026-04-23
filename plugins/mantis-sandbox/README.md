@@ -1,4 +1,4 @@
-# mantis-sandbox
+# lich-sandbox
 
 > *M5 Bounded Subprocess Dry-Run — turn M1's static suspicions into confirmed runtime failures, or retire them as false positives. Python stdlib only. Zero deps.*
 
@@ -73,7 +73,7 @@ def average(nums):
 M1 flags line 2 with `flag_class="div-zero"` and `witness_hints={"divisor_name": "nums"}`. Witness synthesis produces `{"args": [[]]}` as the boundary input. M5 runs the child:
 
 ```bash
-$ python plugins/mantis-sandbox/scripts/sandbox.py
+$ python plugins/lich-sandbox/scripts/sandbox.py
 {"confirmed": 1, "timeout": 0, "sandbox_error": 0, "no_bug": 0, "synth_failed": 0, "unsupported": 0}
 ```
 
@@ -101,32 +101,32 @@ That record is a fact, not a score. The verdict composer reads it and emits FAIL
 Seed flags from M1:
 
 ```bash
-python plugins/mantis-core/scripts/__main__.py <target_file_or_dir>
-# writes plugins/mantis-core/state/review-flags.jsonl
+python plugins/lich-core/scripts/__main__.py <target_file_or_dir>
+# writes plugins/lich-core/state/review-flags.jsonl
 ```
 
 Confirm with M5:
 
 ```bash
-python plugins/mantis-sandbox/scripts/sandbox.py
-# reads the default input path, writes plugins/mantis-sandbox/state/run-log.jsonl
+python plugins/lich-sandbox/scripts/sandbox.py
+# reads the default input path, writes plugins/lich-sandbox/state/run-log.jsonl
 # prints JSON summary: {"confirmed": N, "timeout": N, ...}
 ```
 
 Custom paths:
 
 ```bash
-python plugins/mantis-sandbox/scripts/sandbox.py my-flags.jsonl my-log.jsonl
+python plugins/lich-sandbox/scripts/sandbox.py my-flags.jsonl my-log.jsonl
 ```
 
 Install via the marketplace:
 
 ```bash
-/plugin install mantis-sandbox@mantis
-# or the bundle: /plugin install full@mantis
+/plugin install lich-sandbox@lich
+# or the bundle: /plugin install full@lich
 ```
 
-`mantis-core` must produce the flags file; install both, or use `full`.
+`lich-core` must produce the flags file; install both, or use `full`.
 
 ## Platform reality
 
@@ -143,9 +143,9 @@ No existing reviewer ships static-suspicion -> sandboxed-confirmation at zero-de
 
 M5 does not:
 
-- Scan for CWEs. That is Reaper's R3 lane — 98 CWEs across 2,011 patterns. M5 boosts M6 attention weight on Reaper-flagged files but never reclassifies.
-- Classify changes. That is Hornet's V1/V2 lane. M5 consumes Hornet's trust score into the M6 prior.
-- Emit verdicts. That is `mantis-verdict`'s lane. M5 writes `run-log.jsonl` records; the verdict composer reads them.
+- Scan for CWEs. That is Hydra's R3 lane — 98 CWEs across 2,011 patterns. M5 boosts M6 attention weight on Hydra-flagged files but never reclassifies.
+- Classify changes. That is Raven's V1/V2 lane. M5 consumes Raven's trust score into the M6 prior.
+- Emit verdicts. That is `lich-verdict`'s lane. M5 writes `run-log.jsonl` records; the verdict composer reads them.
 - Persist witness outputs. The per-run tempdir is ephemeral. Only the run-log record survives.
 
 Breaking the split fractures severity source-of-truth across plugins.
@@ -165,5 +165,5 @@ This plugin executes developer code. The six resource caps are the only thing be
 ## Next
 
 - [Sandbox demo walkthrough](../../tests/demo/sandbox_demo.sh)
-- [mantis-core README](../mantis-core/README.md) — M1 static pass that feeds M5
-- [mantis-verdict README](../mantis-verdict/README.md) — composes M1 + M5 + M6 + M7 into DEPLOY / HOLD / FAIL
+- [lich-core README](../lich-core/README.md) — M1 static pass that feeds M5
+- [lich-verdict README](../lich-verdict/README.md) — composes M1 + M5 + M6 + M7 into DEPLOY / HOLD / FAIL

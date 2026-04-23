@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Runtime-observation integration test for the Mantis PostToolUse chain.
+# Runtime-observation integration test for the Lich PostToolUse chain.
 #
-# Fires the real per-plugin hook wrappers back-to-back (mantis-core,
-# mantis-sandbox, mantis-verdict) with a simulated Claude Code PostToolUse
+# Fires the real per-plugin hook wrappers back-to-back (lich-core,
+# lich-sandbox, lich-verdict) with a simulated Claude Code PostToolUse
 # payload and watches the three state files grow asynchronously. Asserts
-# the terminal verdict appears in plugins/mantis-verdict/state/verdict.jsonl
+# the terminal verdict appears in plugins/lich-verdict/state/verdict.jsonl
 # within 30 seconds of the synchronous dispatch return.
 #
 # Scenarios (sequential, NOT parallel — clean timing attribution):
@@ -26,13 +26,13 @@ set -uo pipefail
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$REPO_ROOT"
 
-CORE_DISPATCH="$REPO_ROOT/plugins/mantis-core/hooks/dispatch.sh"
-SB_DISPATCH="$REPO_ROOT/plugins/mantis-sandbox/hooks/dispatch.sh"
-V_DISPATCH="$REPO_ROOT/plugins/mantis-verdict/hooks/dispatch.sh"
+CORE_DISPATCH="$REPO_ROOT/plugins/lich-core/hooks/dispatch.sh"
+SB_DISPATCH="$REPO_ROOT/plugins/lich-sandbox/hooks/dispatch.sh"
+V_DISPATCH="$REPO_ROOT/plugins/lich-verdict/hooks/dispatch.sh"
 
-M1_LOG="$REPO_ROOT/plugins/mantis-core/state/review-flags.jsonl"
-M5_LOG="$REPO_ROOT/plugins/mantis-sandbox/state/run-log.jsonl"
-V_LOG="$REPO_ROOT/plugins/mantis-verdict/state/verdict.jsonl"
+M1_LOG="$REPO_ROOT/plugins/lich-core/state/review-flags.jsonl"
+M5_LOG="$REPO_ROOT/plugins/lich-sandbox/state/run-log.jsonl"
+V_LOG="$REPO_ROOT/plugins/lich-verdict/state/verdict.jsonl"
 HOOKS_LOG="$REPO_ROOT/.claude/logs/hooks.log"
 
 WAIT_PY="$REPO_ROOT/tests/e2e/wait_for_lines.py"
@@ -159,19 +159,19 @@ _run_scenario() {
 
     t0=$(_now_ms)
     set +e
-    printf '%s' "$payload" | bash "$CORE_DISPATCH" mantis-analyze
+    printf '%s' "$payload" | bash "$CORE_DISPATCH" lich-analyze
     rc_core=$?
     set -e
     t1=$(_now_ms)
 
     set +e
-    printf '%s' "$payload" | bash "$SB_DISPATCH" mantis-sandbox
+    printf '%s' "$payload" | bash "$SB_DISPATCH" lich-sandbox
     rc_sb=$?
     set -e
     t2=$(_now_ms)
 
     set +e
-    printf '%s' "$payload" | bash "$V_DISPATCH" mantis-verdict-compose
+    printf '%s' "$payload" | bash "$V_DISPATCH" lich-verdict-compose
     rc_v=$?
     set -e
     t3=$(_now_ms)
@@ -224,7 +224,7 @@ _run_scenario() {
 
         # Observation (not a hard requirement): the verdict dispatcher in
         # shared/hooks/dispatch.sh does not file-extension-gate the
-        # `mantis-verdict-compose` branch; it spawns compose.py for any
+        # `lich-verdict-compose` branch; it spawns compose.py for any
         # path. For a .md file, compose.py yields a preliminary DEPLOY.
         # Report as [NOTE] rather than fail — this is an honest surfacing
         # of the loop's current behavior, not a harness assumption.
@@ -232,7 +232,7 @@ _run_scenario() {
         if (( v_delta_obs == 0 )); then
             pass "$name: verdict dispatcher also skipped (tighter gate than expected)"
         else
-            echo "[NOTE] $name: verdict dispatcher composed $v_delta_obs record(s) on .md file — upstream dispatch.sh lacks _is_python_file gate on mantis-verdict-compose branch (see dispatch.sh L156-170). Not a harness failure; a loop observation."
+            echo "[NOTE] $name: verdict dispatcher composed $v_delta_obs record(s) on .md file — upstream dispatch.sh lacks _is_python_file gate on lich-verdict-compose branch (see dispatch.sh L156-170). Not a harness failure; a loop observation."
         fi
 
         local total_ms=$(( $(_now_ms) - scenario_start ))
@@ -377,8 +377,8 @@ _run_scenario "B-FAIL" \
 # =============================================================================
 # Scenario C — SKIP path (non-Python file, dispatcher gates early)
 # =============================================================================
-# dispatch.sh gates mantis-analyze and mantis-sandbox on _is_python_file but
-# does NOT gate mantis-verdict-compose the same way — the verdict dispatcher
+# dispatch.sh gates lich-analyze and lich-sandbox on _is_python_file but
+# does NOT gate lich-verdict-compose the same way — the verdict dispatcher
 # accepts any file_path and composes a record. Scenario C asserts the M1+M5
 # skip path cleanly; any verdict leakage on a .md file is an upstream
 # observation recorded by the harness, not silently suppressed.

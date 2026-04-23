@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — outcome classifier.
+"""Lich M5 sandbox — outcome classifier.
 
 Maps (flag_class, exit_code, stderr, signal) -> (status, error_class).
 

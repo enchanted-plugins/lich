@@ -5,7 +5,7 @@
 # returns [] cleanly when tool is absent. Verifies routing, not detection.
 
 service:
-  name: mantis
+  name: lich
   timeout: 10
   timeout: 30
   retries: 3

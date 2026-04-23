@@ -24,8 +24,8 @@ REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$REPO_ROOT"
 
 FIXTURE_DIR="$REPO_ROOT/tests/fixtures/polyglot"
-M1_LOG="$REPO_ROOT/plugins/mantis-core/state/review-flags.jsonl"
-DISPATCHER="$REPO_ROOT/plugins/mantis-core/scripts/__main__.py"
+M1_LOG="$REPO_ROOT/plugins/lich-core/state/review-flags.jsonl"
+DISPATCHER="$REPO_ROOT/plugins/lich-core/scripts/__main__.py"
 
 # Expected substrate tag per fixture. Trailing-space-separated so bash `case`
 # can match. `sample.py` varies on ruff presence — we accept either.

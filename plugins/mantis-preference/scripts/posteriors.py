@@ -11,7 +11,7 @@ low variance — no hand-tuned epsilon.
 The 5% floor lives in `surfacing_probability`: any draw below 0.05 is clamped
 UP (never silently floored to 0). A rule surviving 100 rejections still has a
 5% chance of being surfaced. Permanent suppression requires an explicit
-`/mantis-disable` — see override.py.
+`/lich-disable` — see override.py.
 """
 
 from __future__ import annotations

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # Regression coverage for three e2e bugs fixed on 2026-04-21:
 #
-#   bug-1: shared/hooks/dispatch.sh (mantis-sandbox branch) passed the source
+#   bug-1: shared/hooks/dispatch.sh (lich-sandbox branch) passed the source
 #          file path as sandbox.py argv[1]; sandbox.py's argv[1] is the
 #          review-flags.jsonl input path, so M5 silently no-op'd on hook fire.
 #
-#   bug-2: shared/hooks/dispatch.sh (mantis-verdict-compose branch) lacked a
+#   bug-2: shared/hooks/dispatch.sh (lich-verdict-compose branch) lacked a
 #          _is_python_file gate; Write/Edit on .md/.json/.txt composed a
 #          preliminary DEPLOY record. Stop-event invocations (empty
 #          FILE_PATH) must STILL dispatch.
 #
-#   bug-3: plugins/mantis-preference/scripts/override.py used parents[3] for
-#          repo root; from plugins/mantis-preference/scripts/ that overshoots
-#          to enchanted-skills/ rather than enchanted-skills/mantis/. The
+#   bug-3: plugins/lich-preference/scripts/override.py used parents[3] for
+#          repo root; from plugins/lich-preference/scripts/ that overshoots
+#          to enchanted-skills/ rather than enchanted-skills/lich/. The
 #          default overrides.json path landed outside the repo.
 #
 # Harness conventions (mirror tests/e2e/, tests/sandbox/, tests/verdict/):
@@ -26,13 +26,13 @@ set -uo pipefail
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$REPO_ROOT"
 
-SB_DISPATCH="$REPO_ROOT/plugins/mantis-sandbox/hooks/dispatch.sh"
-V_DISPATCH="$REPO_ROOT/plugins/mantis-verdict/hooks/dispatch.sh"
-M1_LOG="$REPO_ROOT/plugins/mantis-core/state/review-flags.jsonl"
-M5_LOG="$REPO_ROOT/plugins/mantis-sandbox/state/run-log.jsonl"
-V_LOG="$REPO_ROOT/plugins/mantis-verdict/state/verdict.jsonl"
-OVR_PATH="$REPO_ROOT/plugins/mantis-preference/state/overrides.json"
-OVERRIDE_PY="$REPO_ROOT/plugins/mantis-preference/scripts/override.py"
+SB_DISPATCH="$REPO_ROOT/plugins/lich-sandbox/hooks/dispatch.sh"
+V_DISPATCH="$REPO_ROOT/plugins/lich-verdict/hooks/dispatch.sh"
+M1_LOG="$REPO_ROOT/plugins/lich-core/state/review-flags.jsonl"
+M5_LOG="$REPO_ROOT/plugins/lich-sandbox/state/run-log.jsonl"
+V_LOG="$REPO_ROOT/plugins/lich-verdict/state/verdict.jsonl"
+OVR_PATH="$REPO_ROOT/plugins/lich-preference/state/overrides.json"
+OVERRIDE_PY="$REPO_ROOT/plugins/lich-preference/scripts/override.py"
 BAD_PY="$REPO_ROOT/tests/fixtures/quality-ladder/bad.py"
 
 fails=0
@@ -43,7 +43,7 @@ fail() { echo "[FAIL] $*"; fails=$((fails+1)); }
 # Back up state, restore on exit. We mutate M1/M5/verdict logs and
 # overrides.json — every mutation is reversed.
 # ---------------------------------------------------------------------------
-BACKUP_DIR=$(mktemp -d 2>/dev/null || echo "$TMPDIR/mantis-regression-$$")
+BACKUP_DIR=$(mktemp -d 2>/dev/null || echo "$TMPDIR/lich-regression-$$")
 mkdir -p "$BACKUP_DIR"
 
 _backup() {
@@ -125,7 +125,7 @@ echo "[bug-1] seeding M1 flags for bad.py, then firing sandbox dispatcher"
 # gracefully — sandbox needs only ONE flag to prove argv wiring is fixed.
 mkdir -p "$(dirname "$M1_LOG")"
 : > "$M1_LOG"
-python "$REPO_ROOT/plugins/mantis-core/scripts/__main__.py" "$BAD_PY" \
+python "$REPO_ROOT/plugins/lich-core/scripts/__main__.py" "$BAD_PY" \
     >/dev/null 2>&1 || true
 
 m1_seeded=$(_count_lines "$M1_LOG")
@@ -141,7 +141,7 @@ m5_before=$(_count_lines "$M5_LOG")
 
 # Fire via the exact per-plugin wrapper Claude Code invokes.
 payload=$(_simulate_payload "$BAD_PY")
-printf '%s' "$payload" | bash "$SB_DISPATCH" mantis-sandbox
+printf '%s' "$payload" | bash "$SB_DISPATCH" lich-sandbox
 rc_sb=$?
 if (( rc_sb != 0 )); then
     fail "bug-1: sandbox dispatch exit=$rc_sb"
@@ -170,7 +170,7 @@ echo "[bug-2] firing verdict dispatcher with .md payload (should skip)"
 v_before=$(_count_lines "$V_LOG")
 
 md_payload=$(_simulate_payload "$REPO_ROOT/README.md")
-printf '%s' "$md_payload" | bash "$V_DISPATCH" mantis-verdict-compose
+printf '%s' "$md_payload" | bash "$V_DISPATCH" lich-verdict-compose
 rc_v1=$?
 if (( rc_v1 != 0 )); then
     fail "bug-2: verdict dispatch (md payload) exit=$rc_v1"
@@ -190,7 +190,7 @@ echo "[bug-2] firing verdict dispatcher with empty FILE_PATH (Stop event; should
 # with empty file_path — the dispatcher parses `""` and must still spawn.
 empty_payload='{"tool_name":"","tool_input":{"file_path":""}}'
 v_before_stop=$(_count_lines "$V_LOG")
-printf '%s' "$empty_payload" | bash "$V_DISPATCH" mantis-verdict-compose
+printf '%s' "$empty_payload" | bash "$V_DISPATCH" lich-verdict-compose
 rc_v2=$?
 if (( rc_v2 != 0 )); then
     fail "bug-2: verdict dispatch (empty payload) exit=$rc_v2"
@@ -205,7 +205,7 @@ else
 fi
 
 # =============================================================================
-# Bug 3 — override.py writes under plugins/mantis-preference/state/
+# Bug 3 — override.py writes under plugins/lich-preference/state/
 # (parents[2] idiom), not outside the repo (parents[3]).
 # =============================================================================
 echo "[bug-3] invoking override.py disable; asserting written path is inside repo"
@@ -245,7 +245,7 @@ else
 fi
 
 # Also explicitly prove no file was written at the overshoot location.
-OVERSHOOT="$REPO_ROOT/../plugins/mantis-preference/state/overrides.json"
+OVERSHOOT="$REPO_ROOT/../plugins/lich-preference/state/overrides.json"
 if [[ -f "$OVERSHOOT" ]]; then
     fail "bug-3: override.py wrote to overshoot path $OVERSHOOT (parents[3] regression)"
 else

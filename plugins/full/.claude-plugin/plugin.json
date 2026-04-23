@@ -1,6 +1,6 @@
 {
   "name": "full",
-  "description": "Meta-plugin. One install pulls in all 7 Mantis sub-plugins via dependency resolution: mantis-core, mantis-sandbox, mantis-preference, mantis-rubric, mantis-python, mantis-typescript, mantis-verdict.",
+  "description": "Meta-plugin. One install pulls in all 7 Lich sub-plugins via dependency resolution: lich-core, lich-sandbox, lich-preference, lich-rubric, lich-python, lich-typescript, lich-verdict.",
   "version": "0.1.0",
   "author": {
     "name": "enchanted-plugins"
@@ -13,15 +13,15 @@
   "keywords": [
     "meta",
     "full-install",
-    "mantis"
+    "lich"
   ],
   "dependencies": [
-    "mantis-core",
-    "mantis-sandbox",
-    "mantis-preference",
-    "mantis-rubric",
-    "mantis-python",
-    "mantis-typescript",
-    "mantis-verdict"
+    "lich-core",
+    "lich-sandbox",
+    "lich-preference",
+    "lich-rubric",
+    "lich-python",
+    "lich-typescript",
+    "lich-verdict"
   ]
 }

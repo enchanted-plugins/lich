@@ -1,37 +1,37 @@
 ---
-name: mantis-explain
+name: lich-explain
 description: >
-  Walks through why Mantis flagged a specific finding — M1 flag rationale,
+  Walks through why Lich flagged a specific finding — M1 flag rationale,
   M5 sandbox witness (if confirmed), M7 rubric scores per axis, Kappa
   reliability, M6 posterior state. Use when: the user runs
-  /mantis-explain <finding_id>, or wants to understand a HOLD/FAIL verdict.
-  Do not use for: general code review (/mantis-review handles that), rule
-  disabling (/mantis-disable handles that), or modifying rubric axes
+  /lich-explain <finding_id>, or wants to understand a HOLD/FAIL verdict.
+  Do not use for: general code review (/lich-review handles that), rule
+  disabling (/lich-disable handles that), or modifying rubric axes
   (rubric-v1.json edits go through a separate migration skill).
 model: sonnet
 tools: [Read]
 ---
 
-# mantis-explain
+# lich-explain
 
 ## Preconditions
 
-- A finding exists in `plugins/mantis-verdict/state/verdict.jsonl` with the given `finding_id`.
-- `plugins/mantis-rubric/config/rubric-v1.json` exists (defines the 5 axes).
-- `plugins/mantis-rubric/state/kappa-log.jsonl` has a per-axis Kappa entry for the finding's review.
+- A finding exists in `plugins/lich-verdict/state/verdict.jsonl` with the given `finding_id`.
+- `plugins/lich-rubric/config/rubric-v1.json` exists (defines the 5 axes).
+- `plugins/lich-rubric/state/kappa-log.jsonl` has a per-axis Kappa entry for the finding's review.
 
 ## Inputs
 
-- **Slash command**: `/mantis-explain <finding_id>`
+- **Slash command**: `/lich-explain <finding_id>`
 
 ## Steps
 
-1. **Resolve the finding.** Load `plugins/mantis-verdict/state/verdict.jsonl`, find the record with matching `finding_id`.
+1. **Resolve the finding.** Load `plugins/lich-verdict/state/verdict.jsonl`, find the record with matching `finding_id`.
 2. **Assemble engine traces.** Read per-engine state files:
-   - `plugins/mantis-core/state/review-flags.jsonl` → M1 flag rationale (variable, abstract value, failure class)
-   - `plugins/mantis-sandbox/state/run-log.jsonl` → M5 outcome (confirmed / timeout / sandbox-error / no-bug + witness input if applicable)
-   - `plugins/mantis-rubric/state/kappa-log.jsonl` → M7 per-axis scores + Kappa reliability
-   - `plugins/mantis-preference/state/learnings.json` → M6 (developer, rule) posterior
+   - `plugins/lich-core/state/review-flags.jsonl` → M1 flag rationale (variable, abstract value, failure class)
+   - `plugins/lich-sandbox/state/run-log.jsonl` → M5 outcome (confirmed / timeout / sandbox-error / no-bug + witness input if applicable)
+   - `plugins/lich-rubric/state/kappa-log.jsonl` → M7 per-axis scores + Kappa reliability
+   - `plugins/lich-preference/state/learnings.json` → M6 (developer, rule) posterior
 3. **Compose explanation.** Render a structured block:
    - **Finding**: `<one-line summary>`
    - **M1 says**: abstract interpretation traced `<var>` to `<abstract value>`, flagging `<failure class>` at `<severity>`.
@@ -48,7 +48,7 @@ tools: [Read]
 
 ## Handoff
 
-If the developer disagrees with the finding: suggest `/mantis-disable <rule_id>`. If the developer agrees but wants to fix: the explanation already surfaces the witness input (if M5 confirmed), which is the starting point.
+If the developer disagrees with the finding: suggest `/lich-disable <rule_id>`. If the developer agrees but wants to fix: the explanation already surfaces the witness input (if M5 confirmed), which is the starting point.
 
 ## Failure modes
 

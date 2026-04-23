@@ -1,4 +1,4 @@
 {
-  "description": "mantis-typescript adapter hooks — advisory-only. Activated by mantis-core's dispatcher when target file is .ts/.tsx/.js/.jsx. See @shared/conduct/hooks.md.",
+  "description": "lich-typescript adapter hooks — advisory-only. Activated by lich-core's dispatcher when target file is .ts/.tsx/.js/.jsx. See @shared/conduct/hooks.md.",
   "hooks": {}
 }

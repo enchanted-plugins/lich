@@ -1,9 +1,9 @@
 """Unit tests for the M3 Yamaguchi Property-Graph Traversal adapter.
 
 Run (from repo root):
-    python plugins/mantis-core/scripts/tests/test_m3_property_graph.py
+    python plugins/lich-core/scripts/tests/test_m3_property_graph.py
 or:
-    python -m unittest discover -s plugins/mantis-core/scripts/tests -p 'test_*.py'
+    python -m unittest discover -s plugins/lich-core/scripts/tests -p 'test_*.py'
 
 Joern is NEVER invoked in these tests. Subprocess is mocked throughout;
 canned JSON payloads stand in for real Joern output.
@@ -20,7 +20,7 @@ import unittest
 from unittest import mock
 
 # Make sibling `scripts/` importable regardless of cwd (hyphen in
-# `mantis-core` blocks package import).
+# `lich-core` blocks package import).
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SCRIPTS = os.path.dirname(_HERE)
 if _SCRIPTS not in sys.path:
@@ -336,7 +336,7 @@ class SecurityGuardTests(unittest.TestCase):
     def test_security_pattern_in_query_never_mapped(self):
         """If a caller (or future code edit) passes a query string
         touching CWE / injection / taint-sink vocab, _run_joern_query
-        refuses even with Joern detected. Reaper R3 owns CWE taxonomy."""
+        refuses even with Joern detected. Hydra R3 owns CWE taxonomy."""
         bad_query = 'cpg.call.name("taintSink").reachableByFlows(...)'
         with mock.patch(
             "m3_property_graph.subprocess.run"
@@ -373,7 +373,7 @@ class SecurityGuardTests(unittest.TestCase):
             self.assertFalse(
                 _query_touches_security(rid, meta["query"]),
                 f"Canonical rule {rid} tripped the security guard — "
-                "either a false-positive token or Reaper-lane drift.",
+                "either a false-positive token or Hydra-lane drift.",
             )
 
 

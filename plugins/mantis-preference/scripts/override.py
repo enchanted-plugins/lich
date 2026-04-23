@@ -1,4 +1,4 @@
-"""Override: permanent rule suppression via explicit `/mantis-disable`.
+"""Override: permanent rule suppression via explicit `/lich-disable`.
 
 Per CLAUDE.md §4, accumulated rejections CANNOT silently zero out a rule.
 The developer's explicit action goes here, and it auto-expires after 90 days
@@ -14,7 +14,7 @@ State shape (overrides.json):
         }
     ]
 
-CLI: handler for the `/mantis-disable` skill invocation.
+CLI: handler for the `/lich-disable` skill invocation.
     python override.py --dev DEV --rule RULE disable
     python override.py --dev DEV --rule RULE check
 """
@@ -29,11 +29,11 @@ from pathlib import Path
 
 
 _HERE = Path(__file__).resolve().parent
-# plugins/mantis-preference/scripts/ -> repo root via parents[2].
+# plugins/lich-preference/scripts/ -> repo root via parents[2].
 # Matches sandbox.py / compose.py idiom (parents[3] would overshoot).
 _REPO_ROOT = _HERE.parents[2]
 _DEFAULT_STATE = (
-    _REPO_ROOT / "plugins" / "mantis-preference" / "state" / "overrides.json"
+    _REPO_ROOT / "plugins" / "lich-preference" / "state" / "overrides.json"
 )
 
 # Quarterly re-prompt per CLAUDE.md §4.
@@ -111,12 +111,12 @@ def disable(dev_id: str, rule_id: str, path: Path | None = None) -> dict:
                     _sys.path.insert(0, str(_shared))
                 break
         from events.bus import publish as _publish  # type: ignore
-        _publish("mantis.rule.disabled", {
+        _publish("lich.rule.disabled", {
             "dev_id": dev_id,
             "rule_id": rule_id,
             "disabled_at": entry["disabled_at"],
             "reprompt_at": entry["reprompt_at"],
-        }, source="mantis-preference")
+        }, source="lich-preference")
     except Exception:
         pass
 
@@ -143,7 +143,7 @@ def due_for_reprompt(
 
 def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Permanent rule override handler (/mantis-disable)."
+        description="Permanent rule override handler (/lich-disable)."
     )
     parser.add_argument("--dev", required=True)
     parser.add_argument("--rule", required=True)

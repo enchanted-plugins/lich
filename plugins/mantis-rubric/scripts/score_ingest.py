@@ -6,13 +6,13 @@ It never spawns the judge. Its contracts:
 
   1. Validate the score shape against rubric-v1.json.
   2. Compute the per-axis Kappa proxy (see kappa.py module docstring).
-  3. Append exactly one JSONL record to plugins/mantis-rubric/state/kappa-log.jsonl.
+  3. Append exactly one JSONL record to plugins/lich-rubric/state/kappa-log.jsonl.
   4. Report unstable axes and Opus-adjudication flags — never average away.
 
 Zero external deps; stdlib only.
 
 CLI:
-    python plugins/mantis-rubric/scripts/score_ingest.py \\
+    python plugins/lich-rubric/scripts/score_ingest.py \\
         --file path/to/file.py \\
         --pass1 '{"clarity":4,"correctness_at_glance":4,...}' \\
         --pass2 '{"clarity":4,"correctness_at_glance":3,...}' \\
@@ -49,8 +49,8 @@ except Exception:  # pragma: no cover — advisory
     _learnings = None
 
 _REPO_ROOT = _SCRIPTS_DIR.parents[2]
-RUBRIC_PATH = _REPO_ROOT / "plugins" / "mantis-rubric" / "config" / "rubric-v1.json"
-LOG_PATH = _REPO_ROOT / "plugins" / "mantis-rubric" / "state" / "kappa-log.jsonl"
+RUBRIC_PATH = _REPO_ROOT / "plugins" / "lich-rubric" / "config" / "rubric-v1.json"
+LOG_PATH = _REPO_ROOT / "plugins" / "lich-rubric" / "state" / "kappa-log.jsonl"
 
 
 def _now_iso() -> str:
@@ -137,7 +137,7 @@ def ingest(
         try:
             kappa_values = {k: v.get("kappa") for k, v in kappa.items()}
             _learnings.safe_emit(
-                plugin="mantis-rubric",
+                plugin="lich-rubric",
                 code="F13",
                 axis=",".join(record["unstable_axes"]),
                 hypothesis=f"axes {record['unstable_axes']} unstable",
@@ -151,7 +151,7 @@ def ingest(
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(prog="mantis-rubric-score-ingest")
+    p = argparse.ArgumentParser(prog="lich-rubric-score-ingest")
     p.add_argument("--file", required=True, help="path of the file under review")
     p.add_argument("--pass1", required=True, help="JSON dict of pass-1 scores")
     p.add_argument("--pass2", required=True, help="JSON dict of pass-2 scores")

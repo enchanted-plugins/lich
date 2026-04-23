@@ -47,6 +47,6 @@
     "under_budget_pressure": "claude-haiku-4-5-20251001",
     "adjudication": "claude-opus-4-7"
   },
-  "prompt_template_ref": "plugins/mantis-rubric/skills/mantis-explain/rubric-prompt.md",
+  "prompt_template_ref": "plugins/lich-rubric/skills/lich-explain/rubric-prompt.md",
   "_note": "Rubric version bump requires a migration skill. Axis changes are semantic — a new v2 cannot be loaded unless downstream (M6 posterior, verdict threshold) is updated in the same PR."
 }

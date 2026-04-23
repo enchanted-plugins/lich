@@ -4,7 +4,7 @@ context: fork
 allowed-tools: [Read, Bash]
 ---
 
-# mantis-sandbox-runner
+# lich-sandbox-runner
 
 Executes M5 Bounded Subprocess Dry-Run for each M1-flagged site, using the stdlib-only sandbox (resource.setrlimit + signal.alarm).
 
@@ -18,9 +18,9 @@ Executes M5 Bounded Subprocess Dry-Run for each M1-flagged site, using the stdli
 
 ## Contract
 
-**Inputs:** Review-flag records from `plugins/mantis-core/state/review-flags.jsonl`.
+**Inputs:** Review-flag records from `plugins/lich-core/state/review-flags.jsonl`.
 
-**Outputs:** `plugins/mantis-sandbox/state/run-log.jsonl` with one record per witness execution. Return to parent: `{confirmed: N, timeout: N, sandbox_error: N, input_synthesis_failed: N, no_bug: N, duration_ms: X}`.
+**Outputs:** `plugins/lich-sandbox/state/run-log.jsonl` with one record per witness execution. Return to parent: `{confirmed: N, timeout: N, sandbox_error: N, input_synthesis_failed: N, no_bug: N, duration_ms: X}`.
 
 **Scope fence:**
 - Do not relax resource caps. Ever. The five caps are load-bearing.
@@ -39,6 +39,6 @@ Phase 2 M4 (Type-Reflected Invariant Synthesis) may upgrade this to Opus for the
 
 If the agent reports "done" without a run-log entry per flagged site, the parent must verify. A missing outcome is worse than a `no-bug-found` outcome — missing means the flag is silently unresolved.
 
-Log operational failures (Python version incompatibility, resource module absent, temp-dir write denied) to `plugins/mantis-sandbox/state/precedent-log.md` per `@shared/conduct/precedent.md`.
+Log operational failures (Python version incompatibility, resource module absent, temp-dir write denied) to `plugins/lich-sandbox/state/precedent-log.md` per `@shared/conduct/precedent.md`.
 
 See [@shared/conduct/delegation.md](../../../shared/conduct/delegation.md) § Trust but verify the subagent.

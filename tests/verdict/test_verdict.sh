@@ -16,9 +16,9 @@ FIXTURES=(
     tests/fixtures/quality-ladder/massive_orders.py
 )
 
-M1_LOG="$REPO_ROOT/plugins/mantis-core/state/review-flags.jsonl"
-M5_LOG="$REPO_ROOT/plugins/mantis-sandbox/state/run-log.jsonl"
-V_LOG="$REPO_ROOT/plugins/mantis-verdict/state/verdict.jsonl"
+M1_LOG="$REPO_ROOT/plugins/lich-core/state/review-flags.jsonl"
+M5_LOG="$REPO_ROOT/plugins/lich-sandbox/state/run-log.jsonl"
+V_LOG="$REPO_ROOT/plugins/lich-verdict/state/verdict.jsonl"
 
 : > "$M1_LOG"
 : > "$M5_LOG"
@@ -30,19 +30,19 @@ for f in "${FIXTURES[@]}"; do
         echo "[harness] skip: $f not found"
         continue
     fi
-    python plugins/mantis-core/scripts/__main__.py "$f" 2>/dev/null || true
+    python plugins/lich-core/scripts/__main__.py "$f" 2>/dev/null || true
 done
 m1_count=$(wc -l < "$M1_LOG" 2>/dev/null | tr -d ' ' || echo 0)
 echo "[harness]          M1 wrote $m1_count flag(s)"
 
 echo "[harness] stage 2: M5 sandbox"
-python plugins/mantis-sandbox/scripts/sandbox.py "$M1_LOG" "$M5_LOG" 2>/dev/null || \
-    python plugins/mantis-sandbox/scripts/sandbox.py 2>/dev/null || true
+python plugins/lich-sandbox/scripts/sandbox.py "$M1_LOG" "$M5_LOG" 2>/dev/null || \
+    python plugins/lich-sandbox/scripts/sandbox.py 2>/dev/null || true
 m5_count=$(wc -l < "$M5_LOG" 2>/dev/null | tr -d ' ' || echo 0)
 echo "[harness]          M5 wrote $m5_count run(s)"
 
 echo "[harness] stage 3: verdict compose"
-python plugins/mantis-verdict/scripts/compose.py \
+python plugins/lich-verdict/scripts/compose.py \
     --file "${FIXTURES[0]}" \
     --file "${FIXTURES[1]}" \
     --file "${FIXTURES[2]}"

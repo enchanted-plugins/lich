@@ -41,9 +41,9 @@ import sys
 from pathlib import Path
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
-_M1 = _REPO_ROOT / "plugins" / "mantis-core" / "state" / "review-flags.jsonl"
-_M5 = _REPO_ROOT / "plugins" / "mantis-sandbox" / "state" / "run-log.jsonl"
-_V = _REPO_ROOT / "plugins" / "mantis-verdict" / "state" / "verdict.jsonl"
+_M1 = _REPO_ROOT / "plugins" / "lich-core" / "state" / "review-flags.jsonl"
+_M5 = _REPO_ROOT / "plugins" / "lich-sandbox" / "state" / "run-log.jsonl"
+_V = _REPO_ROOT / "plugins" / "lich-verdict" / "state" / "verdict.jsonl"
 
 _KNOWN_ENGINE_STATUSES = {"ran", "unsupported", "not-evaluated"}
 _SYNC_TARGET_MS = 100
@@ -124,7 +124,7 @@ def main() -> int:
         else:
             print(f"  [note] {args.scenario}: verdict composer emitted "
                   f"{len(v_new)} record(s) — upstream dispatch.sh lacks a "
-                  "_is_python_file gate on mantis-verdict-compose; loop "
+                  "_is_python_file gate on lich-verdict-compose; loop "
                   "observation, not a harness failure.")
         print(f"  {args.scenario}: sync={args.sync_ms}ms (skip; budget not applicable)")
         return 0 if fails == 0 else 1

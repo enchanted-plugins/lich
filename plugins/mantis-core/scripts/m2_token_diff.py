@@ -1,6 +1,6 @@
-"""Mantis M2 Tier-2 — Token-based Structural Diff Fallback.
+"""Lich M2 Tier-2 — Token-based Structural Diff Fallback.
 
-A *degraded substrate* for languages where Mantis does not ship a real
+A *degraded substrate* for languages where Lich does not ship a real
 AST parser. Extracts function-like blocks from lexical tokens, then
 pairs old-vs-new by name-equality (fast path) or Dice similarity over
 token bags (slow path), matching the threshold used by the Tier-1
@@ -563,7 +563,7 @@ def _result_to_json(result: DiffResult) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="Mantis M2 Tier-2 token diff")
+    ap = argparse.ArgumentParser(description="Lich M2 Tier-2 token diff")
     ap.add_argument("--old-file", required=True)
     ap.add_argument("--new-file", required=True)
     ap.add_argument("--language", default="c-like")

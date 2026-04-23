@@ -1,7 +1,7 @@
 """Subscriber helpers — Phase 2 seed.
 
 These read the bus tail for events published by sibling plugins
-(Hornet, Reaper, Nook). In v2, siblings live in separate repos and do
+(Raven, Hydra, Pech). In v2, siblings live in separate repos and do
 not publish into this bus. Each helper therefore returns None / False
 when no matching event exists — the no-op read is expected and correct.
 
@@ -10,12 +10,12 @@ helpers keep their exact signatures; only ``bus.subscribe`` changes
 underneath.
 
 Contract (per root CLAUDE.md):
-  * ``check_for_hornet_boost(file)`` — Hornet's V1 trust-score is the
-    authoritative change classifier. Mantis consumes, never re-classifies.
-  * ``check_for_reaper_context(file)`` — Reaper owns CWE taxonomy.
-    Mantis attaches context, never re-reports.
-  * ``check_for_nook_budget_pressure()`` — Nook signals budget threshold
-    crossings. mantis-rubric drops judge tier from Sonnet to Haiku in
+  * ``check_for_raven_boost(file)`` — Raven's V1 trust-score is the
+    authoritative change classifier. Lich consumes, never re-classifies.
+  * ``check_for_hydra_context(file)`` — Hydra owns CWE taxonomy.
+    Lich attaches context, never re-reports.
+  * ``check_for_pech_budget_pressure()`` — Pech signals budget threshold
+    crossings. lich-rubric drops judge tier from Sonnet to Haiku in
     response.
 """
 
@@ -35,21 +35,21 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
-# Hornet — change.classified (trust score for M6 prior weighting)
+# Raven — change.classified (trust score for M6 prior weighting)
 # ---------------------------------------------------------------------------
 
 
-def check_for_hornet_boost(file: str,
+def check_for_raven_boost(file: str,
                             bus_path: Optional[Path] = None) -> Optional[float]:
-    """Return trust-score delta from the most recent Hornet event for this file.
+    """Return trust-score delta from the most recent Raven event for this file.
 
-    Payload contract (Hornet V1):
+    Payload contract (Raven V1):
         {"file": "...", "trust": 0.62, "classification": "..."}
 
     Returns None when no matching event exists.
     """
     latest_trust: Optional[float] = None
-    for ev in subscribe(topic="hornet.change.classified", bus_path=bus_path):
+    for ev in subscribe(topic="raven.change.classified", bus_path=bus_path):
         payload = ev.payload or {}
         if payload.get("file") != file:
             continue
@@ -60,24 +60,24 @@ def check_for_hornet_boost(file: str,
 
 
 # ---------------------------------------------------------------------------
-# Reaper — vuln.detected (CWE context for M1 annotations)
+# Hydra — vuln.detected (CWE context for M1 annotations)
 # ---------------------------------------------------------------------------
 
 
-def check_for_reaper_context(file: str,
+def check_for_hydra_context(file: str,
                               bus_path: Optional[Path] = None
                               ) -> Optional[dict]:
-    """Return CWE context dict from the most recent Reaper event for this file.
+    """Return CWE context dict from the most recent Hydra event for this file.
 
-    Payload contract (Reaper R3):
+    Payload contract (Hydra R3):
         {"file": "...", "cwe": "CWE-89", "severity": "HIGH", ...}
 
-    Returns None when no matching event exists. Mantis never re-classifies
+    Returns None when no matching event exists. Lich never re-classifies
     the CWE (root CLAUDE.md §1); it only attaches context to M7's rubric
     input.
     """
     latest_ctx: Optional[dict] = None
-    for ev in subscribe(topic="reaper.vuln.detected", bus_path=bus_path):
+    for ev in subscribe(topic="hydra.vuln.detected", bus_path=bus_path):
         payload = ev.payload or {}
         if payload.get("file") != file:
             continue
@@ -86,11 +86,11 @@ def check_for_reaper_context(file: str,
 
 
 # ---------------------------------------------------------------------------
-# Nook — budget.threshold.crossed (drops mantis-rubric judge tier)
+# Pech — budget.threshold.crossed (drops lich-rubric judge tier)
 # ---------------------------------------------------------------------------
 
 
-_NOOK_WINDOW_HOURS = 1
+_PECH_WINDOW_HOURS = 1
 
 
 def _parse_iso(ts: str) -> Optional[datetime]:
@@ -103,14 +103,14 @@ def _parse_iso(ts: str) -> Optional[datetime]:
         return None
 
 
-def check_for_nook_budget_pressure(bus_path: Optional[Path] = None) -> bool:
-    """True when a nook.budget.threshold.crossed event fired in the last hour.
+def check_for_pech_budget_pressure(bus_path: Optional[Path] = None) -> bool:
+    """True when a pech.budget.threshold.crossed event fired in the last hour.
 
-    Used by mantis-rubric's judge-tier selector per root CLAUDE.md §
-    Agent tiers: Haiku is the budget fallback "when Nook fires".
+    Used by lich-rubric's judge-tier selector per root CLAUDE.md §
+    Agent tiers: Haiku is the budget fallback "when Pech fires".
     """
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=_NOOK_WINDOW_HOURS)
-    for ev in subscribe(topic="nook.budget.threshold.crossed",
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=_PECH_WINDOW_HOURS)
+    for ev in subscribe(topic="pech.budget.threshold.crossed",
                          bus_path=bus_path):
         when = _parse_iso(ev.ts)
         if when is not None and when >= cutoff:

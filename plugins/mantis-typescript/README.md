@@ -1,6 +1,6 @@
-# mantis-typescript
+# lich-typescript
 
-*TypeScript / JavaScript language adapter for Mantis. Maps biome rule IDs into M-engine outputs.*
+*TypeScript / JavaScript language adapter for Lich. Maps biome rule IDs into M-engine outputs.*
 
 ## What it does
 
@@ -12,18 +12,18 @@ Activates on `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs` files. Invocation priority:
 
 Maps each finding to an M-engine category via `config/biome-rule-map.json`:
 
-| Biome category | Mantis M-engine route |
+| Biome category | Lich M-engine route |
 |----------------|----------------------|
 | correctness/* | M1 runtime-failure candidate |
 | style/* | M7 rubric — Idiom-fit axis |
 | complexity/* | M7 rubric — Simplicity axis |
 | a11y/* | M7 rubric — Clarity axis |
-| suspicious/* (security-framed) | **Skip** — Reaper R3 owns |
+| suspicious/* (security-framed) | **Skip** — Hydra R3 owns |
 
 ## Non-duplication
 
-- Never maps security rules (Reaper R3 overlap).
-- Never runs with `biome check --apply` — Mantis is advisory.
+- Never maps security rules (Hydra R3 overlap).
+- Never runs with `biome check --apply` — Lich is advisory.
 - Never replaces biome — adapter pattern.
 
 ## Launch-to-full coverage
@@ -34,10 +34,10 @@ Maps each finding to an M-engine category via `config/biome-rule-map.json`:
 ## Install
 
 ```bash
-/plugin install mantis-typescript@mantis
+/plugin install lich-typescript@lich
 ```
 
-Requires mantis-core. Optional: `biome` or `typescript` installed in the developer's repo for richer output.
+Requires lich-core. Optional: `biome` or `typescript` installed in the developer's repo for richer output.
 
 ## State
 

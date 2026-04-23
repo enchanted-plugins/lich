@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "biome_version_tested": ">=1.9.0,<3.0.0",
-  "note": "Maps biome rule IDs to Mantis M-engine categories. Biome v2 ships ~423 rules; Phase 1 covers ~80. Security rules (noSecrets, noEval with security framing) are deliberately excluded — those belong to Reaper R3.",
+  "note": "Maps biome rule IDs to Lich M-engine categories. Biome v2 ships ~423 rules; Phase 1 covers ~80. Security rules (noSecrets, noEval with security framing) are deliberately excluded — those belong to Hydra R3.",
   "categories": {
     "correctness_m1": {
       "description": "Rules that flag runtime-failure candidates — routed through M1 and potentially M5.",
@@ -111,8 +111,8 @@
         "a11y/useValidLang"
       ]
     },
-    "reaper_overlap_skip": {
-      "description": "Security rules — Reaper R3 owns these. Mantis-typescript detects the rule fired but does NOT emit a finding.",
+    "hydra_overlap_skip": {
+      "description": "Security rules — Hydra R3 owns these. Lich-typescript detects the rule fired but does NOT emit a finding.",
       "biome_rules": [
         "suspicious/noCatchAssign",
         "suspicious/noConsole",

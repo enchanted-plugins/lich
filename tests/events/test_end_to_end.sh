@@ -2,10 +2,10 @@
 # End-to-end event-bus harness.
 #
 # Verifies:
-#   1. `/mantis-disable` publishes `mantis.rule.disabled` to the bus.
-#   2. The verdict composer publishes `mantis.review.completed` per file.
-#   3. An injected `hornet.change.classified` is visible via
-#      subscriptions.check_for_hornet_boost.
+#   1. `/lich-disable` publishes `lich.rule.disabled` to the bus.
+#   2. The verdict composer publishes `lich.review.completed` per file.
+#   3. An injected `raven.change.classified` is visible via
+#      subscriptions.check_for_raven_boost.
 #
 # The bus is brand invariant #7 — observability. Every publisher is
 # wrapped try/except in the production code, so a bus failure must never
@@ -20,10 +20,10 @@ cd "${REPO_ROOT}"
 
 PYTHON="${PYTHON:-python}"
 BUS="${REPO_ROOT}/shared/events/bus.jsonl"
-OVERRIDES="${REPO_ROOT}/plugins/mantis-preference/state/overrides.json"
-VERDICT_LOG="${REPO_ROOT}/plugins/mantis-verdict/state/verdict.jsonl"
-M1_LOG="${REPO_ROOT}/plugins/mantis-core/state/review-flags.jsonl"
-M5_LOG="${REPO_ROOT}/plugins/mantis-sandbox/state/run-log.jsonl"
+OVERRIDES="${REPO_ROOT}/plugins/lich-preference/state/overrides.json"
+VERDICT_LOG="${REPO_ROOT}/plugins/lich-verdict/state/verdict.jsonl"
+M1_LOG="${REPO_ROOT}/plugins/lich-core/state/review-flags.jsonl"
+M5_LOG="${REPO_ROOT}/plugins/lich-sandbox/state/run-log.jsonl"
 
 echo "[harness] repo:   ${REPO_ROOT}"
 echo "[harness] python: $(${PYTHON} --version 2>&1)"
@@ -39,10 +39,10 @@ mkdir -p "$(dirname "${BUS}")"
 : > "${M5_LOG}"
 
 # ---------------------------------------------------------------------
-# Stage 1: override -> mantis.rule.disabled
+# Stage 1: override -> lich.rule.disabled
 # ---------------------------------------------------------------------
-echo "[harness] stage 1: /mantis-disable publishes mantis.rule.disabled"
-"${PYTHON}" plugins/mantis-preference/scripts/override.py \
+echo "[harness] stage 1: /lich-disable publishes lich.rule.disabled"
+"${PYTHON}" plugins/lich-preference/scripts/override.py \
     --dev alice --rule PY-M1-001 disable >/dev/null
 
 rule_events=$("${PYTHON}" - "${BUS}" <<'PY'
@@ -55,22 +55,22 @@ with open(path, "r", encoding="utf-8") as fh:
         if not ln:
             continue
         rec = json.loads(ln)
-        if rec.get("topic") == "mantis.rule.disabled":
+        if rec.get("topic") == "lich.rule.disabled":
             count += 1
 print(count)
 PY
 )
 if [[ "${rule_events}" -lt 1 ]]; then
-    echo "[harness] FAIL: expected >= 1 mantis.rule.disabled event, got ${rule_events}" >&2
+    echo "[harness] FAIL: expected >= 1 lich.rule.disabled event, got ${rule_events}" >&2
     exit 1
 fi
-echo "[harness]          got ${rule_events} mantis.rule.disabled event(s)"
+echo "[harness]          got ${rule_events} lich.rule.disabled event(s)"
 
 # ---------------------------------------------------------------------
-# Stage 2: compose verdict on a clean fixture -> mantis.review.completed
+# Stage 2: compose verdict on a clean fixture -> lich.review.completed
 # ---------------------------------------------------------------------
-echo "[harness] stage 2: verdict composer publishes mantis.review.completed"
-"${PYTHON}" plugins/mantis-verdict/scripts/compose.py \
+echo "[harness] stage 2: verdict composer publishes lich.review.completed"
+"${PYTHON}" plugins/lich-verdict/scripts/compose.py \
     --file tests/fixtures/quality-ladder/high_level.py >/dev/null
 
 review_events=$("${PYTHON}" - "${BUS}" <<'PY'
@@ -83,43 +83,43 @@ with open(path, "r", encoding="utf-8") as fh:
         if not ln:
             continue
         rec = json.loads(ln)
-        if rec.get("topic") == "mantis.review.completed":
+        if rec.get("topic") == "lich.review.completed":
             count += 1
 print(count)
 PY
 )
 if [[ "${review_events}" -lt 1 ]]; then
-    echo "[harness] FAIL: expected >= 1 mantis.review.completed event, got ${review_events}" >&2
+    echo "[harness] FAIL: expected >= 1 lich.review.completed event, got ${review_events}" >&2
     exit 1
 fi
-echo "[harness]          got ${review_events} mantis.review.completed event(s)"
+echo "[harness]          got ${review_events} lich.review.completed event(s)"
 
 # ---------------------------------------------------------------------
-# Stage 3: inject a synthetic hornet.change.classified event and confirm
-# check_for_hornet_boost returns the trust score.
+# Stage 3: inject a synthetic raven.change.classified event and confirm
+# check_for_raven_boost returns the trust score.
 # ---------------------------------------------------------------------
-echo "[harness] stage 3: check_for_hornet_boost returns the synthetic trust"
+echo "[harness] stage 3: check_for_raven_boost returns the synthetic trust"
 "${PYTHON}" - "${REPO_ROOT}" <<'PY'
 import sys
 from pathlib import Path
 repo = Path(sys.argv[1])
 sys.path.insert(0, str(repo / "shared"))
 from events.bus import publish
-from events.subscriptions import check_for_hornet_boost
+from events.subscriptions import check_for_raven_boost
 
-publish("hornet.change.classified",
+publish("raven.change.classified",
         {"file": "src/foo.py", "trust": 0.62,
          "classification": "refactor"},
-        source="hornet")
-assert check_for_hornet_boost("src/foo.py") == 0.62, \
+        source="raven")
+assert check_for_raven_boost("src/foo.py") == 0.62, \
     "expected 0.62 trust score"
-assert check_for_hornet_boost("src/other.py") is None, \
+assert check_for_raven_boost("src/other.py") is None, \
     "expected None for unmatched file"
 print("OK")
 PY
 rc=$?
 if [[ ${rc} -ne 0 ]]; then
-    echo "[harness] FAIL: check_for_hornet_boost assertion failed" >&2
+    echo "[harness] FAIL: check_for_raven_boost assertion failed" >&2
     exit 1
 fi
 

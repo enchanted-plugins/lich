@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Mantis M5 Sandbox Demo
+# Lich M5 Sandbox Demo
 #
 # Walks the full M1 -> M5 -> verdict pipeline on an obviously-buggy fixture,
 # prints human-readable output per stage, and ends with a summary. Idempotent:
@@ -56,7 +56,7 @@ fi
 # Banner
 # ---------------------------------------------------------------------------
 printf '\n'
-printf "${C_BOLD}Mantis M5 Sandbox Demo${C_RESET}\n"
+printf "${C_BOLD}Lich M5 Sandbox Demo${C_RESET}\n"
 printf "%s\n" "$RULE"
 printf "Pipeline: M1 static suspicion -> M5 sandbox confirm -> verdict\n"
 printf "Host:     %s\n" "$PLATFORM_LABEL"
@@ -66,9 +66,9 @@ printf "Caps:     CPU=5s, AS=512MB, NOFILE=16, FSIZE=10MB, NPROC=0, alarm=10s\n"
 # ---------------------------------------------------------------------------
 # Reset state so the demo is idempotent
 # ---------------------------------------------------------------------------
-M1_LOG="plugins/mantis-core/state/review-flags.jsonl"
-M5_LOG="plugins/mantis-sandbox/state/run-log.jsonl"
-V_LOG="plugins/mantis-verdict/state/verdict.jsonl"
+M1_LOG="plugins/lich-core/state/review-flags.jsonl"
+M5_LOG="plugins/lich-sandbox/state/run-log.jsonl"
+V_LOG="plugins/lich-verdict/state/verdict.jsonl"
 : > "$M1_LOG"
 : > "$M5_LOG"
 : > "$V_LOG"
@@ -92,14 +92,14 @@ printf "  ${C_RED}${MARK_ARROW}${C_RESET} L14 mutable-default  def tally(items, 
 # Stage 1: M1 static pass
 # ---------------------------------------------------------------------------
 _stage 1 "M1 STATIC SUSPICION (Cousot interval + nullability walk)"
-_note "Invoking: python plugins/mantis-core/scripts/__main__.py $FIXTURE"
-M1_OUT=$(python plugins/mantis-core/scripts/__main__.py "$FIXTURE" 2>&1 | tail -2 | head -1)
+_note "Invoking: python plugins/lich-core/scripts/__main__.py $FIXTURE"
+M1_OUT=$(python plugins/lich-core/scripts/__main__.py "$FIXTURE" 2>&1 | tail -2 | head -1)
 printf '\n%s\n\n' "$M1_OUT"
 _note "M1 flags (review-flags.jsonl):"
 python - <<'PY'
 import json, pathlib
 rows = []
-for ln in pathlib.Path('plugins/mantis-core/state/review-flags.jsonl').read_text(encoding='utf-8').splitlines():
+for ln in pathlib.Path('plugins/lich-core/state/review-flags.jsonl').read_text(encoding='utf-8').splitlines():
     if not ln.strip():
         continue
     r = json.loads(ln)
@@ -112,9 +112,9 @@ PY
 # Stage 2: M5 sandbox
 # ---------------------------------------------------------------------------
 _stage 2 "M5 SANDBOX CONFIRMATION (bounded subprocess dry-run)"
-_note "Invoking: python plugins/mantis-sandbox/scripts/sandbox.py"
+_note "Invoking: python plugins/lich-sandbox/scripts/sandbox.py"
 printf '\n'
-M5_OUT=$(python plugins/mantis-sandbox/scripts/sandbox.py 2>&1 | tail -1)
+M5_OUT=$(python plugins/lich-sandbox/scripts/sandbox.py 2>&1 | tail -1)
 printf '%s\n\n' "$M5_OUT"
 
 # Render each run-log record with status markers
@@ -143,7 +143,7 @@ marker = {
 if no_color:
     marker = {k: (v[0].replace('\u2717','[FAIL]').replace('\u26a0','[WARN]').replace('\u2713','[OK]').replace('\u2022','[-]'), v[1]) for k,v in marker.items()}
 
-rows = [json.loads(l) for l in pathlib.Path('plugins/mantis-sandbox/state/run-log.jsonl').read_text(encoding='utf-8').splitlines() if l.strip()]
+rows = [json.loads(l) for l in pathlib.Path('plugins/lich-sandbox/state/run-log.jsonl').read_text(encoding='utf-8').splitlines() if l.strip()]
 for r in rows:
     flag = r.get('flag_ref') or {}
     status = r.get('status', 'unknown')
@@ -168,9 +168,9 @@ fi
 # Stage 3: verdict compose
 # ---------------------------------------------------------------------------
 _stage 3 "VERDICT COMPOSE (M1 + M5 + M6 + M7 -> DEPLOY/HOLD/FAIL)"
-_note "Invoking: python plugins/mantis-verdict/scripts/compose.py --file $FIXTURE"
+_note "Invoking: python plugins/lich-verdict/scripts/compose.py --file $FIXTURE"
 printf '\n'
-V_OUT=$(python plugins/mantis-verdict/scripts/compose.py --file "$FIXTURE" 2>&1 | tail -1)
+V_OUT=$(python plugins/lich-verdict/scripts/compose.py --file "$FIXTURE" 2>&1 | tail -1)
 printf '%s\n\n' "$V_OUT"
 
 python - <<'PY'
@@ -179,7 +179,7 @@ no_color = bool(os.environ.get('NO_COLOR'))
 def paint(s, code):
     return s if no_color else f"\033[{code}m{s}\033[0m"
 
-v = json.loads(pathlib.Path('plugins/mantis-verdict/state/verdict.jsonl').read_text(encoding='utf-8').splitlines()[-1])
+v = json.loads(pathlib.Path('plugins/lich-verdict/state/verdict.jsonl').read_text(encoding='utf-8').splitlines()[-1])
 verdict = v['verdict']
 conf = v['confidence']
 verdict_color = {'DEPLOY': '32', 'HOLD': '33', 'FAIL': '31'}.get(verdict, '0')
@@ -201,7 +201,7 @@ PY
 # ---------------------------------------------------------------------------
 _stage 4 "SUMMARY"
 
-FINAL_VERDICT=$(python -c "import json,pathlib; v=json.loads(pathlib.Path('plugins/mantis-verdict/state/verdict.jsonl').read_text(encoding='utf-8').splitlines()[-1]); print(v['verdict'], v['confidence'])")
+FINAL_VERDICT=$(python -c "import json,pathlib; v=json.loads(pathlib.Path('plugins/lich-verdict/state/verdict.jsonl').read_text(encoding='utf-8').splitlines()[-1]); print(v['verdict'], v['confidence'])")
 VERDICT_LEVEL=${FINAL_VERDICT% *}
 VERDICT_CONF=${FINAL_VERDICT#* }
 
@@ -226,7 +226,7 @@ else
 fi
 
 printf '\n'
-printf "%s\n" "Want to run this in CI? See plugins/mantis-sandbox/README.md \u00a7 Running it."
+printf "%s\n" "Want to run this in CI? See plugins/lich-sandbox/README.md \u00a7 Running it."
 printf "%s\n" "Full contract: CLAUDE.md \u00a7 Verdict bar, Engine table, Behavioral contract 2."
 printf '\n'
 

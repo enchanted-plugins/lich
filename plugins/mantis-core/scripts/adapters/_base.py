@@ -2,7 +2,7 @@
 
 Each language adapter loads its bucketed registry from shared/rules/, invokes
 a subprocess linter, parses the output, and emits M1 Flag records for
-correctness-bucket rule IDs only. Security rules never route to M1 (Reaper's
+correctness-bucket rule IDs only. Security rules never route to M1 (Hydra's
 lane) — the guard below refuses even if a registry edit accidentally lists
 one in a non-security bucket.
 """
@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Optional
 
 _HERE = Path(__file__).resolve()
-# plugins/mantis-core/scripts/adapters/_base.py -> repo root (parents[4])
+# plugins/lich-core/scripts/adapters/_base.py -> repo root (parents[4])
 REPO_ROOT = _HERE.parents[4]
 
 
@@ -30,7 +30,7 @@ def load_registry(language: str) -> dict:
     """Returns {rule_id: (bucket_name, severity_hint)}.
 
     bucket_name is one of: correctness_m1, idiom_m7, complexity_m7,
-    naming_m7, testability_m7, security_defer_to_reaper.
+    naming_m7, testability_m7, security_defer_to_hydra.
     """
     path = registry_path(language)
     if not path.exists():
@@ -58,12 +58,12 @@ def _default_severity(bucket: str) -> str:
         "complexity_m7": "MED",
         "naming_m7": "LOW",
         "testability_m7": "LOW",
-        "security_defer_to_reaper": "HIGH",
+        "security_defer_to_hydra": "HIGH",
     }.get(bucket, "MED")
 
 
 def is_security_bucket(bucket: str) -> bool:
-    return bucket == "security_defer_to_reaper"
+    return bucket == "security_defer_to_hydra"
 
 
 def run_subprocess(cmd: list[str], *, timeout_s: int,

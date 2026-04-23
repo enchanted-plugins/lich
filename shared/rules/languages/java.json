@@ -6,7 +6,7 @@
     "version_range": ">=4.8.0",
     "homepage": "https://spotbugs.github.io/"
   },
-  "note": "Phase 1 seed. SpotBugs codes use bug-pattern prefixes (NP = null-pointer, DLS = dead local store, NM = naming, UC = useless code). Reaper R3 owns the SECURITY category and find-sec-bugs plugin output.",
+  "note": "Phase 1 seed. SpotBugs codes use bug-pattern prefixes (NP = null-pointer, DLS = dead local store, NM = naming, UC = useless code). Hydra R3 owns the SECURITY category and find-sec-bugs plugin output.",
   "categories": {
     "correctness_m1": {
       "description": "Null-path, concurrency, numeric, and resource-leak bug patterns. Routed to M1 / M5.",
@@ -62,8 +62,8 @@
         "IJU_TEARDOWN_NO_SUPER"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "find-sec-bugs + SpotBugs SECURITY category — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+    "security_defer_to_hydra": {
+      "description": "find-sec-bugs + SpotBugs SECURITY category — Hydra R3 owns these (CWE lane). Listed for provenance; never mapped.",
       "rule_ids": [
         "SQL_INJECTION_JDBC",
         "SQL_INJECTION_JPA",

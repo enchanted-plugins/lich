@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Slice C: Stop-event auto-compose verification.
 #
-# Simulates a Claude Code Stop event by invoking the mantis-verdict plugin
+# Simulates a Claude Code Stop event by invoking the lich-verdict plugin
 # dispatcher with an empty stdin payload (Stop carries no tool_input.file_path)
 # and asserts the advisory-only contract:
 #   (1) exit 0 always (fail-open)
-#   (2) "spawn mantis-verdict-compose" line hits the hook log
+#   (2) "spawn lich-verdict-compose" line hits the hook log
 #   (3) background compose.py completes and verdict.jsonl is well-formed
 #   (4) CLAUDE_SUBAGENT=1 short-circuits the dispatcher (no spawn)
 #
@@ -18,11 +18,11 @@ set -uo pipefail
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$REPO_ROOT"
 
-DISPATCH="$REPO_ROOT/plugins/mantis-verdict/hooks/dispatch.sh"
+DISPATCH="$REPO_ROOT/plugins/lich-verdict/hooks/dispatch.sh"
 LOG="$REPO_ROOT/.claude/logs/hooks.log"
-M1_LOG="$REPO_ROOT/plugins/mantis-core/state/review-flags.jsonl"
-M5_LOG="$REPO_ROOT/plugins/mantis-sandbox/state/run-log.jsonl"
-V_LOG="$REPO_ROOT/plugins/mantis-verdict/state/verdict.jsonl"
+M1_LOG="$REPO_ROOT/plugins/lich-core/state/review-flags.jsonl"
+M5_LOG="$REPO_ROOT/plugins/lich-sandbox/state/run-log.jsonl"
+V_LOG="$REPO_ROOT/plugins/lich-verdict/state/verdict.jsonl"
 
 mkdir -p "$(dirname "$LOG")"
 touch "$LOG"
@@ -61,7 +61,7 @@ echo "[stop-hook] scenario (a): empty state"
 off_a=$(wc -c < "$LOG" 2>/dev/null | tr -d ' ')
 start_ms=$(date +%s%N 2>/dev/null || echo 0)
 set +e
-: | bash "$DISPATCH" mantis-verdict-compose
+: | bash "$DISPATCH" lich-verdict-compose
 rc=$?
 set -e
 end_ms=$(date +%s%N 2>/dev/null || echo 0)
@@ -90,15 +90,15 @@ echo "[stop-hook] scenario (b): populated state"
 for f in tests/fixtures/quality-ladder/bad.py \
          tests/fixtures/quality-ladder/high_level.py \
          tests/fixtures/quality-ladder/massive_orders.py ; do
-    [[ -f "$f" ]] && python plugins/mantis-core/scripts/__main__.py "$f" >/dev/null 2>&1 || true
+    [[ -f "$f" ]] && python plugins/lich-core/scripts/__main__.py "$f" >/dev/null 2>&1 || true
 done
-python plugins/mantis-sandbox/scripts/sandbox.py "$M1_LOG" "$M5_LOG" >/dev/null 2>&1 || \
-    python plugins/mantis-sandbox/scripts/sandbox.py >/dev/null 2>&1 || true
+python plugins/lich-sandbox/scripts/sandbox.py "$M1_LOG" "$M5_LOG" >/dev/null 2>&1 || \
+    python plugins/lich-sandbox/scripts/sandbox.py >/dev/null 2>&1 || true
 
 off_b=$(wc -c < "$LOG" 2>/dev/null | tr -d ' ')
 start_ms=$(date +%s%N 2>/dev/null || echo 0)
 set +e
-: | bash "$DISPATCH" mantis-verdict-compose
+: | bash "$DISPATCH" lich-verdict-compose
 rc=$?
 set -e
 end_ms=$(date +%s%N 2>/dev/null || echo 0)
@@ -123,7 +123,7 @@ fi
 echo "[stop-hook] scenario (c): subagent guard"
 off_c=$(wc -c < "$LOG" 2>/dev/null | tr -d ' ')
 set +e
-: | CLAUDE_SUBAGENT=1 bash "$DISPATCH" mantis-verdict-compose
+: | CLAUDE_SUBAGENT=1 bash "$DISPATCH" lich-verdict-compose
 rc=$?
 set -e
 [[ $rc -eq 0 ]] && pass "(c) dispatcher exit=0 under guard" || fail "(c) dispatcher exit=$rc"

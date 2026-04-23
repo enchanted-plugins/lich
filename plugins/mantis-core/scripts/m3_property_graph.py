@@ -17,16 +17,16 @@ What Joern gives us that the M1 walker and ruff don't:
       — we ship three v1 queries and template the rest as we grow.
 
 Contract (brand invariants from CLAUDE.md):
-    - **Zero runtime deps on Mantis's side.** Joern is a JVM-backed,
+    - **Zero runtime deps on Lich's side.** Joern is a JVM-backed,
       ~200MB install; it is never installed at build time, never required,
-      and never called by Mantis's plugin-install hooks. If absent,
+      and never called by Lich's plugin-install hooks. If absent,
       everything downstream continues via M1.
     - **Advisory only.** Subprocess crash, timeout, or malformed JSON =>
       log and return empty; never raise to the CLI.
     - **Correctness scope — never security.** M3 flags dataflow-reachable
       *runtime failures* (null->deref, unbounded->iter, dataflow->div).
       Any query mentioning CWE / injection / taint-sink terminology is
-      Reaper's lane. A hard-coded refusal pattern list guards against
+      Hydra's lane. A hard-coded refusal pattern list guards against
       accidental overlap — see `_SECURITY_GUARD_TOKENS`.
     - **Flag shape identical to M1.** Downstream consumers bind to
       `m1_walker.Flag`; M3 emits the same dataclass. The only
@@ -51,7 +51,7 @@ from m1_walker import Flag
 # Module-level constants
 # -------------------------------------------------------------------------
 
-# v1 primary language. Joern supports many; Python is first because Mantis's
+# v1 primary language. Joern supports many; Python is first because Lich's
 # M1/ruff coverage is Python-first and the dataflow complement lands here.
 LANG = "python"
 
@@ -72,21 +72,21 @@ DEFAULT_TIMEOUT_S = 60
 #   2. Runs the caller-provided query fragment.
 #   3. Emits a JSON array to stdout for our parser.
 # The `QUERY` placeholder is replaced by the canonical query bodies below.
-_JOERN_SCRIPT_TEMPLATE = r"""// Mantis M3 — Joern query script (auto-generated)
+_JOERN_SCRIPT_TEMPLATE = r"""// Lich M3 — Joern query script (auto-generated)
 // Target: {target}
 // Rule:   {rule_id}
-importCode(inputPath = "{target}", projectName = "mantis_m3")
+importCode(inputPath = "{target}", projectName = "lich_m3")
 val findings = {query}
 println(findings.toJson)
 """
 
 # -------------------------------------------------------------------------
-# Security guard — refuse anything Reaper owns
+# Security guard — refuse anything Hydra owns
 # -------------------------------------------------------------------------
 
 # If a query body or rule_id mentions any of these tokens (case-insensitive),
-# the adapter refuses to emit and returns []. Reaper R3 owns CWE taxonomy;
-# peer-classifying CWEs from Mantis breaks the severity source-of-truth
+# the adapter refuses to emit and returns []. Hydra R3 owns CWE taxonomy;
+# peer-classifying CWEs from Lich breaks the severity source-of-truth
 # contract. This is a belt-and-suspenders guard in addition to scoping the
 # v1 query set to correctness.
 _SECURITY_GUARD_TOKENS = frozenset({
@@ -97,7 +97,7 @@ _SECURITY_GUARD_TOKENS = frozenset({
     "ssrf",
     "rce",
     "xxe",
-    "taint",         # taint *classification* is Reaper's; M3 does dataflow
+    "taint",         # taint *classification* is Hydra's; M3 does dataflow
                      # tracking but never labels it "taint" in the flag.
     "sanitizer",
     "sink",          # taint-sink is a security term
@@ -116,7 +116,7 @@ def _query_touches_security(rule_id: str, query: str) -> bool:
 
     Case-insensitive substring match. Intentionally aggressive: false-positive
     refusals are fine (fallback is M1); false-negatives would duplicate
-    Reaper and break the contract.
+    Hydra and break the contract.
     """
     blob = f"{rule_id}\n{query}".lower()
     return any(tok in blob for tok in _SECURITY_GUARD_TOKENS)
@@ -143,7 +143,7 @@ _M3_QUERIES: dict[str, dict] = {
             '"line" -> f.elements.last.lineNumber.getOrElse(0),'
             '"function" -> f.elements.last.method.name,'
             # Use "deref_expr" rather than any *sink* label — "sink" is
-            # Reaper's security vocabulary; the guard below refuses queries
+            # Hydra's security vocabulary; the guard below refuses queries
             # that mention it.
             '"deref_expr" -> f.elements.last.code'
             ')).toList'
@@ -245,7 +245,7 @@ def _run_joern_query(
     """
     if _query_touches_security(rule_id, query):
         # Belt-and-suspenders. The _M3_QUERIES dict is audited; this guard
-        # catches future edits that drift into Reaper's lane.
+        # catches future edits that drift into Hydra's lane.
         print(
             json.dumps({
                 "status": "m3-security-refusal",
@@ -427,7 +427,7 @@ def analyze(file_path: str, timeout_s: int = DEFAULT_TIMEOUT_S) -> list[Flag]:
       - file extension is outside FILE_EXTENSIONS
       - any/all queries time out, error, or refuse via security guard
 
-    Never raises. Never overlaps Reaper. Flag shape is identical to M1.
+    Never raises. Never overlaps Hydra. Flag shape is identical to M1.
     """
     if not _ext_supported(file_path):
         return []

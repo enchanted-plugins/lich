@@ -1,13 +1,13 @@
 """Verdict composer.
 
-Reads M1 flags (plugins/mantis-core/state/review-flags.jsonl) and M5 runs
-(plugins/mantis-sandbox/state/run-log.jsonl), groups by file, applies the
+Reads M1 flags (plugins/lich-core/state/review-flags.jsonl) and M5 runs
+(plugins/lich-sandbox/state/run-log.jsonl), groups by file, applies the
 verdict bar from rules.py, and appends per-file records to
-plugins/mantis-verdict/state/verdict.jsonl.
+plugins/lich-verdict/state/verdict.jsonl.
 
 CLI:
-    python plugins/mantis-verdict/scripts/compose.py
-    python plugins/mantis-verdict/scripts/compose.py --file tests/fixtures/quality-ladder/bad.py
+    python plugins/lich-verdict/scripts/compose.py
+    python plugins/lich-verdict/scripts/compose.py --file tests/fixtures/quality-ladder/bad.py
 
 Advisory only. Never mutates upstream state.
 """
@@ -54,7 +54,7 @@ def _emit_disagreement_learning(verdict_obj) -> None:
         m1 = demands.get("M1", "n/a")
         m7 = demands.get("M7", "n/a")
         _learnings.safe_emit(
-            plugin="mantis-verdict",
+            plugin="lich-verdict",
             code="F11",
             axis="cross-engine-disagreement",
             hypothesis="engines disagree on final verdict",
@@ -64,9 +64,9 @@ def _emit_disagreement_learning(verdict_obj) -> None:
         )
 
 
-_DEFAULT_M1 = _REPO_ROOT / "plugins" / "mantis-core" / "state" / "review-flags.jsonl"
-_DEFAULT_M5 = _REPO_ROOT / "plugins" / "mantis-sandbox" / "state" / "run-log.jsonl"
-_DEFAULT_OUT = _REPO_ROOT / "plugins" / "mantis-verdict" / "state" / "verdict.jsonl"
+_DEFAULT_M1 = _REPO_ROOT / "plugins" / "lich-core" / "state" / "review-flags.jsonl"
+_DEFAULT_M5 = _REPO_ROOT / "plugins" / "lich-sandbox" / "state" / "run-log.jsonl"
+_DEFAULT_OUT = _REPO_ROOT / "plugins" / "lich-verdict" / "state" / "verdict.jsonl"
 
 
 def _load_jsonl(path: Path) -> list[dict]:
@@ -141,13 +141,13 @@ def run(
             # orchestration.
             try:
                 from events.bus import publish as _publish  # noqa: E402
-                _publish("mantis.review.completed", {
+                _publish("lich.review.completed", {
                     "file": v.file,
                     "verdict": v.verdict,
                     "confidence": v.confidence,
                     "engines_ran": [e.engine for e in v.engines
                                      if e.status == "ran"],
-                }, source="mantis-verdict")
+                }, source="lich-verdict")
             except Exception:
                 pass
 
@@ -155,7 +155,7 @@ def run(
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(prog="mantis-verdict-compose")
+    p = argparse.ArgumentParser(prog="lich-verdict-compose")
     p.add_argument("--m1", type=Path, default=_DEFAULT_M1)
     p.add_argument("--m5", type=Path, default=_DEFAULT_M5)
     p.add_argument("--out", type=Path, default=_DEFAULT_OUT)

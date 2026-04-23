@@ -7,8 +7,8 @@ ruff is absent, the adapter returns cleanly so callers fall back to the
 stdlib walker.
 
 Contract (brand invariants from CLAUDE.md):
-    - Zero runtime deps on Mantis's side. Ruff is optional in the target.
-    - Security S-series rules NEVER map to M1. Reaper R3 owns CWEs. We
+    - Zero runtime deps on Lich's side. Ruff is optional in the target.
+    - Security S-series rules NEVER map to M1. Hydra R3 owns CWEs. We
       hard-code a guard (prefix check) that refuses to emit an M1 flag
       for an S-series rule even if a registry bug accidentally listed one.
     - Advisory only. Subprocess crash, timeout, or malformed JSON -> log
@@ -43,7 +43,7 @@ _REGISTRY_REL = os.path.join(
 def _repo_root() -> str:
     """Walk up from this file to the repo root (the dir containing `shared/`)."""
     here = os.path.dirname(os.path.abspath(__file__))
-    # scripts -> mantis-core -> plugins -> repo_root
+    # scripts -> lich-core -> plugins -> repo_root
     return os.path.dirname(os.path.dirname(os.path.dirname(here)))
 
 
@@ -80,7 +80,7 @@ def load_registry(path: Optional[str] = None) -> dict:
     for bucket, body in data.get("categories", {}).items():
         if bucket == "correctness_m1":
             route = "m1"
-        elif bucket == "security_defer_to_reaper":
+        elif bucket == "security_defer_to_hydra":
             route = "defer"
         else:
             route = "m7"
@@ -224,7 +224,7 @@ def _resolve_function(spans: list[tuple[int, int, str]], line: int) -> str:
 
 def _is_security_rule(rule_id: str) -> bool:
     """Hard-coded guard: any ID starting with `S` followed by digits is
-    Reaper's lane. Never emit an M1 flag for these — even if the registry
+    Hydra's lane. Never emit an M1 flag for these — even if the registry
     accidentally lists one."""
     if not rule_id or not rule_id.startswith("S"):
         return False

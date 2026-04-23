@@ -52,65 +52,65 @@ class _IsolatedRepoTest(unittest.TestCase):
 
 class TestAppendRoundTrip(_IsolatedRepoTest):
     def test_append_and_read_one_plugin(self) -> None:
-        self._seed_plugin("mantis-core")
-        L.append("mantis-core", L.Learning(
-            plugin="mantis-core", code="F02",
+        self._seed_plugin("lich-core")
+        L.append("lich-core", L.Learning(
+            plugin="lich-core", code="F02",
             hypothesis="fab-check", outcome="ok", counter="verify first",
         ))
-        got = L.read_all("mantis-core")
+        got = L.read_all("lich-core")
         self.assertEqual(len(got), 1)
-        self.assertEqual(got[0].plugin, "mantis-core")
+        self.assertEqual(got[0].plugin, "lich-core")
         self.assertEqual(got[0].code, "F02")
         self.assertEqual(got[0].hypothesis, "fab-check")
 
     def test_append_corrects_mismatched_plugin_attribution(self) -> None:
-        self._seed_plugin("mantis-core")
-        # Caller claims mantis-core but entry says mantis-rubric — the
+        self._seed_plugin("lich-core")
+        # Caller claims lich-core but entry says lich-rubric — the
         # write path forces consistency.
-        L.append("mantis-core", L.Learning(
-            plugin="mantis-rubric", code="F13",
+        L.append("lich-core", L.Learning(
+            plugin="lich-rubric", code="F13",
             hypothesis="h", outcome="o", counter="c",
         ))
-        got = L.read_all("mantis-core")
-        self.assertEqual(got[0].plugin, "mantis-core")
+        got = L.read_all("lich-core")
+        self.assertEqual(got[0].plugin, "lich-core")
 
     def test_append_creates_state_dir(self) -> None:
         # Do not pre-create the state dir — append must make it.
-        L.append("mantis-newplugin", L.Learning(
-            plugin="mantis-newplugin", code="F01",
+        L.append("lich-newplugin", L.Learning(
+            plugin="lich-newplugin", code="F01",
             hypothesis="h", outcome="o", counter="c",
         ))
         self.assertTrue(
-            (self.repo / "plugins" / "mantis-newplugin" / "state"
+            (self.repo / "plugins" / "lich-newplugin" / "state"
              / "learnings.jsonl").exists()
         )
 
 
 class TestReadAllChronological(_IsolatedRepoTest):
     def test_file_order_preserved(self) -> None:
-        self._seed_plugin("mantis-core")
+        self._seed_plugin("lich-core")
         for i in range(5):
-            L.append("mantis-core", L.Learning(
-                plugin="mantis-core", code="F03",
+            L.append("lich-core", L.Learning(
+                plugin="lich-core", code="F03",
                 hypothesis=f"h{i}", outcome=f"o{i}", counter="c",
                 ts=f"2026-04-20T00:00:0{i}+00:00",
             ))
-        got = L.read_all("mantis-core")
+        got = L.read_all("lich-core")
         self.assertEqual([g.hypothesis for g in got],
                          ["h0", "h1", "h2", "h3", "h4"])
 
     def test_skips_corrupt_lines(self) -> None:
-        state = self._seed_plugin("mantis-core")
+        state = self._seed_plugin("lich-core")
         path = state / "learnings.jsonl"
         path.write_text(
-            '{"plugin":"mantis-core","code":"F01","hypothesis":"ok",'
+            '{"plugin":"lich-core","code":"F01","hypothesis":"ok",'
             '"outcome":"o","counter":"c","axis":"","ts":"t1"}\n'
             'not-json-at-all\n'
-            '{"plugin":"mantis-core","code":"F02","hypothesis":"ok2",'
+            '{"plugin":"lich-core","code":"F02","hypothesis":"ok2",'
             '"outcome":"o","counter":"c","axis":"","ts":"t2"}\n',
             encoding="utf-8",
         )
-        got = L.read_all("mantis-core")
+        got = L.read_all("lich-core")
         self.assertEqual(len(got), 2)
         self.assertEqual([g.hypothesis for g in got], ["ok", "ok2"])
 
@@ -118,45 +118,45 @@ class TestReadAllChronological(_IsolatedRepoTest):
 class TestInvalidCode(_IsolatedRepoTest):
     def test_rejects_non_taxonomy_code(self) -> None:
         with self.assertRaises(ValueError):
-            L.Learning(plugin="mantis-core", code="F99",
+            L.Learning(plugin="lich-core", code="F99",
                        hypothesis="", outcome="", counter="")
 
     def test_rejects_empty_code(self) -> None:
         with self.assertRaises(ValueError):
-            L.Learning(plugin="mantis-core", code="",
+            L.Learning(plugin="lich-core", code="",
                        hypothesis="", outcome="", counter="")
 
     def test_safe_emit_swallows_invalid_code(self) -> None:
         # safe_emit must never raise, even on invalid input.
-        self._seed_plugin("mantis-core")
+        self._seed_plugin("lich-core")
         L.safe_emit(
-            plugin="mantis-core", code="NOPE",
+            plugin="lich-core", code="NOPE",
             hypothesis="h", outcome="o", counter="c",
         )
         # Nothing got logged because Learning() raised inside the try.
-        self.assertEqual(L.read_all("mantis-core"), [])
+        self.assertEqual(L.read_all("lich-core"), [])
 
 
 class TestExportAggregated(_IsolatedRepoTest):
     def test_dedup_by_ts_plugin_code(self) -> None:
-        self._seed_plugin("mantis-core")
-        self._seed_plugin("mantis-sandbox")
+        self._seed_plugin("lich-core")
+        self._seed_plugin("lich-sandbox")
         # Duplicate key: same ts + plugin + code written twice.
         for _ in range(2):
-            L.append("mantis-core", L.Learning(
-                plugin="mantis-core", code="F02",
+            L.append("lich-core", L.Learning(
+                plugin="lich-core", code="F02",
                 hypothesis="h", outcome="o", counter="c",
                 ts="2026-04-20T00:00:00+00:00",
             ))
         # Different code at same ts — kept.
-        L.append("mantis-core", L.Learning(
-            plugin="mantis-core", code="F03",
+        L.append("lich-core", L.Learning(
+            plugin="lich-core", code="F03",
             hypothesis="h", outcome="o", counter="c",
             ts="2026-04-20T00:00:00+00:00",
         ))
         # Different plugin, same ts + code — kept.
-        L.append("mantis-sandbox", L.Learning(
-            plugin="mantis-sandbox", code="F02",
+        L.append("lich-sandbox", L.Learning(
+            plugin="lich-sandbox", code="F02",
             hypothesis="h", outcome="o", counter="c",
             ts="2026-04-20T00:00:00+00:00",
         ))
@@ -165,9 +165,9 @@ class TestExportAggregated(_IsolatedRepoTest):
         self.assertEqual(len(snap["entries"]), 3)
         keys = {(e["ts"], e["plugin"], e["code"]) for e in snap["entries"]}
         self.assertEqual(keys, {
-            ("2026-04-20T00:00:00+00:00", "mantis-core", "F02"),
-            ("2026-04-20T00:00:00+00:00", "mantis-core", "F03"),
-            ("2026-04-20T00:00:00+00:00", "mantis-sandbox", "F02"),
+            ("2026-04-20T00:00:00+00:00", "lich-core", "F02"),
+            ("2026-04-20T00:00:00+00:00", "lich-core", "F03"),
+            ("2026-04-20T00:00:00+00:00", "lich-sandbox", "F02"),
         })
 
     def test_empty_export_has_valid_schema(self) -> None:
@@ -181,9 +181,9 @@ class TestExportAggregated(_IsolatedRepoTest):
         self.assertEqual(loaded["entries"], [])
 
     def test_export_snapshot_is_pretty_json(self) -> None:
-        self._seed_plugin("mantis-core")
-        L.append("mantis-core", L.Learning(
-            plugin="mantis-core", code="F01",
+        self._seed_plugin("lich-core")
+        L.append("lich-core", L.Learning(
+            plugin="lich-core", code="F01",
             hypothesis="h", outcome="o", counter="c",
             ts="2026-04-20T00:00:00+00:00",
         ))
@@ -194,16 +194,16 @@ class TestExportAggregated(_IsolatedRepoTest):
         self.assertIn("  ", text)
 
     def test_export_stable_sort(self) -> None:
-        self._seed_plugin("mantis-core")
-        self._seed_plugin("mantis-verdict")
+        self._seed_plugin("lich-core")
+        self._seed_plugin("lich-verdict")
         # Append in reverse chronological order.
-        L.append("mantis-verdict", L.Learning(
-            plugin="mantis-verdict", code="F11",
+        L.append("lich-verdict", L.Learning(
+            plugin="lich-verdict", code="F11",
             hypothesis="h", outcome="o", counter="c",
             ts="2026-04-20T02:00:00+00:00",
         ))
-        L.append("mantis-core", L.Learning(
-            plugin="mantis-core", code="F14",
+        L.append("lich-core", L.Learning(
+            plugin="lich-core", code="F14",
             hypothesis="h", outcome="o", counter="c",
             ts="2026-04-20T01:00:00+00:00",
         ))
@@ -214,9 +214,9 @@ class TestExportAggregated(_IsolatedRepoTest):
 
 class TestCLI(_IsolatedRepoTest):
     def test_export_cli(self) -> None:
-        self._seed_plugin("mantis-core")
-        L.append("mantis-core", L.Learning(
-            plugin="mantis-core", code="F04",
+        self._seed_plugin("lich-core")
+        L.append("lich-core", L.Learning(
+            plugin="lich-core", code="F04",
             hypothesis="drift", outcome="o", counter="c",
         ))
         rc = L.main(["export"])
@@ -224,17 +224,17 @@ class TestCLI(_IsolatedRepoTest):
         self.assertTrue(L._AGG_PATH.exists())
 
     def test_tail_cli_limits_to_n(self) -> None:
-        self._seed_plugin("mantis-core")
+        self._seed_plugin("lich-core")
         for i in range(5):
-            L.append("mantis-core", L.Learning(
-                plugin="mantis-core", code="F01",
+            L.append("lich-core", L.Learning(
+                plugin="lich-core", code="F01",
                 hypothesis=f"h{i}", outcome="o", counter="c",
             ))
         # Capture stdout.
         import io
         buf = io.StringIO()
         with mock.patch.object(sys, "stdout", buf):
-            rc = L.main(["tail", "--plugin", "mantis-core", "--n", "2"])
+            rc = L.main(["tail", "--plugin", "lich-core", "--n", "2"])
         self.assertEqual(rc, 0)
         lines = [ln for ln in buf.getvalue().splitlines() if ln.strip()]
         self.assertEqual(len(lines), 2)

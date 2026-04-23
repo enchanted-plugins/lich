@@ -7,11 +7,11 @@ map correctness rules to M1 flags.
 
 Security guard: any rule whose dotted path contains `.security.`, `.auth.`,
 `.crypto.`, `.injection`, `.xss`, `.ssrf`, `.traversal`, or `.insecure` is
-NEVER mapped to M1 — Reaper R3 owns that lane. The guard runs regardless
+NEVER mapped to M1 — Hydra R3 owns that lane. The guard runs regardless
 of what bucket the registry places the rule in.
 
 Offline fallback: `--config=auto` pulls from semgrep.dev over HTTP. When
-`MANTIS_SEMGREP_OFFLINE=1` is set we skip auto config and use local rules
+`LICH_SEMGREP_OFFLINE=1` is set we skip auto config and use local rules
 (Phase 2: shared/rules/frameworks/semgrep-local/ — not yet shipped; we
 return [] honestly).
 """
@@ -76,7 +76,7 @@ def analyze(file_path: str, *, timeout_s: int = 30) -> list[Flag]:
     binary = detect()
     if not binary:
         return []
-    offline = os.environ.get("MANTIS_SEMGREP_OFFLINE") == "1"
+    offline = os.environ.get("LICH_SEMGREP_OFFLINE") == "1"
     if offline:
         _log({"event": "semgrep-offline-mode"})
         return []

@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — witness synthesis.
+"""Lich M5 sandbox — witness synthesis.
 
 Given a flag_class + witness_hints from the M1 walker, produce a list of
 concrete boundary-value witnesses to feed the sandboxed runner.

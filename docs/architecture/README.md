@@ -31,7 +31,7 @@ Commit the regenerated `*.mmd` and `index.html` in the same commit that changed 
 
 ## Why generation, not hand-edit
 
-The 4-sibling consensus (allay + flux + hornet + reaper) treats this as a brand invariant: *diagrams never go stale*. Every sibling's `generate.py` reads the same source shapes and produces the same diagram types. If you edit a `.mmd` by hand, the next `generate.py` run overwrites you — and if no one ever runs `generate.py` again, the `.mmd` is wrong forever.
+The 4-sibling consensus (fae + wixie + raven + hydra) treats this as a brand invariant: *diagrams never go stale*. Every sibling's `generate.py` reads the same source shapes and produces the same diagram types. If you edit a `.mmd` by hand, the next `generate.py` run overwrites you — and if no one ever runs `generate.py` again, the `.mmd` is wrong forever.
 
 ## Optional: SVG renders
 
@@ -40,5 +40,5 @@ If [mermaid-cli](https://github.com/mermaid-js/mermaid-cli) is available (`cd do
 ## Troubleshooting
 
 - **`.mmd` file is one line of placeholder**: you haven't run `generate.py` yet. Template ships `.mmd` files as scaffolds; populate them by running the generator after your first sub-plugin is configured.
-- **`generate.py` raises KeyError**: a plugin's `plugin.json` is missing a required field. Compare against any sibling plugin (`enchanted-plugins/flux/plugins/prompt-crafter/.claude-plugin/plugin.json`).
+- **`generate.py` raises KeyError**: a plugin's `plugin.json` is missing a required field. Compare against any sibling plugin (`enchanted-plugins/wixie/plugins/prompt-crafter/.claude-plugin/plugin.json`).
 - **`index.html` renders blank**: the four `.mmd` files are stale or empty. Regenerate.

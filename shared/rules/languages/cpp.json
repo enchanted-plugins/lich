@@ -6,7 +6,7 @@
     "version_range": ">=17.0",
     "homepage": "https://clang.llvm.org/extra/clang-tidy/"
   },
-  "note": "Phase 1 seed. Clang-tidy checks are grouped by prefix: bugprone-* (correctness), readability-* (idiom/clarity), modernize-* (idiom), performance-* (perf), cppcoreguidelines-* (mixed), cert-* (security subset). The cert-* and clang-analyzer security checks defer to Reaper R3.",
+  "note": "Phase 1 seed. Clang-tidy checks are grouped by prefix: bugprone-* (correctness), readability-* (idiom/clarity), modernize-* (idiom), performance-* (perf), cppcoreguidelines-* (mixed), cert-* (security subset). The cert-* and clang-analyzer security checks defer to Hydra R3.",
   "categories": {
     "correctness_m1": {
       "description": "bugprone-* and clang-analyzer.core — undefined behavior, lifetime, and resource bugs. Routed to M1 / M5.",
@@ -63,8 +63,8 @@
         "bugprone-assert-side-effect"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "cert-* and clang-analyzer.security — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+    "security_defer_to_hydra": {
+      "description": "cert-* and clang-analyzer.security — Hydra R3 owns these (CWE lane). Listed for provenance; never mapped.",
       "rule_ids": [
         "cert-env33-c",
         "cert-err34-c",

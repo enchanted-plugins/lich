@@ -1,5 +1,5 @@
 {
-  "description": "mantis-rubric hooks — advisory-only. PostToolUse chain (after mantis-core + mantis-sandbox) triggers M7 judgment. See @shared/conduct/hooks.md.",
+  "description": "lich-rubric hooks — advisory-only. PostToolUse chain (after lich-core + lich-sandbox) triggers M7 judgment. See @shared/conduct/hooks.md.",
   "hooks": {
     "PostToolUse": [
       {
@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" mantis-judge",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" lich-judge",
             "timeout": 15000
           }
         ]

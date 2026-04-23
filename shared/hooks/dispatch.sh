@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Mantis canonical hook dispatcher (v1)
+# Lich canonical hook dispatcher (v1)
 #
 # Contract: advisory-only, fail-open. Always exits 0 regardless of outcome.
 # Invoked by per-plugin wrappers at plugins/<name>/hooks/dispatch.sh, which
 # simply delegate here with the same argv. The plugin's hooks.json supplies
-# the command name as $1 (e.g. "mantis-analyze", "mantis-sandbox").
+# the command name as $1 (e.g. "lich-analyze", "lich-sandbox").
 #
 # Stdin: PostToolUse JSON payload from Claude Code (tool_name, tool_input, ...).
 # Stdout: nothing (polluting the conversation context is banned by
@@ -59,13 +59,13 @@ fi
 if [[ -z "$LOG" ]]; then
     _tmp="${TMPDIR:-/tmp}"
     mkdir -p "$_tmp" 2>/dev/null
-    LOG="$_tmp/mantis-hooks.log"
+    LOG="$_tmp/lich-hooks.log"
     touch "$LOG" 2>/dev/null || LOG="/dev/null"
 fi
 
 _log() {
     # one-line entries, greppable. Never emit to stdout.
-    echo "[$(date -Is 2>/dev/null || date)] mantis-dispatch cmd=$COMMAND $*" >> "$LOG" 2>/dev/null || true
+    echo "[$(date -Is 2>/dev/null || date)] lich-dispatch cmd=$COMMAND $*" >> "$LOG" 2>/dev/null || true
 }
 
 # ---------------------------------------------------------------------------
@@ -108,7 +108,7 @@ _is_python_file() {
 # Command switch.
 # ---------------------------------------------------------------------------
 case "$COMMAND" in
-    mantis-analyze)
+    lich-analyze)
         if [[ -z "$FILE_PATH" ]]; then
             _log "skip:no-file-path tool=$TOOL_NAME"
             exit 0
@@ -121,8 +121,8 @@ case "$COMMAND" in
             _log "skip:no-repo-root"
             exit 0
         fi
-        _script="$REPO_ROOT/plugins/mantis-core/scripts/__main__.py"
-        _log "spawn mantis-core file=$FILE_PATH"
+        _script="$REPO_ROOT/plugins/lich-core/scripts/__main__.py"
+        _log "spawn lich-core file=$FILE_PATH"
         # Background spawn keeps us inside the synchronous budget. All three
         # fds are redirected; `disown` detaches from the job table so the
         # child survives the parent shell's exit. On Windows git-bash,
@@ -134,7 +134,7 @@ case "$COMMAND" in
         disown 2>/dev/null || true
         exit 0
         ;;
-    mantis-sandbox)
+    lich-sandbox)
         if [[ -z "$FILE_PATH" ]]; then
             _log "skip:no-file-path tool=$TOOL_NAME"
             exit 0
@@ -147,16 +147,16 @@ case "$COMMAND" in
             _log "skip:no-repo-root"
             exit 0
         fi
-        _script="$REPO_ROOT/plugins/mantis-sandbox/scripts/sandbox.py"
-        _log "spawn mantis-sandbox file=$FILE_PATH"
+        _script="$REPO_ROOT/plugins/lich-sandbox/scripts/sandbox.py"
+        _log "spawn lich-sandbox file=$FILE_PATH"
         # sandbox.py's argv[1] is the review-flags.jsonl path, not a source
         # file. Omit the positional arg so it uses its default input
-        # (plugins/mantis-core/state/review-flags.jsonl).
+        # (plugins/lich-core/state/review-flags.jsonl).
         python "$_script" >> "$LOG" 2>&1 </dev/null &
         disown 2>/dev/null || true
         exit 0
         ;;
-    mantis-verdict-compose)
+    lich-verdict-compose)
         if [[ -z "$REPO_ROOT" ]]; then
             _log "skip:no-repo-root"
             exit 0
@@ -165,11 +165,11 @@ case "$COMMAND" in
         # arrive with empty FILE_PATH and must still compose over all recent
         # verdicts.
         if [[ -n "$FILE_PATH" ]] && ! _is_python_file "$FILE_PATH"; then
-            _log "skip:non-py file=$FILE_PATH cmd=mantis-verdict-compose"
+            _log "skip:non-py file=$FILE_PATH cmd=lich-verdict-compose"
             exit 0
         fi
-        _script="$REPO_ROOT/plugins/mantis-verdict/scripts/compose.py"
-        _log "spawn mantis-verdict-compose file=$FILE_PATH"
+        _script="$REPO_ROOT/plugins/lich-verdict/scripts/compose.py"
+        _log "spawn lich-verdict-compose file=$FILE_PATH"
         _args=()
         if [[ -n "$FILE_PATH" ]]; then
             _args=(--file "$FILE_PATH")
@@ -178,7 +178,7 @@ case "$COMMAND" in
         disown 2>/dev/null || true
         exit 0
         ;;
-    mantis-preference-update)
+    lich-preference-update)
         # PostToolUse: after M1/M5 have written state, scan review-flags.jsonl
         # and update surfaced.jsonl with Thompson-sampled surfacing decisions.
         # The 5% floor is enforced inside posteriors.py — we never clamp to 0.
@@ -190,15 +190,15 @@ case "$COMMAND" in
         # at this layer), but skip for consistency with other engines unless
         # the invocation is a Stop-event (empty FILE_PATH).
         if [[ -n "$FILE_PATH" ]] && ! _is_python_file "$FILE_PATH"; then
-            _log "skip:non-py file=$FILE_PATH cmd=mantis-preference-update"
+            _log "skip:non-py file=$FILE_PATH cmd=lich-preference-update"
             exit 0
         fi
-        _script="$REPO_ROOT/plugins/mantis-preference/scripts/observer.py"
+        _script="$REPO_ROOT/plugins/lich-preference/scripts/observer.py"
         if [[ ! -f "$_script" ]]; then
             _log "skip:missing-script $_script"
             exit 0
         fi
-        _log "spawn mantis-preference-update file=$FILE_PATH"
+        _log "spawn lich-preference-update file=$FILE_PATH"
         # Background spawn — observer.py's --scan-flags reads M1 output and
         # appends one snapshot line to surfaced.jsonl. Fail-open: if the
         # python invocation errors, it logs but does not block the hook.
@@ -206,13 +206,13 @@ case "$COMMAND" in
         disown 2>/dev/null || true
         exit 0
         ;;
-    mantis-judge)
+    lich-judge)
         # M7 rubric judgment is a Claude-in-loop Sonnet subagent; hooks run in
         # a plain subprocess and cannot spawn LLM calls. Honest no-op marker —
         # do NOT silently pretend M7 ran (per CLAUDE.md anti-pattern "Bare M7
         # score without Kappa" and the verdict bar's honest-numbers contract).
         # Future: when a Claude-API batch-judge path lands, fire it here.
-        _log "NOTE:mantis-judge-noop reason=llm-judge-is-claude-in-loop file=$FILE_PATH"
+        _log "NOTE:lich-judge-noop reason=llm-judge-is-claude-in-loop file=$FILE_PATH"
         exit 0
         ;;
     *)

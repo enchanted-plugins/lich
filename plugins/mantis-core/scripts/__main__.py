@@ -1,7 +1,7 @@
 """CLI entrypoint for the M1 walker.
 
 Usage:
-    python plugins/mantis-core/scripts/__main__.py <file_path>
+    python plugins/lich-core/scripts/__main__.py <file_path>
     python -m scripts <file_path>          # if on PYTHONPATH
 
 Two-substrate pipeline:
@@ -23,7 +23,7 @@ import os
 import sys
 
 # Ensure local imports (emit_flags, m1_walker, ruff_adapter) resolve
-# whether run as a module or a direct script — the hyphen in `mantis-core`
+# whether run as a module or a direct script — the hyphen in `lich-core`
 # makes the parent package unimportable, so script-relative sys.path is
 # the robust way in.
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -145,7 +145,7 @@ def main(argv: list[str]) -> int:
         if _learnings is not None:
             try:
                 _learnings.safe_emit(
-                    plugin="mantis-core",
+                    plugin="lich-core",
                     code="F14",
                     axis="substrate-parse-failed",
                     hypothesis=f"target {path} failed to parse",

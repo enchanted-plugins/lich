@@ -1,11 +1,11 @@
-"""Mantis M5 sandbox — resource caps applied in the child before exec.
+"""Lich M5 sandbox — resource caps applied in the child before exec.
 
 LOAD-BEARING per CLAUDE.md Behavioral contract 2. The caps in this module
 are the ACE-risk mitigation for executing developer code on every PR. Any
 relaxation converts the sandbox into an arbitrary-code-execution surface
 and REQUIRES a documented security review.
 
-v1 ships 6 caps. The first five are the canonical Mantis contract
+v1 ships 6 caps. The first five are the canonical Lich contract
 (CPU / AS / NOFILE / FSIZE + signal.alarm). The sixth, `RLIMIT_NPROC = 0`,
 is an honest extension: without it, a fork-bomb inside the child defeats
 the AS / CPU caps by multiplying the resource budget across children.

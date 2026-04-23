@@ -6,7 +6,7 @@
     "version_range": ">=2.12.0,<3.0.0",
     "homepage": "https://github.com/hadolint/hadolint"
   },
-  "note": "Phase 1 seed covering hadolint's DL3000/DL4000 series (Dockerfile correctness + idiom). SC-prefixed rules are passed through from embedded ShellCheck and are already covered by shared/rules/languages/shell.json — not re-mapped here. Security-framed Docker concerns (hardcoded secrets, privileged FROM, curl|sh patterns) are NOT hadolint's remit; Reaper R3 owns container-image CWE taxonomy. DL3002 (final user is root) and DL3004 (sudo usage) are defense-in-depth posture signals that sit adjacent to security — routed to security_defer_to_reaper to preserve the non-duplication contract with Reaper.",
+  "note": "Phase 1 seed covering hadolint's DL3000/DL4000 series (Dockerfile correctness + idiom). SC-prefixed rules are passed through from embedded ShellCheck and are already covered by shared/rules/languages/shell.json — not re-mapped here. Security-framed Docker concerns (hardcoded secrets, privileged FROM, curl|sh patterns) are NOT hadolint's remit; Hydra R3 owns container-image CWE taxonomy. DL3002 (final user is root) and DL3004 (sudo usage) are defense-in-depth posture signals that sit adjacent to security — routed to security_defer_to_hydra to preserve the non-duplication contract with Hydra.",
   "categories": {
     "correctness_m1": {
       "description": "Rules flagging Dockerfile runtime-failure candidates: invalid instruction combinations, unreachable stage references, unpinned dependencies that will break reproducibility. M1 widens on COPY/FROM graph; M5 cannot witness container-build at zero-dep, so these stay at static confidence.",
@@ -95,8 +95,8 @@
       "description": "Phase 2 gap — hadolint does not flag testability concerns for Dockerfiles directly. Seeded empty; revisit when hadolint emits image-scan-friendly checks.",
       "rule_ids": []
     },
-    "security_defer_to_reaper": {
-      "description": "Posture rules adjacent to container security (root user, sudo escalation). Reaper R3 owns CWE-250 / CWE-269 / image-layer CVE surfaces. Mantis records the hadolint fire but does NOT emit a finding — boosts M6 attention weight on the Dockerfile instead.",
+    "security_defer_to_hydra": {
+      "description": "Posture rules adjacent to container security (root user, sudo escalation). Hydra R3 owns CWE-250 / CWE-269 / image-layer CVE surfaces. Lich records the hadolint fire but does NOT emit a finding — boosts M6 attention weight on the Dockerfile instead.",
       "rule_ids": [
         "DL3002",
         "DL3004"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Mantis M5 integration harness — exercises the M1 -> M5 pipeline end to end
+# Lich M5 integration harness — exercises the M1 -> M5 pipeline end to end
 # across six fixture files covering all canonical run-log statuses.
 #
 # Stages:
@@ -24,10 +24,10 @@ cd "${REPO_ROOT}"
 
 FIXTURES_DIR="tests/sandbox/fixtures"
 HAND_FLAGS="${FIXTURES_DIR}/hand_flags.jsonl"
-M1_LOG="plugins/mantis-core/state/review-flags.jsonl"
-M5_LOG="plugins/mantis-sandbox/state/run-log.jsonl"
-M1_ENTRY="plugins/mantis-core/scripts/__main__.py"
-M5_ENTRY="plugins/mantis-sandbox/scripts/sandbox.py"
+M1_LOG="plugins/lich-core/state/review-flags.jsonl"
+M5_LOG="plugins/lich-sandbox/state/run-log.jsonl"
+M1_ENTRY="plugins/lich-core/scripts/__main__.py"
+M5_ENTRY="plugins/lich-sandbox/scripts/sandbox.py"
 CHECK="tests/sandbox/check_outcomes.py"
 
 PYTHON="${PYTHON:-python}"

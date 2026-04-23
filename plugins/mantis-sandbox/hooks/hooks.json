@@ -1,5 +1,5 @@
 {
-  "description": "mantis-sandbox hooks — advisory-only, never blocking. Chained after mantis-core PostToolUse fires (bash dispatch.sh reads review-flags.jsonl and triggers this sub-plugin). See @shared/conduct/hooks.md.",
+  "description": "lich-sandbox hooks — advisory-only, never blocking. Chained after lich-core PostToolUse fires (bash dispatch.sh reads review-flags.jsonl and triggers this sub-plugin). See @shared/conduct/hooks.md.",
   "hooks": {
     "PostToolUse": [
       {
@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" mantis-sandbox",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" lich-sandbox",
             "timeout": 30000
           }
         ]

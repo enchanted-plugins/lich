@@ -2,12 +2,12 @@
 # Phase-2 hook dispatch wiring test.
 #
 # Verifies that shared/hooks/dispatch.sh routes the two Phase-2 commands
-# (mantis-preference-update, mantis-judge) to their handlers instead of
+# (lich-preference-update, lich-judge) to their handlers instead of
 # falling through to the `*)` unknown-command branch.
 #
 # Scenarios:
-#   1. mantis-preference-update on a .py file -> exit 0, log "spawn mantis-preference-update"
-#   2. mantis-judge on a .py file            -> exit 0, log "NOTE:mantis-judge-noop"
+#   1. lich-preference-update on a .py file -> exit 0, log "spawn lich-preference-update"
+#   2. lich-judge on a .py file            -> exit 0, log "NOTE:lich-judge-noop"
 #   3. CLAUDE_SUBAGENT=1 guard               -> both return exit 0 without spawn/NOTE
 #   4. Neither handler trips the "*) NOTE:unknown-command" fallthrough
 #
@@ -59,26 +59,26 @@ _log_size() {
 }
 
 # ---------------------------------------------------------------------------
-# Scenario 1: mantis-preference-update routes to the preference handler
+# Scenario 1: lich-preference-update routes to the preference handler
 # ---------------------------------------------------------------------------
-echo "[phase2] ===== scenario 1: mantis-preference-update ====="
+echo "[phase2] ===== scenario 1: lich-preference-update ====="
 before=$(_log_size)
 set +e
-_payload "tests/fixtures/quality-ladder/bad.py" | bash "$DISPATCH" mantis-preference-update
+_payload "tests/fixtures/quality-ladder/bad.py" | bash "$DISPATCH" lich-preference-update
 rc=$?
 set -e
 after=$(_log_size)
 tail_bytes=$(_log_tail_after "$before")
 
 if [[ $rc -eq 0 ]]; then
-    pass "mantis-preference-update exit=0"
+    pass "lich-preference-update exit=0"
 else
-    fail "mantis-preference-update exit=$rc"
+    fail "lich-preference-update exit=$rc"
 fi
 
-if echo "$tail_bytes" | grep -q "spawn mantis-preference-update"; then
+if echo "$tail_bytes" | grep -q "spawn lich-preference-update"; then
     pass "preference handler logged spawn"
-elif echo "$tail_bytes" | grep -q "cmd=mantis-preference-update" && \
+elif echo "$tail_bytes" | grep -q "cmd=lich-preference-update" && \
      echo "$tail_bytes" | grep -q "skip:"; then
     # Clean skip (e.g., no jq, no repo-root, missing script) is also acceptable
     # per the fail-open contract.
@@ -97,25 +97,25 @@ fi
 sleep 0.3 2>/dev/null || true
 
 # ---------------------------------------------------------------------------
-# Scenario 2: mantis-judge logs the honest no-op marker
+# Scenario 2: lich-judge logs the honest no-op marker
 # ---------------------------------------------------------------------------
 echo
-echo "[phase2] ===== scenario 2: mantis-judge (honest no-op) ====="
+echo "[phase2] ===== scenario 2: lich-judge (honest no-op) ====="
 before=$(_log_size)
 set +e
-_payload "tests/fixtures/quality-ladder/bad.py" | bash "$DISPATCH" mantis-judge
+_payload "tests/fixtures/quality-ladder/bad.py" | bash "$DISPATCH" lich-judge
 rc=$?
 set -e
 after=$(_log_size)
 tail_bytes=$(_log_tail_after "$before")
 
 if [[ $rc -eq 0 ]]; then
-    pass "mantis-judge exit=0"
+    pass "lich-judge exit=0"
 else
-    fail "mantis-judge exit=$rc"
+    fail "lich-judge exit=$rc"
 fi
 
-if echo "$tail_bytes" | grep -q "mantis-judge-noop"; then
+if echo "$tail_bytes" | grep -q "lich-judge-noop"; then
     pass "judge handler emitted honest no-op marker"
 else
     fail "judge handler did not log no-op marker"
@@ -131,7 +131,7 @@ fi
 # ---------------------------------------------------------------------------
 echo
 echo "[phase2] ===== scenario 3: subagent guard ====="
-for cmd in mantis-preference-update mantis-judge; do
+for cmd in lich-preference-update lich-judge; do
     before=$(_log_size)
     set +e
     CLAUDE_SUBAGENT=1 _payload "tests/fixtures/quality-ladder/bad.py" | \

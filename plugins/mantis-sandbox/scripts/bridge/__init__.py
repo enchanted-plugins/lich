@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — platform bridge.
+"""Lich M5 sandbox — platform bridge.
 
 Exports the two entry points Agent 3's `sandbox.py` consumes:
 

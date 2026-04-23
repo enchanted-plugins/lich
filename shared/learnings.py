@@ -6,7 +6,7 @@ Brand invariant #6 (CLAUDE.md): "Per-session learnings at
 Schema per entry (tagged with one code from shared/conduct/failure-modes.md):
 
     {"ts": "2026-04-20T12:34:56+00:00",
-     "plugin": "mantis-core",
+     "plugin": "lich-core",
      "code": "F12",
      "axis": "div-zero",
      "hypothesis": "rule PY-M1-001 flagged but dismissed via M6 posterior",
@@ -18,7 +18,7 @@ Storage:
     aggregated:    shared/learnings.json                   (pretty JSON snapshot)
 
 Naming note: the brand invariant specifies `learnings.json` as the path, but
-`mantis-preference` already owns `plugins/mantis-preference/state/learnings.json`
+`lich-preference` already owns `plugins/lich-preference/state/learnings.json`
 for Beta-Binomial posteriors (pretty JSON object, not a log). To avoid
 clobbering preferences while keeping "JSONL, append-only" semantics, this
 module uses the `.jsonl` extension for per-plugin Gauss logs. The aggregated
@@ -27,7 +27,7 @@ remains `.json`.
 
 CLI:
     python shared/learnings.py export
-    python shared/learnings.py tail --plugin mantis-core --n 20
+    python shared/learnings.py tail --plugin lich-core --n 20
 """
 
 from __future__ import annotations
@@ -131,7 +131,7 @@ def append(plugin: str, learning: Learning) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     # One-line JSON + newline. POSIX O_APPEND makes <PIPE_BUF concurrent
     # writes atomic; on Windows (git-bash) append mode serializes through
-    # the CRT, which is adequate at the volumes Mantis produces.
+    # the CRT, which is adequate at the volumes Lich produces.
     with path.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(learning.to_dict(), separators=(",", ":")) + "\n")
     return path

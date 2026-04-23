@@ -1,8 +1,8 @@
 """Reader: per-flag M6 assessment + aggregate evaluate() for the verdict bar.
 
-Consumers (mantis-verdict.rules.evaluate_m6) pass in a list of M1 flags plus
+Consumers (lich-verdict.rules.evaluate_m6) pass in a list of M1 flags plus
 the developer id; we look up each (dev, rule) posterior, Thompson-sample, and
-classify. Overrides (explicit `/mantis-disable`) suppress surfacing entirely —
+classify. Overrides (explicit `/lich-disable`) suppress surfacing entirely —
 distinct from posterior-driven de-prioritization, which always keeps the 5%
 floor.
 """

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PDF render smoke test for the Mantis verdict report.
+# PDF render smoke test for the Lich verdict report.
 #
 # Exercises docs/architecture/generate.py in two modes:
 #   1. --html-only: always runs (stdlib-only Python path; no npm/node needed).

@@ -6,7 +6,7 @@
     "version_range": ">=2024.1.0",
     "homepage": "https://staticcheck.dev/"
   },
-  "note": "Phase 1 seed. Staticcheck checks partition by prefix: SA (correctness), S (simple), ST (stylecheck), U (unused), QF (quickfix). Reaper R3 owns CWE-tagged security lanes — any SA-rule with an overt injection/crypto framing belongs to Reaper.",
+  "note": "Phase 1 seed. Staticcheck checks partition by prefix: SA (correctness), S (simple), ST (stylecheck), U (unused), QF (quickfix). Hydra R3 owns CWE-tagged security lanes — any SA-rule with an overt injection/crypto framing belongs to Hydra.",
   "categories": {
     "correctness_m1": {
       "description": "Staticcheck SA-series — runtime-failure candidates (nil deref, invalid args, misuse of sync primitives). Routed to M1 / M5.",
@@ -60,8 +60,8 @@
         "testpackage"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "gosec G-series and staticcheck crypto/auth rules — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+    "security_defer_to_hydra": {
+      "description": "gosec G-series and staticcheck crypto/auth rules — Hydra R3 owns these (CWE lane). Listed for provenance; never mapped.",
       "rule_ids": [
         "G101",
         "G102",

@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# Mantis installer. Sub-plugins coordinate through the enchanted-mcp event bus;
+# Lich installer. Sub-plugins coordinate through the enchanted-mcp event bus;
 # the `full` meta-plugin pulls them all in via one dependency-resolution pass.
 set -euo pipefail
 
-REPO="https://github.com/enchanted-plugins/mantis"
-PLUGIN_HOME_DIR="$HOME/.claude/plugins/mantis"
+REPO="https://github.com/enchanted-plugins/lich"
+PLUGIN_HOME_DIR="$HOME/.claude/plugins/lich"
 
 step() { printf "\n\033[1;36m▸ %s\033[0m\n" "$*"; }
 ok()   { printf "  \033[32m✓\033[0m %s\n" "$*"; }
 warn() { printf "  \033[33m!\033[0m %s\n" "$*" >&2; }
 
-step "Mantis installer"
+step "Lich installer"
 
 # 1. Clone the monorepo so shared/scripts/*.py are available locally.
 #    Plugins themselves are served via the marketplace command below.
@@ -22,9 +22,9 @@ else
   ok "Cloned to $PLUGIN_HOME_DIR"
 fi
 
-# 2. Pre-flight git check — Mantis's hooks and scripts require git.
+# 2. Pre-flight git check — Lich's hooks and scripts require git.
 if ! command -v git >/dev/null 2>&1; then
-  warn "git not found on PATH — Mantis requires git"
+  warn "git not found on PATH — Lich requires git"
   exit 1
 fi
 ok "git present"
@@ -51,7 +51,7 @@ fi
 cat <<'EOF'
 
 ─────────────────────────────────────────────────────────────────────────
-  Mantis ships as a 7-plugin marketplace. Each sub-plugin owns one named
+  Lich ships as a 7-plugin marketplace. Each sub-plugin owns one named
   engine (M1, M2, M5, M6, M7) or one orthogonal concern (language adapter,
   verdict synthesizer). The `full` meta-plugin lists all 7 as dependencies
   so one install pulls in the whole chain.
@@ -59,18 +59,18 @@ cat <<'EOF'
 
   Finish in Claude Code with TWO commands:
 
-    /plugin marketplace add enchanted-plugins/mantis
-    /plugin install full@mantis
+    /plugin marketplace add enchanted-plugins/lich
+    /plugin install full@lich
 
   That installs every sub-plugin via dependency resolution. To cherry-pick
-  a single sub-plugin instead, use e.g. `/plugin install mantis-core@mantis`.
+  a single sub-plugin instead, use e.g. `/plugin install lich-core@lich`.
 
   Verify with:   /plugin list
-  Expected:      full + 7 sub-plugins installed under the mantis marketplace.
+  Expected:      full + 7 sub-plugins installed under the lich marketplace.
 
   Upstream context:
-    - Reaper owns security (CWE findings) — Mantis never duplicates R3.
-    - Hornet owns change classification — Mantis consumes V1/V2.
-    - Nook owns cost tracking — Mantis downshifts M7 judge under budget pressure.
+    - Hydra owns security (CWE findings) — Lich never duplicates R3.
+    - Raven owns change classification — Lich consumes V1/V2.
+    - Pech owns cost tracking — Lich downshifts M7 judge under budget pressure.
 
 EOF

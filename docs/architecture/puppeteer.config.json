@@ -1,5 +1,5 @@
 {
-  "_comment": "Puppeteer launch + print-to-PDF settings for the Mantis verdict report. Dev-only; consumed by docs/architecture/render.js, never imported from plugin code.",
+  "_comment": "Puppeteer launch + print-to-PDF settings for the Lich verdict report. Dev-only; consumed by docs/architecture/render.js, never imported from plugin code.",
   "launch": {
     "headless": "new",
     "args": [

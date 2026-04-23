@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "ruff_version_tested": ">=0.5.0,<1.0.0",
-  "note": "Maps ruff rule IDs to Mantis M-engine categories. Updated at each major ruff release. Phase 1 covers ~120 of ruff's ~900 rules; remaining rules are tagged 'phase-2-coverage-gap' until the mapping expands. Security rules in the S-series (bandit-derived) are deliberately NOT mapped — those belong to Reaper R3.",
+  "note": "Maps ruff rule IDs to Lich M-engine categories. Updated at each major ruff release. Phase 1 covers ~120 of ruff's ~900 rules; remaining rules are tagged 'phase-2-coverage-gap' until the mapping expands. Security rules in the S-series (bandit-derived) are deliberately NOT mapped — those belong to Hydra R3.",
   "categories": {
     "correctness_m1": {
       "description": "Rules that flag runtime-failure candidates — routed through M1 (abstract interpretation validates) and potentially M5 (sandbox confirms).",
@@ -33,8 +33,8 @@
         "N801", "N802", "N803", "N804", "N805", "N806", "N807", "N811", "N812", "N813", "N814", "N815", "N816", "N817", "N818"
       ]
     },
-    "reaper_overlap_skip": {
-      "description": "Security rules — Reaper R3 owns these. Mantis-python detects the rule fired but does NOT emit a finding (Reaper will have its own record).",
+    "hydra_overlap_skip": {
+      "description": "Security rules — Hydra R3 owns these. Lich-python detects the rule fired but does NOT emit a finding (Hydra will have its own record).",
       "ruff_rules": [
         "S101", "S102", "S103", "S104", "S105", "S106", "S107", "S108", "S110", "S112", "S113", "S201", "S202", "S301", "S302", "S303", "S304", "S305", "S306", "S307", "S308", "S310", "S311", "S312", "S313", "S314", "S315", "S316", "S317", "S318", "S319", "S320", "S321", "S324", "S401", "S402", "S403", "S404", "S405", "S406", "S407", "S408", "S409", "S411", "S412", "S413", "S415", "S501", "S502", "S503", "S504", "S505", "S506", "S507", "S508", "S509", "S601", "S602", "S603", "S604", "S605", "S606", "S607", "S608", "S609", "S610", "S611", "S612", "S701", "S702"
       ]

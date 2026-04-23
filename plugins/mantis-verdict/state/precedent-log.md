@@ -1,4 +1,4 @@
-# mantis-verdict — Precedent Log
+# lich-verdict — Precedent Log
 
 Self-observed operational failures for the verdict composer. Format per `shared/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
 
@@ -9,7 +9,7 @@ Consult: grep before adding or modifying PostToolUse / Stop hook dispatch branch
 ## 2026-04-21 — Verdict-compose fired on non-Python Writes
 
 **Command that failed:**
-`shared/hooks/dispatch.sh` `mantis-verdict-compose` branch dispatched on any Write/Edit matcher. A `.md` or `.json` Write composed a preliminary `DEPLOY` verdict and appended a noisy row to `verdict.jsonl`.
+`shared/hooks/dispatch.sh` `lich-verdict-compose` branch dispatched on any Write/Edit matcher. A `.md` or `.json` Write composed a preliminary `DEPLOY` verdict and appended a noisy row to `verdict.jsonl`.
 
 **Why it failed:**
 The compose branch lacked a `_is_python_file` gate. Write/Edit events matched unconditionally, so doc-only changes triggered compose even though M1/M2/M5 never ran on them — empty-evidence DEPLOY.

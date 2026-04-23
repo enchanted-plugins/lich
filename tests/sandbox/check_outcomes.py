@@ -1,6 +1,6 @@
-"""Mantis M5 integration — outcome assertions.
+"""Lich M5 integration — outcome assertions.
 
-Reads `plugins/mantis-sandbox/state/run-log.jsonl` and verifies that every
+Reads `plugins/lich-sandbox/state/run-log.jsonl` and verifies that every
 fixture under `tests/sandbox/fixtures/` produced at least one record whose
 `status` matches the expected outcome class.
 
@@ -28,7 +28,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 RUN_LOG = os.path.join(
-    REPO_ROOT, "plugins", "mantis-sandbox", "state", "run-log.jsonl"
+    REPO_ROOT, "plugins", "lich-sandbox", "state", "run-log.jsonl"
 )
 FIXTURES_DIR = os.path.join(HERE, "fixtures")
 
@@ -39,7 +39,7 @@ FIXTURES_DIR = os.path.join(HERE, "fixtures")
 #
 # `None` in the error_class tuple means "any error class (or absent) is ok".
 # The outcome classifier's acceptable classes per flag_class are the source
-# of truth (see mantis-sandbox/scripts/outcome.py::_EXPECTED).
+# of truth (see lich-sandbox/scripts/outcome.py::_EXPECTED).
 EXPECTED = {
     "confirmed_divzero.py": (
         "confirmed-bug",

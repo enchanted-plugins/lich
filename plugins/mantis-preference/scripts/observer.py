@@ -58,20 +58,20 @@ def _crossed_threshold(old_mean: float, new_mean: float) -> str | None:
 
 
 _HERE = Path(__file__).resolve().parent
-# scripts/ -> mantis-preference/ -> plugins/ -> repo root = parents[2].
+# scripts/ -> lich-preference/ -> plugins/ -> repo root = parents[2].
 # (Matches sandbox.py / compose.py / override.py idiom; parents[3] overshoots.)
 _REPO_ROOT = _HERE.parents[2]
 _DEFAULT_STATE = (
-    _REPO_ROOT / "plugins" / "mantis-preference" / "state" / "learnings.json"
+    _REPO_ROOT / "plugins" / "lich-preference" / "state" / "learnings.json"
 )
 _DEFAULT_FLAGS = (
-    _REPO_ROOT / "plugins" / "mantis-core" / "state" / "review-flags.jsonl"
+    _REPO_ROOT / "plugins" / "lich-core" / "state" / "review-flags.jsonl"
 )
 _DEFAULT_OVERRIDES = (
-    _REPO_ROOT / "plugins" / "mantis-preference" / "state" / "overrides.json"
+    _REPO_ROOT / "plugins" / "lich-preference" / "state" / "overrides.json"
 )
 _DEFAULT_SURFACED = (
-    _REPO_ROOT / "plugins" / "mantis-preference" / "state" / "surfaced.jsonl"
+    _REPO_ROOT / "plugins" / "lich-preference" / "state" / "surfaced.jsonl"
 )
 
 
@@ -155,7 +155,7 @@ def observe(
             crossed = _crossed_threshold(mean(existing), mean(new))
             if crossed is not None:
                 _learnings.safe_emit(
-                    plugin="mantis-preference",
+                    plugin="lich-preference",
                     code="F05",
                     axis=rule_id,
                     hypothesis=f"rule {rule_id} posterior crossed {crossed}",

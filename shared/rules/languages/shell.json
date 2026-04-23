@@ -58,8 +58,8 @@
         "shunit2::test-function-naming"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "Shellcheck codes with security framing (unquoted user input, eval, insecure temp file) — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+    "security_defer_to_hydra": {
+      "description": "Shellcheck codes with security framing (unquoted user input, eval, insecure temp file) — Hydra R3 owns these (CWE lane). Listed for provenance; never mapped.",
       "rule_ids": [
         "SC2001",
         "SC2089",

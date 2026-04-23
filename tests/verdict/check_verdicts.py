@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 _REPO = Path(__file__).resolve().parents[2]
-_LOG = _REPO / "plugins" / "mantis-verdict" / "state" / "verdict.jsonl"
+_LOG = _REPO / "plugins" / "lich-verdict" / "state" / "verdict.jsonl"
 
 _EXPECTED = {
     "tests/fixtures/quality-ladder/bad.py": "FAIL",

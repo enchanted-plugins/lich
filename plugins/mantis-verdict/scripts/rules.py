@@ -121,7 +121,7 @@ def evaluate_m6(posteriors: Optional[dict] = None, *,
     if posteriors is None and flags:
         try:
             import sys
-            _pref = Path(__file__).resolve().parents[3] / "plugins" / "mantis-preference" / "scripts"
+            _pref = Path(__file__).resolve().parents[3] / "plugins" / "lich-preference" / "scripts"
             if str(_pref) not in sys.path:
                 sys.path.insert(0, str(_pref))
             from reader import evaluate as pref_evaluate
@@ -157,7 +157,7 @@ def evaluate_m7(scores: Optional[dict] = None, *, file: Optional[str] = None) ->
         # Lazy import to avoid cross-plugin coupling at module-load time
         try:
             import sys
-            _rubric_scripts = Path(__file__).resolve().parents[3] / "plugins" / "mantis-rubric" / "scripts"
+            _rubric_scripts = Path(__file__).resolve().parents[3] / "plugins" / "lich-rubric" / "scripts"
             if str(_rubric_scripts) not in sys.path:
                 sys.path.insert(0, str(_rubric_scripts))
             from reader import latest_for
@@ -223,7 +223,7 @@ def compose(
 ) -> Verdict:
     import os
     m1_list = list(m1_flags)
-    dev_id = os.environ.get("MANTIS_DEV_ID", "default")
+    dev_id = os.environ.get("LICH_DEV_ID", "default")
     engines = [
         evaluate_m1(m1_list),
         evaluate_m5(m5_runs),

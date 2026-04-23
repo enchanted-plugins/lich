@@ -93,7 +93,7 @@ class NodeRunner(Runner):
                               stdout="", stderr="tsx/ts-node required for .ts — not present",
                               exit_code=None, signal=None, duration_ms=0)
 
-        tmpdir = tempfile.mkdtemp(prefix="mantis-node-")
+        tmpdir = tempfile.mkdtemp(prefix="lich-node-")
         child_path = Path(tmpdir) / "_child.js"
         child_path.write_text(_CHILD_JS, encoding="utf-8")
 

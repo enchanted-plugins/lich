@@ -20,7 +20,7 @@ REPO_ROOT="$(cd "${HERE}/../.." && pwd)"
 cd "${REPO_ROOT}"
 
 PYTHON="${PYTHON:-python}"
-PLUGINS=(mantis-core mantis-sandbox mantis-verdict mantis-preference mantis-rubric)
+PLUGINS=(lich-core lich-sandbox lich-verdict lich-preference lich-rubric)
 AGG="${REPO_ROOT}/shared/learnings.json"
 
 echo "[harness] repo:   ${REPO_ROOT}"
@@ -42,8 +42,8 @@ from pathlib import Path
 from datetime import datetime, timedelta, timezone
 
 repo = Path(os.environ["REPO_ROOT"])
-plugins = ["mantis-core", "mantis-sandbox", "mantis-verdict",
-           "mantis-preference", "mantis-rubric"]
+plugins = ["lich-core", "lich-sandbox", "lich-verdict",
+           "lich-preference", "lich-rubric"]
 codes = ["F01", "F02", "F05", "F06", "F11", "F13", "F14"]
 base = datetime(2026, 4, 20, 12, 0, 0, tzinfo=timezone.utc)
 
@@ -82,8 +82,8 @@ entries = snap["entries"]
 assert len(entries) == 25, f"expected 25 entries, got {len(entries)}"
 
 plugin_counts = Counter(e["plugin"] for e in entries)
-expected_plugins = {"mantis-core", "mantis-sandbox", "mantis-verdict",
-                    "mantis-preference", "mantis-rubric"}
+expected_plugins = {"lich-core", "lich-sandbox", "lich-verdict",
+                    "lich-preference", "lich-rubric"}
 assert set(plugin_counts) == expected_plugins, \
     f"plugin set mismatch: {set(plugin_counts)} vs {expected_plugins}"
 for p in expected_plugins:

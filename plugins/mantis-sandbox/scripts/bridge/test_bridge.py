@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — bridge unit tests.
+"""Lich M5 sandbox — bridge unit tests.
 
 Covers the three behaviours that can be exercised without WSL installed:
 
@@ -88,8 +88,8 @@ class PathTranslationTest(unittest.TestCase):
 
     def test_uppercase_drive_normalises_to_lower(self) -> None:
         self.assertEqual(
-            _windows_to_wsl(r"C:\git\enchanted-skills\mantis\foo.py"),
-            "/mnt/c/git/enchanted-skills/mantis/foo.py",
+            _windows_to_wsl(r"C:\git\enchanted-skills\lich\foo.py"),
+            "/mnt/c/git/enchanted-skills/lich/foo.py",
         )
 
     def test_forward_slash_input_still_works(self) -> None:

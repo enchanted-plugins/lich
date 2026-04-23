@@ -144,7 +144,7 @@ class MeanAndUnstable(unittest.TestCase):
 
 class ScoreIngest(unittest.TestCase):
     def _tmp(self) -> Path:
-        d = tempfile.mkdtemp(prefix="mantis-kappa-")
+        d = tempfile.mkdtemp(prefix="lich-kappa-")
         return Path(d) / "kappa-log.jsonl"
 
     def test_valid_pass_writes_record(self):
@@ -202,7 +202,7 @@ class ScoreIngest(unittest.TestCase):
 
 class Reader(unittest.TestCase):
     def _tmp(self) -> Path:
-        d = tempfile.mkdtemp(prefix="mantis-reader-")
+        d = tempfile.mkdtemp(prefix="lich-reader-")
         return Path(d) / "kappa-log.jsonl"
 
     def test_latest_for_no_log(self):
@@ -246,7 +246,7 @@ class Integration(unittest.TestCase):
     """Ingest-then-read round trip with an axis disagreement that surfaces unstable."""
 
     def test_ingest_then_reader_roundtrip(self):
-        d = tempfile.mkdtemp(prefix="mantis-integration-")
+        d = tempfile.mkdtemp(prefix="lich-integration-")
         log = Path(d) / "kappa-log.jsonl"
 
         p1 = _perfect_pass(4)

@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — platform guard.
+"""Lich M5 sandbox — platform guard.
 
 Single probe per process: decide which backend the sandbox should use.
 

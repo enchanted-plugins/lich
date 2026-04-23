@@ -1,4 +1,4 @@
-# mantis-sandbox — Precedent Log
+# lich-sandbox — Precedent Log
 
 Self-observed operational failures for the M5 Bounded Subprocess Dry-Run engine. Format per `shared/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
 
@@ -9,7 +9,7 @@ Consult: grep before editing `limits.py`, `sandbox.py`, or anything that crosses
 ## 2026-04-21 — Windows host has no `resource.setrlimit`
 
 **Command that failed:**
-`python plugins/mantis-sandbox/scripts/sandbox.py` on a native Windows interpreter — `import resource` fails with `ModuleNotFoundError`.
+`python plugins/lich-sandbox/scripts/sandbox.py` on a native Windows interpreter — `import resource` fails with `ModuleNotFoundError`.
 
 **Why it failed:**
 `resource.setrlimit` is POSIX-only. The Python stdlib does not ship it on Windows. Any call site that assumes it can `import resource` at module-load time crashes before the caps can be applied.

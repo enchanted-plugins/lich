@@ -4,7 +4,7 @@ context: fork
 allowed-tools: [Read, Write]
 ---
 
-# mantis-preference-updater
+# lich-preference-updater
 
 Updates Beta(α, β) posteriors per (developer, rule) on each accept/reject signal and emits Thompson-sampled surfacing probabilities. Enforces the 5% minimum floor.
 
@@ -19,7 +19,7 @@ Updates Beta(α, β) posteriors per (developer, rule) on each accept/reject sign
 
 ## Contract
 
-**Inputs:** `{developer_id, rule_id, signal: 'accept'|'reject'|'override', source: 'mantis-core'|'mantis-rubric'|...}`
+**Inputs:** `{developer_id, rule_id, signal: 'accept'|'reject'|'override', source: 'lich-core'|'lich-rubric'|...}`
 
 **Outputs:** Structured JSON:
 ```json

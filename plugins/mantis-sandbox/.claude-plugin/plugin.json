@@ -1,5 +1,5 @@
 {
-  "name": "mantis-sandbox",
+  "name": "lich-sandbox",
   "description": "M5 Bounded Subprocess Dry-Run. Confirms M1-flagged runtime-failure candidates by executing witness inputs in a stdlib-only sandbox (resource.setrlimit for CPU/AS/NOFILE/FSIZE + signal.alarm for wall-clock). Unix-only at launch; Windows skips M5 with platform-unsupported verdict.",
   "version": "0.1.0",
   "author": {
@@ -17,7 +17,7 @@
     "bounded-execution"
   ],
   "skills": [
-    "./skills/mantis-sandbox/"
+    "./skills/lich-sandbox/"
   ],
   "agents": "./agents/"
 }

@@ -6,7 +6,7 @@
     "version_range": ">=1.80.0",
     "homepage": "https://semgrep.dev/"
   },
-  "note": "Phase 1 seed, 50 rules across Django, FastAPI, React, Next.js, and Express — Semgrep community registry. Framework-layer detections complement per-language linters. Security-framed semgrep rules are the largest bucket and all defer to Reaper R3.",
+  "note": "Phase 1 seed, 50 rules across Django, FastAPI, React, Next.js, and Express — Semgrep community registry. Framework-layer detections complement per-language linters. Security-framed semgrep rules are the largest bucket and all defer to Hydra R3.",
   "categories": {
     "correctness_m1": {
       "description": "Framework correctness pitfalls — wrong lifecycle hook placement, missing await, mis-configured serializer. Routed to M1 / M5.",
@@ -68,8 +68,8 @@
         "javascript.express.testability.app-not-exported-for-supertest"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "Semgrep community security rules — Reaper R3 owns these (CWE lane, 98 patterns / 2,011 signatures). Listed here for provenance; never mapped.",
+    "security_defer_to_hydra": {
+      "description": "Semgrep community security rules — Hydra R3 owns these (CWE lane, 98 patterns / 2,011 signatures). Listed here for provenance; never mapped.",
       "rule_ids": [
         "python.django.security.injection.formatted-sql-query",
         "python.django.security.injection.command-injection-os-system",

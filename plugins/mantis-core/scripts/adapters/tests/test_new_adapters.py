@@ -13,7 +13,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 _HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(_HERE.parents[1]))  # plugins/mantis-core/scripts
+sys.path.insert(0, str(_HERE.parents[1]))  # plugins/lich-core/scripts
 
 from adapters import java, cpp, ruby, shell, semgrep  # noqa: E402
 
@@ -67,7 +67,7 @@ class JavaAdapter(unittest.TestCase):
              patch("adapters.java.run_subprocess",
                    return_value=_FakeCompleted(stdout=xml)), \
              patch("adapters.java.load_registry",
-                   return_value={"LEAKED_TOKEN": ("security_defer_to_reaper", "HIGH")}):
+                   return_value={"LEAKED_TOKEN": ("security_defer_to_hydra", "HIGH")}):
             self.assertEqual(java.analyze("/tmp/Foo.java"), [])
 
 
@@ -96,7 +96,7 @@ class CppAdapter(unittest.TestCase):
              patch("adapters.cpp.run_subprocess",
                    return_value=_FakeCompleted(stdout="", stderr=stderr)), \
              patch("adapters.cpp.load_registry",
-                   return_value={"cert-msc50-cpp": ("security_defer_to_reaper", "HIGH")}):
+                   return_value={"cert-msc50-cpp": ("security_defer_to_hydra", "HIGH")}):
             self.assertEqual(cpp.analyze("/tmp/x.cpp"), [])
 
 
@@ -169,7 +169,7 @@ class ShellAdapter(unittest.TestCase):
              patch("adapters.shell.run_subprocess",
                    return_value=_FakeCompleted(stdout=payload)), \
              patch("adapters.shell.load_registry",
-                   return_value={"SC9999": ("security_defer_to_reaper", "HIGH")}):
+                   return_value={"SC9999": ("security_defer_to_hydra", "HIGH")}):
             self.assertEqual(shell.analyze("/tmp/x.sh"), [])
 
 
@@ -201,7 +201,7 @@ class SemgrepAdapter(unittest.TestCase):
     def test_offline_env_skips(self):
         import os
         with patch("adapters.semgrep.detect_binary", return_value="/fake/semgrep"), \
-             patch.dict(os.environ, {"MANTIS_SEMGREP_OFFLINE": "1"}):
+             patch.dict(os.environ, {"LICH_SEMGREP_OFFLINE": "1"}):
             self.assertEqual(semgrep.analyze("/tmp/views.py"), [])
 
     def test_correctness_rule_mapped(self):

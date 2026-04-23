@@ -1,4 +1,4 @@
-"""Mantis sandbox target — inventory + order workflow with bugs distributed
+"""Lich sandbox target — inventory + order workflow with bugs distributed
 across realistic surfaces. Every function is reachable; every flagged site
 has a concrete witness input.
 

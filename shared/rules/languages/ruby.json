@@ -75,8 +75,8 @@
         "Minitest/GlobalExpectations"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "Security/* cops and brakeman findings — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+    "security_defer_to_hydra": {
+      "description": "Security/* cops and brakeman findings — Hydra R3 owns these (CWE lane). Listed for provenance; never mapped.",
       "rule_ids": [
         "Security/Eval",
         "Security/JSONLoad",

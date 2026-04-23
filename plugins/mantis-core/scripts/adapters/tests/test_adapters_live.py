@@ -9,7 +9,7 @@ and all Windows developer boxes).
 What each test asserts when the tool IS present:
     * analyze() returns a list[Flag]; at least one flag for the buggy fixture.
     * Every flag's rule_id matches the adapter's expected prefix pattern.
-    * No flag is in the security bucket — Reaper owns CWEs, Mantis doesn't.
+    * No flag is in the security bucket — Hydra owns CWEs, Lich doesn't.
 
 What the suite reports when the tool is NOT present:
     * A single-line `[skip: <tool> not installed]` marker. The test is still
@@ -36,7 +36,7 @@ import unittest
 from pathlib import Path
 
 _HERE = Path(__file__).resolve().parent
-_SCRIPTS = _HERE.parents[1]  # plugins/mantis-core/scripts
+_SCRIPTS = _HERE.parents[1]  # plugins/lich-core/scripts
 sys.path.insert(0, str(_SCRIPTS))
 sys.path.insert(0, str(_SCRIPTS / "adapters"))
 
@@ -50,7 +50,7 @@ import ruff_adapter  # noqa: E402
 # Fixture resolution
 # ---------------------------------------------------------------------------
 
-_REPO_ROOT = _SCRIPTS.parents[2]  # <repo>/plugins/mantis-core/scripts -> <repo>
+_REPO_ROOT = _SCRIPTS.parents[2]  # <repo>/plugins/lich-core/scripts -> <repo>
 _POLYGLOT = _REPO_ROOT / "tests" / "fixtures" / "polyglot"
 
 
@@ -81,7 +81,7 @@ def _assert_no_security_bucket(
     flags: list,
     security_prefixes: tuple[str, ...],
 ) -> None:
-    """Reaper owns CWE taxonomy. Even if an adapter accidentally surfaces a
+    """Hydra owns CWE taxonomy. Even if an adapter accidentally surfaces a
     security-prefix rule ID, the non-duplication contract says it must not
     land in M1 output. This is the defense-in-depth cross-check."""
     for flag in flags:
@@ -110,7 +110,7 @@ class GoAdapterLive(unittest.TestCase):
         _assert_basic_shape(self, flags)
         # SA-series = staticcheck correctness rules. An `_` swallow typically
         # triggers SA4006 / SA4017 / SA9003 depending on version — we don't
-        # pin a specific code, just that any Mantis-mapped rule surfaced.
+        # pin a specific code, just that any Lich-mapped rule surfaced.
         for flag in flags:
             self.assertRegex(
                 flag.rule_id,
@@ -118,7 +118,7 @@ class GoAdapterLive(unittest.TestCase):
                 f"unexpected rule_id shape from staticcheck: {flag.rule_id!r}",
             )
         # Security-bucket crypto rule SA1018 is the one staticcheck shares
-        # with Reaper's lane; it must never leak to M1.
+        # with Hydra's lane; it must never leak to M1.
         _assert_no_security_bucket(self, flags, ("sa1018",))
 
 
@@ -170,8 +170,8 @@ class JavaAdapterLive(unittest.TestCase):
             )
         _assert_no_security_bucket(
             self, flags,
-            # The security-defer-to-reaper Java bucket; any LEAKED_* / SQL_* is
-            # Reaper's lane, never M1.
+            # The security-defer-to-hydra Java bucket; any LEAKED_* / SQL_* is
+            # Hydra's lane, never M1.
             ("leaked_", "sql_", "xss_", "path_traversal"),
         )
 
@@ -217,7 +217,7 @@ class RubyAdapterLive(unittest.TestCase):
                 r"^[A-Z][A-Za-z]+/[A-Z][A-Za-z0-9]+$",
                 f"unexpected rubocop cop name: {flag.rule_id!r}",
             )
-        # The Security/* department is Reaper's lane.
+        # The Security/* department is Hydra's lane.
         for flag in flags:
             self.assertFalse(
                 flag.rule_id.startswith("Security/"),
@@ -248,7 +248,7 @@ class ShellAdapterLive(unittest.TestCase):
 class SemgrepAdapterLive(unittest.TestCase):
     """semgrep against a polyglot source — correctness rules only.
 
-    Semgrep's security.* rulesets are Reaper's lane; the adapter has a
+    Semgrep's security.* rulesets are Hydra's lane; the adapter has a
     dotted-path guard. We exercise the correctness path by letting semgrep
     apply its default non-security checks.
     """
@@ -299,7 +299,7 @@ class RuffAdapterLive(unittest.TestCase):
                 r"^[A-Z]+\d+$",
                 f"unexpected ruff rule_id shape: {flag.rule_id!r}",
             )
-            # S-series (bandit-via-ruff) is Reaper's lane.
+            # S-series (bandit-via-ruff) is Hydra's lane.
             self.assertFalse(
                 flag.rule_id.startswith("S"),
                 f"ruff S-series (security) leaked to M1: {flag.rule_id!r}",
@@ -327,7 +327,7 @@ class _StatusDump(unittest.TestCase):
             ("semgrep (Polyglot)", "semgrep"),
             ("ruff (Python)", "ruff"),
         ]
-        lines = ["", "Mantis adapter live-test tool availability:"]
+        lines = ["", "Lich adapter live-test tool availability:"]
         for label, bin_name in tools:
             found = shutil.which(bin_name)
             tag = f"ran (path={found})" if found else "skip: tool not installed"

@@ -24,12 +24,12 @@ sys.path.insert(0, str(ARCH_DIR))
 def seed_state(tmp_root: Path) -> None:
     """Populate tmp_root with the five engine state files — one fixture per
     M5 outcome class plus matching verdict / flags / kappa rows."""
-    (tmp_root / "plugins" / "mantis-verdict" / "state").mkdir(parents=True)
-    (tmp_root / "plugins" / "mantis-core" / "state").mkdir(parents=True)
-    (tmp_root / "plugins" / "mantis-sandbox" / "state").mkdir(parents=True)
-    (tmp_root / "plugins" / "mantis-rubric" / "state").mkdir(parents=True)
-    (tmp_root / "plugins" / "mantis-rubric" / "config").mkdir(parents=True)
-    (tmp_root / "plugins" / "mantis-preference" / "state").mkdir(parents=True)
+    (tmp_root / "plugins" / "lich-verdict" / "state").mkdir(parents=True)
+    (tmp_root / "plugins" / "lich-core" / "state").mkdir(parents=True)
+    (tmp_root / "plugins" / "lich-sandbox" / "state").mkdir(parents=True)
+    (tmp_root / "plugins" / "lich-rubric" / "state").mkdir(parents=True)
+    (tmp_root / "plugins" / "lich-rubric" / "config").mkdir(parents=True)
+    (tmp_root / "plugins" / "lich-preference" / "state").mkdir(parents=True)
     (tmp_root / "shared").mkdir(parents=True)
 
     verdicts = [
@@ -92,21 +92,21 @@ def seed_state(tmp_root: Path) -> None:
         {"code": "F12", "date": "2026-04-21", "note": "degeneration loop on clarity axis"},
     ]}
 
-    with (tmp_root / "plugins" / "mantis-verdict" / "state" / "verdict.jsonl").open("w", encoding="utf-8") as f:
+    with (tmp_root / "plugins" / "lich-verdict" / "state" / "verdict.jsonl").open("w", encoding="utf-8") as f:
         for r in verdicts:
             f.write(json.dumps(r) + "\n")
-    with (tmp_root / "plugins" / "mantis-core" / "state" / "review-flags.jsonl").open("w", encoding="utf-8") as f:
+    with (tmp_root / "plugins" / "lich-core" / "state" / "review-flags.jsonl").open("w", encoding="utf-8") as f:
         for r in flags:
             f.write(json.dumps(r) + "\n")
-    with (tmp_root / "plugins" / "mantis-sandbox" / "state" / "run-log.jsonl").open("w", encoding="utf-8") as f:
+    with (tmp_root / "plugins" / "lich-sandbox" / "state" / "run-log.jsonl").open("w", encoding="utf-8") as f:
         for r in sandbox_runs:
             f.write(json.dumps(r) + "\n")
-    with (tmp_root / "plugins" / "mantis-rubric" / "state" / "kappa-log.jsonl").open("w", encoding="utf-8") as f:
+    with (tmp_root / "plugins" / "lich-rubric" / "state" / "kappa-log.jsonl").open("w", encoding="utf-8") as f:
         for r in kappa:
             f.write(json.dumps(r) + "\n")
-    (tmp_root / "plugins" / "mantis-preference" / "state" / "learnings.json").write_text(
+    (tmp_root / "plugins" / "lich-preference" / "state" / "learnings.json").write_text(
         json.dumps(prefs), encoding="utf-8")
-    (tmp_root / "plugins" / "mantis-rubric" / "config" / "rubric-v1.json").write_text(
+    (tmp_root / "plugins" / "lich-rubric" / "config" / "rubric-v1.json").write_text(
         json.dumps(rubric_cfg), encoding="utf-8")
     (tmp_root / "shared" / "learnings.json").write_text(
         json.dumps(shared_learnings), encoding="utf-8")
@@ -116,7 +116,7 @@ class GenerateReportTest(unittest.TestCase):
     """Verdict-report HTML generation, seeded state, no PDF step."""
 
     def setUp(self) -> None:
-        self.tmp = Path(tempfile.mkdtemp(prefix="mantis-report-"))
+        self.tmp = Path(tempfile.mkdtemp(prefix="lich-report-"))
         seed_state(self.tmp)
         # re-import generate with repo root pointed at the tmp tree
         if "generate" in sys.modules:
@@ -126,12 +126,12 @@ class GenerateReportTest(unittest.TestCase):
         # Override paths to point at tmp
         generate.REPO_ROOT = self.tmp
         generate.STATE_FILES = {
-            "verdict":  self.tmp / "plugins" / "mantis-verdict"    / "state" / "verdict.jsonl",
-            "flags":    self.tmp / "plugins" / "mantis-core"       / "state" / "review-flags.jsonl",
-            "sandbox":  self.tmp / "plugins" / "mantis-sandbox"    / "state" / "run-log.jsonl",
-            "kappa":    self.tmp / "plugins" / "mantis-rubric"     / "state" / "kappa-log.jsonl",
-            "prefs":    self.tmp / "plugins" / "mantis-preference" / "state" / "learnings.json",
-            "rubric_cfg": self.tmp / "plugins" / "mantis-rubric"   / "config" / "rubric-v1.json",
+            "verdict":  self.tmp / "plugins" / "lich-verdict"    / "state" / "verdict.jsonl",
+            "flags":    self.tmp / "plugins" / "lich-core"       / "state" / "review-flags.jsonl",
+            "sandbox":  self.tmp / "plugins" / "lich-sandbox"    / "state" / "run-log.jsonl",
+            "kappa":    self.tmp / "plugins" / "lich-rubric"     / "state" / "kappa-log.jsonl",
+            "prefs":    self.tmp / "plugins" / "lich-preference" / "state" / "learnings.json",
+            "rubric_cfg": self.tmp / "plugins" / "lich-rubric"   / "config" / "rubric-v1.json",
             "shared_learnings": self.tmp / "shared" / "learnings.json",
         }
 
@@ -184,13 +184,13 @@ class GenerateReportTest(unittest.TestCase):
         self.assertTrue(out_html.exists())
         body = out_html.read_text(encoding="utf-8")
         self.assertIn("<!DOCTYPE html>", body)
-        self.assertIn("Mantis Review Report", body)
+        self.assertIn("Lich Review Report", body)
         # HTML-only must not contain the literal "PDF render failed"
         self.assertNotIn("PDF render failed", body)
 
     def test_m5_pie_zero_case(self) -> None:
         # Wipe sandbox runs — pie should degrade to a "no runs" stub
-        (self.tmp / "plugins" / "mantis-sandbox" / "state" / "run-log.jsonl").write_text("", encoding="utf-8")
+        (self.tmp / "plugins" / "lich-sandbox" / "state" / "run-log.jsonl").write_text("", encoding="utf-8")
         html = self.generate.build_html(self.tmp)
         self.assertIn("no runs", html)
 

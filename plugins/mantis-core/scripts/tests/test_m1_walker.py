@@ -1,9 +1,9 @@
 """Unit tests for the M1 walker.
 
 Run (from repo root):
-    python plugins/mantis-core/scripts/tests/test_m1_walker.py
+    python plugins/lich-core/scripts/tests/test_m1_walker.py
 or:
-    python -m unittest discover -s plugins/mantis-core/scripts/tests -p 'test_*.py'
+    python -m unittest discover -s plugins/lich-core/scripts/tests -p 'test_*.py'
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ import textwrap
 import unittest
 
 # Make the sibling `scripts/` directory importable regardless of cwd.
-# Parent package `mantis-core` is not a valid Python identifier (hyphen),
+# Parent package `lich-core` is not a valid Python identifier (hyphen),
 # so path manipulation is the only portable way.
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SCRIPTS = os.path.dirname(_HERE)

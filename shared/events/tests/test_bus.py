@@ -2,7 +2,7 @@
 
 Exercises:
   * publish/subscribe round-trip
-  * topic prefix filtering (``mantis.`` vs ``reaper.``)
+  * topic prefix filtering (``lich.`` vs ``hydra.``)
   * ``since`` timestamp filter
   * concurrent publishes (threads) — every event lands on its own line
   * persisted-line schema — five required fields, valid JSON
@@ -49,12 +49,12 @@ class TestPublishSubscribe(BusPathMixin, unittest.TestCase):
 
     def test_round_trip(self) -> None:
         ev = _bus.publish(
-            "mantis.review.completed",
+            "lich.review.completed",
             {"file": "a.py", "verdict": "DEPLOY"},
-            source="mantis-verdict",
+            source="lich-verdict",
             bus_path=self.bus_path,
         )
-        self.assertEqual(ev.topic, "mantis.review.completed")
+        self.assertEqual(ev.topic, "lich.review.completed")
         self.assertEqual(ev.payload["verdict"], "DEPLOY")
         self.assertTrue(ev.uuid)
         self.assertTrue(ev.ts)
@@ -67,17 +67,17 @@ class TestPublishSubscribe(BusPathMixin, unittest.TestCase):
 
     def test_multiple_events_preserve_order(self) -> None:
         for i in range(5):
-            _bus.publish("mantis.x", {"i": i}, "test",
+            _bus.publish("lich.x", {"i": i}, "test",
                          bus_path=self.bus_path)
         received = list(_bus.subscribe(bus_path=self.bus_path))
         self.assertEqual([e.payload["i"] for e in received], [0, 1, 2, 3, 4])
 
     def test_latest_returns_most_recent(self) -> None:
         for i in range(3):
-            _bus.publish("mantis.rule.disabled",
+            _bus.publish("lich.rule.disabled",
                          {"rule": f"R{i}"}, "test",
                          bus_path=self.bus_path)
-        latest = _bus.latest("mantis.rule.disabled", bus_path=self.bus_path)
+        latest = _bus.latest("lich.rule.disabled", bus_path=self.bus_path)
         self.assertIsNotNone(latest)
         assert latest is not None
         self.assertEqual(latest.payload["rule"], "R2")
@@ -89,33 +89,33 @@ class TestPublishSubscribe(BusPathMixin, unittest.TestCase):
 class TestTopicFiltering(BusPathMixin, unittest.TestCase):
 
     def test_prefix_match(self) -> None:
-        _bus.publish("mantis.review.completed", {}, "src",
+        _bus.publish("lich.review.completed", {}, "src",
                      bus_path=self.bus_path)
-        _bus.publish("mantis.sandbox.failed", {}, "src",
+        _bus.publish("lich.sandbox.failed", {}, "src",
                      bus_path=self.bus_path)
-        _bus.publish("reaper.vuln.detected", {}, "src",
+        _bus.publish("hydra.vuln.detected", {}, "src",
                      bus_path=self.bus_path)
 
-        mantis_only = list(_bus.subscribe(topic="mantis.",
+        lich_only = list(_bus.subscribe(topic="lich.",
                                            bus_path=self.bus_path))
-        self.assertEqual(len(mantis_only), 2)
-        self.assertTrue(all(e.topic.startswith("mantis.")
-                             for e in mantis_only))
+        self.assertEqual(len(lich_only), 2)
+        self.assertTrue(all(e.topic.startswith("lich.")
+                             for e in lich_only))
 
-        reaper_only = list(_bus.subscribe(topic="reaper.",
+        hydra_only = list(_bus.subscribe(topic="hydra.",
                                            bus_path=self.bus_path))
-        self.assertEqual(len(reaper_only), 1)
+        self.assertEqual(len(hydra_only), 1)
 
     def test_exact_topic_match(self) -> None:
-        _bus.publish("mantis.review.completed", {}, "src",
+        _bus.publish("lich.review.completed", {}, "src",
                      bus_path=self.bus_path)
-        _bus.publish("mantis.sandbox.failed", {}, "src",
+        _bus.publish("lich.sandbox.failed", {}, "src",
                      bus_path=self.bus_path)
 
-        exact = list(_bus.subscribe(topic="mantis.review.completed",
+        exact = list(_bus.subscribe(topic="lich.review.completed",
                                      bus_path=self.bus_path))
         self.assertEqual(len(exact), 1)
-        self.assertEqual(exact[0].topic, "mantis.review.completed")
+        self.assertEqual(exact[0].topic, "lich.review.completed")
 
     def test_no_filter_returns_all(self) -> None:
         _bus.publish("a.b", {}, "src", bus_path=self.bus_path)

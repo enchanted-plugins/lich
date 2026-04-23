@@ -1,4 +1,4 @@
-"""Language adapters for Mantis M1.
+"""Language adapters for Lich M1.
 
 Each adapter follows the same contract so the dispatcher below routes a
 file by extension to the correct backend:

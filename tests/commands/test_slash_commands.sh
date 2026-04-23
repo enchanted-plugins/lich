@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Verify the three Mantis slash-command markdown files and the /mantis-disable
+# Verify the three Lich slash-command markdown files and the /lich-disable
 # end-to-end invocation of override.py.
 #
 # Scope fence: we do NOT simulate Claude Code's slash dispatch — that belongs to
 # the client. We verify (1) the command markdown files exist with well-formed
-# frontmatter and (2) the one command with Python glue (/mantis-disable)
+# frontmatter and (2) the one command with Python glue (/lich-disable)
 # actually produces the expected state mutation.
 set -euo pipefail
 
@@ -30,13 +30,13 @@ check() {
 
 # ---- 1. The three command files exist ---------------------------------------
 
-CMD_REVIEW="plugins/mantis-core/commands/mantis-review.md"
-CMD_EXPLAIN="plugins/mantis-rubric/commands/mantis-explain.md"
-CMD_DISABLE="plugins/mantis-preference/commands/mantis-disable.md"
+CMD_REVIEW="plugins/lich-core/commands/lich-review.md"
+CMD_EXPLAIN="plugins/lich-rubric/commands/lich-explain.md"
+CMD_DISABLE="plugins/lich-preference/commands/lich-disable.md"
 
-check "mantis-review.md exists"  test -f "$CMD_REVIEW"
-check "mantis-explain.md exists" test -f "$CMD_EXPLAIN"
-check "mantis-disable.md exists" test -f "$CMD_DISABLE"
+check "lich-review.md exists"  test -f "$CMD_REVIEW"
+check "lich-explain.md exists" test -f "$CMD_EXPLAIN"
+check "lich-disable.md exists" test -f "$CMD_DISABLE"
 
 # ---- 2. Frontmatter parses (YAML between two --- fences) --------------------
 
@@ -72,9 +72,9 @@ except Exception as e:  # yaml.YAMLError, ValueError
 PY
 }
 
-check "mantis-review  frontmatter parses"  frontmatter_ok "$CMD_REVIEW"
-check "mantis-explain frontmatter parses"  frontmatter_ok "$CMD_EXPLAIN"
-check "mantis-disable frontmatter parses"  frontmatter_ok "$CMD_DISABLE"
+check "lich-review  frontmatter parses"  frontmatter_ok "$CMD_REVIEW"
+check "lich-explain frontmatter parses"  frontmatter_ok "$CMD_EXPLAIN"
+check "lich-disable frontmatter parses"  frontmatter_ok "$CMD_DISABLE"
 
 # Per the user spec, also confirm exactly 2 '---' fence lines per file.
 fence_count_ok() {
@@ -83,17 +83,17 @@ fence_count_ok() {
   count="$(grep -c '^---$' "$path" || true)"
   [[ "$count" == "2" ]]
 }
-check "mantis-review  has 2 frontmatter fences"  fence_count_ok "$CMD_REVIEW"
-check "mantis-explain has 2 frontmatter fences"  fence_count_ok "$CMD_EXPLAIN"
-check "mantis-disable has 2 frontmatter fences"  fence_count_ok "$CMD_DISABLE"
+check "lich-review  has 2 frontmatter fences"  fence_count_ok "$CMD_REVIEW"
+check "lich-explain has 2 frontmatter fences"  fence_count_ok "$CMD_EXPLAIN"
+check "lich-disable has 2 frontmatter fences"  fence_count_ok "$CMD_DISABLE"
 
-# ---- 3. Semantic /mantis-disable invocation ---------------------------------
+# ---- 3. Semantic /lich-disable invocation ---------------------------------
 # Point override.py at a temp state file so we don't touch the real one.
 
-TMP_STATE="$(mktemp -t mantis-overrides-XXXXXX.json)"
+TMP_STATE="$(mktemp -t lich-overrides-XXXXXX.json)"
 trap 'rm -f "$TMP_STATE"' EXIT
 
-python plugins/mantis-preference/scripts/override.py \
+python plugins/lich-preference/scripts/override.py \
   --dev "test-harness-dev" \
   --rule "PY-M1-001" \
   --state "$TMP_STATE" \
@@ -133,7 +133,7 @@ assert 89 <= delta <= 91, f"reprompt delta not ~90 days: {delta}"
 PY
 }
 
-check "/mantis-disable PY-M1-001 writes a valid override record" invocation_ok
+check "/lich-disable PY-M1-001 writes a valid override record" invocation_ok
 
 # ---- summary ----------------------------------------------------------------
 

@@ -4,23 +4,23 @@ context: fork
 allowed-tools: [Read, Write]
 ---
 
-# mantis-verdict-synthesizer
+# lich-verdict-synthesizer
 
-Composes M1/M2/M5/M6/M7 outputs into a single DEPLOY / HOLD / FAIL verdict per the threshold contract in `../../CLAUDE.md` § Verdict bar. Appends to `state/verdict.jsonl` and (Phase 2) emits `mantis.review.completed` on the enchanted-mcp bus.
+Composes M1/M2/M5/M6/M7 outputs into a single DEPLOY / HOLD / FAIL verdict per the threshold contract in `../../CLAUDE.md` § Verdict bar. Appends to `state/verdict.jsonl` and (Phase 2) emits `lich.review.completed` on the enchanted-mcp bus.
 
 ## Responsibilities
 
-- Read all sibling sub-plugin state files (mantis-core flags, mantis-sandbox run-log, mantis-preference posteriors, mantis-rubric kappa-log).
+- Read all sibling sub-plugin state files (lich-core flags, lich-sandbox run-log, lich-preference posteriors, lich-rubric kappa-log).
 - Apply the hard-floor + composite tie-breaker threshold math from the Verdict Contract table.
 - Never hide disagreement: if M5 confirmed a runtime failure, verdict is FAIL even if M7 rubric scored high. Confirmed bugs are facts, not averaged into scores.
-- Emit the verdict record with full per-engine trace for `/mantis-explain`.
-- Phase 2: publish `mantis.review.completed` event; Phase 1: write to `state/verdict.jsonl` only.
+- Emit the verdict record with full per-engine trace for `/lich-explain`.
+- Phase 2: publish `lich.review.completed` event; Phase 1: write to `state/verdict.jsonl` only.
 
 ## Contract
 
 **Inputs:** per-review assembly from sibling state files — no direct PR/file arguments. The synthesizer is the terminal step of the pipeline.
 
-**Outputs:** appends to `plugins/mantis-verdict/state/verdict.jsonl`:
+**Outputs:** appends to `plugins/lich-verdict/state/verdict.jsonl`:
 ```json
 {
   "event": "review.completed",
@@ -49,7 +49,7 @@ Composes M1/M2/M5/M6/M7 outputs into a single DEPLOY / HOLD / FAIL verdict per t
 
 ## Failure handling
 
-If the synthesizer reports a verdict but `state/verdict.jsonl` wasn't updated atomically, the downstream (Weaver's pre-commit gate) sees stale state — block the PR. Verify file hash before/after.
+If the synthesizer reports a verdict but `state/verdict.jsonl` wasn't updated atomically, the downstream (Sylph's pre-commit gate) sees stale state — block the PR. Verify file hash before/after.
 
 If any sibling state file is malformed, emit `verdict: UNAVAILABLE` with a diagnostic — never silently default to DEPLOY.
 

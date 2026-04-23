@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shared constants — sourced by hooks and utilities across all sub-plugins.
-# Mantis conventions: M_-prefixed constants namespace per-engine values.
+# Lich conventions: M_-prefixed constants namespace per-engine values.
 
 M_VERSION="0.1.0"
 M_STATE_DIR="state"
@@ -12,7 +12,7 @@ M_SANDBOX_RLIMIT_NOFILE="${M_SANDBOX_RLIMIT_NOFILE:-16}"
 M_SANDBOX_RLIMIT_FSIZE_BYTES="${M_SANDBOX_RLIMIT_FSIZE_BYTES:-10485760}"  # 10 MB
 M_SANDBOX_WALL_CLOCK_SEC="${M_SANDBOX_WALL_CLOCK_SEC:-10}"
 
-# M6 preference floor (no rule dies permanently without /mantis-disable)
+# M6 preference floor (no rule dies permanently without /lich-disable)
 M_PREFERENCE_MIN_SURFACE_PROB="${M_PREFERENCE_MIN_SURFACE_PROB:-0.05}"
 
 # M7 rubric thresholds

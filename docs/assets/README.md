@@ -22,24 +22,24 @@ The `apply-blueprint.js` step overlays an engineering-blueprint grid
 (navy `#0a1628` paper, `#1e3a5f` major lines / `#16304f` minor lines)
 onto the rendered diagram so it reads as a CAD drawing rather than a
 neutral dark card. This is the shared visual identity across every
-sibling repo (allay, flux, hornet, nook, reaper, weaver, mantis).
+sibling repo (fae, wixie, raven, pech, hydra, sylph, lich).
 
 ## Diagram content
 
-- **pipeline.svg** (MNT-001) — seven-sub-plugin architecture. Hornet
-  change-classification input; mantis-core (M1 + M2) static-suspicion
-  layer; mantis-sandbox (M5) runtime confirmation; mantis-preference +
-  mantis-rubric (M6 + M7) preference-filter and judgment layers;
-  mantis-python + mantis-typescript language adapters; mantis-verdict
+- **pipeline.svg** (MNT-001) — seven-sub-plugin architecture. Raven
+  change-classification input; lich-core (M1 + M2) static-suspicion
+  layer; lich-sandbox (M5) runtime confirmation; lich-preference +
+  lich-rubric (M6 + M7) preference-filter and judgment layers;
+  lich-python + lich-typescript language adapters; lich-verdict
   cross-engine DEPLOY/HOLD/FAIL router; peer-plugin subscription
-  legend (Weaver gates merge, Nook attributes spend, Reaper keeps CWE
+  legend (Sylph gates merge, Pech attributes spend, Hydra keeps CWE
   exclusivity).
 
 - **lifecycle.svg** (MNT-002) — five-stage review lifecycle:
   PostToolUse intake → sandbox dry-run (on M1 flags) → Bayesian
   preference filter → pairwise rubric judgment → verdict synthesis at
-  end-of-PR. Orthogonal branch: developer-invoked `/mantis-review`,
-  `/mantis-explain`, `/mantis-disable` commands.
+  end-of-PR. Orthogonal branch: developer-invoked `/lich-review`,
+  `/lich-explain`, `/lich-disable` commands.
 
 - **math/** — 5 named-engine equations rendered from `render-math.js`:
   `m1-interval.svg` (Cousot interval + nullability + shape lattice

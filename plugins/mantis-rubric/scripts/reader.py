@@ -1,6 +1,6 @@
-"""Reader for plugins/mantis-rubric/state/kappa-log.jsonl.
+"""Reader for plugins/lich-rubric/state/kappa-log.jsonl.
 
-Exposes the minimum surface compose.py (in mantis-verdict) needs to pull
+Exposes the minimum surface compose.py (in lich-verdict) needs to pull
 per-file M7 scores without importing ingest-side code.
 """
 
@@ -12,7 +12,7 @@ from typing import Optional
 
 _HERE = Path(__file__).resolve().parent
 _REPO_ROOT = _HERE.parents[2]
-_DEFAULT_LOG = _REPO_ROOT / "plugins" / "mantis-rubric" / "state" / "kappa-log.jsonl"
+_DEFAULT_LOG = _REPO_ROOT / "plugins" / "lich-rubric" / "state" / "kappa-log.jsonl"
 
 
 def _normalize(p: str) -> str:

@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — WSL delegation backend.
+"""Lich M5 sandbox — WSL delegation backend.
 
 Given a Windows host with WSL installed, execute the child runner inside
 WSL's Linux Python so the 6 resource caps + `signal.alarm` contract holds

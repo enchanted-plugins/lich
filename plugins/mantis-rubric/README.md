@@ -1,4 +1,4 @@
-# mantis-rubric
+# lich-rubric
 
 *M7 Zheng Pairwise Rubric Judgment. 5-axis LLM-as-judge with position-swap debiasing and Cohen's Kappa inter-judge reliability.*
 
@@ -26,26 +26,26 @@ Catches the style / clarity / idiom signals no static engine can — the "is thi
 | Tier | When | Cost contract |
 |------|------|---------------|
 | Sonnet (default) | Normal reviews | Base cost |
-| Haiku | Downshift when Nook's `nook.budget.threshold.crossed` fires at 80% | Respect budget |
+| Haiku | Downshift when Pech's `pech.budget.threshold.crossed` fires at 80% | Respect budget |
 | Opus | Disagreement adjudication only (axis with \|delta\| ≥ 1.5 between two Sonnet runs) | Reserved for judgment |
 
 ## Non-duplication
 
-- Not a security reviewer (Reaper R3).
-- Not a change classifier (Hornet V1/V2).
+- Not a security reviewer (Hydra R3).
+- Not a change classifier (Raven V1/V2).
 - Not a correctness prover (M1+M5 handle that — M7 judges readability and idiom, not soundness).
 
 ## Install
 
 ```bash
-/plugin install mantis-rubric@mantis
+/plugin install lich-rubric@lich
 ```
 
 ## Skills
 
 | Skill | Purpose |
 |-------|---------|
-| `/mantis-explain <finding_id>` | Walk through why M1/M5/M7 flagged a specific finding, with honest Kappa reporting |
+| `/lich-explain <finding_id>` | Walk through why M1/M5/M7 flagged a specific finding, with honest Kappa reporting |
 
 ## State
 

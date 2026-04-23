@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://mantis.local/schemas/rule-map-1.0.json",
-  "title": "Mantis Rule Map",
-  "description": "Canonical schema for shared/rules/<scope>/<slug>.json — maps upstream linter/framework rule IDs to Mantis M-engine buckets. Security-framed rules are routed to security_defer_to_reaper with never_mapped:true; Reaper R3 owns the CWE lane.",
+  "$id": "https://lich.local/schemas/rule-map-1.0.json",
+  "title": "Lich Rule Map",
+  "description": "Canonical schema for shared/rules/<scope>/<slug>.json — maps upstream linter/framework rule IDs to Lich M-engine buckets. Security-framed rules are routed to security_defer_to_hydra with never_mapped:true; Hydra R3 owns the CWE lane.",
   "type": "object",
   "required": [
     "schema_version",
@@ -44,7 +44,7 @@
         "complexity_m7",
         "naming_m7",
         "testability_m7",
-        "security_defer_to_reaper"
+        "security_defer_to_hydra"
       ],
       "additionalProperties": false,
       "properties": {
@@ -53,7 +53,7 @@
         "complexity_m7": { "$ref": "#/definitions/mappedCategory" },
         "naming_m7": { "$ref": "#/definitions/mappedCategory" },
         "testability_m7": { "$ref": "#/definitions/mappedCategory" },
-        "security_defer_to_reaper": { "$ref": "#/definitions/deferredCategory" }
+        "security_defer_to_hydra": { "$ref": "#/definitions/deferredCategory" }
       }
     },
     "coverage_stats": {

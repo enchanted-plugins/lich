@@ -1,6 +1,6 @@
 # Sandbox Demo
 
-A single-command walkthrough of Mantis's M1 -> M5 -> verdict pipeline on a deliberately-buggy fixture.
+A single-command walkthrough of Lich's M1 -> M5 -> verdict pipeline on a deliberately-buggy fixture.
 
 ## Run it
 

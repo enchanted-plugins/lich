@@ -1,12 +1,12 @@
 ---
-name: mantis-sandbox
+name: lich-sandbox
 description: >
   Runs M5 Bounded Subprocess Dry-Run. For each M1-flagged runtime-failure
   candidate, synthesizes a witness input (boundary values: 0, None, "",
   sys.maxsize, etc.), executes the containing function in a stdlib-only
   sandbox with resource.setrlimit CPU/AS/NOFILE/FSIZE caps + signal.alarm
   wall-clock timeout, and records confirmed / timeout / sandbox-error /
-  input-synthesis-failed outcomes. Use when: mantis-core emits flags that
+  input-synthesis-failed outcomes. Use when: lich-core emits flags that
   need confirmation, OR the user runs a skill that explicitly invokes M5.
   Do not use for: running untrusted code without caps, running on Windows
   (skip with platform-unsupported), or as a replacement for real test
@@ -15,23 +15,23 @@ model: sonnet
 tools: [Read, Bash]
 ---
 
-# mantis-sandbox
+# lich-sandbox
 
 ## Preconditions
 
 - **POSIX platform.** Python's `resource` module is absent on Windows — if `platform.system() == "Windows"`, skip with `platform-unsupported` and do not attempt to run code.
-- `plugins/mantis-core/state/review-flags.jsonl` exists and has records to confirm.
-- Target file is in a project Mantis can safely execute (the developer's own repo, not a fetched-unknown source).
+- `plugins/lich-core/state/review-flags.jsonl` exists and has records to confirm.
+- Target file is in a project Lich can safely execute (the developer's own repo, not a fetched-unknown source).
 
 ## Inputs
 
-- **Hook payload** (chained after mantis-core): the review-flags records emitted by mantis-core.
+- **Hook payload** (chained after lich-core): the review-flags records emitted by lich-core.
 - **Optional direct call**: `{file, function, line, flag_class}` — run one confirmation.
 
 ## Steps
 
 1. **Platform guard.** If not POSIX, emit `{status: "platform-unsupported"}` and exit. Never silently pretend M5 ran.
-2. **Read flagged sites.** Load `plugins/mantis-core/state/review-flags.jsonl`; select records with `needs_M5_confirmation: true`.
+2. **Read flagged sites.** Load `plugins/lich-core/state/review-flags.jsonl`; select records with `needs_M5_confirmation: true`.
 3. **Synthesize witness inputs.** For each flagged variable, assemble boundary values from a language-aware default set:
    - Python: `{0, -1, None, "", [], {}, sys.maxsize, -sys.maxsize}`
    - TypeScript: `{0, -1, null, undefined, "", [], {}, Number.MAX_SAFE_INTEGER}`
@@ -44,7 +44,7 @@ tools: [Read, Bash]
    - `signal.alarm(10)` — 10-second wall-clock kill
    - Environment scrubbed: no `HTTP_PROXY`, `HTTPS_PROXY`, `no_proxy=*`
    - Per-run `tempfile.mkdtemp()` write-target, deleted on exit
-5. **Record outcome.** For each witness-execution, write to `plugins/mantis-sandbox/state/run-log.jsonl`:
+5. **Record outcome.** For each witness-execution, write to `plugins/lich-sandbox/state/run-log.jsonl`:
    - `{status: "confirmed-bug", error_class: "ZeroDivisionError", witness: {...}, ...}` — bug reproduced
    - `{status: "timeout-without-confirmation", duration_ms: 10000, ...}` — alarm fired before bug surfaced
    - `{status: "sandbox-error", error: "...", ...}` — infra failure (not a finding)
@@ -54,13 +54,13 @@ tools: [Read, Bash]
 
 ## Outputs
 
-- `plugins/mantis-sandbox/state/run-log.jsonl` — append-only run history.
+- `plugins/lich-sandbox/state/run-log.jsonl` — append-only run history.
 - stderr: one line per run status.
 - Parent return: `{confirmed: N, timeout: N, sandbox_error: N, no_bug: N, duration_ms: X}`.
 
 ## Handoff
 
-Next skill in the chain: **mantis-verdict** composes mantis-core flags + mantis-sandbox confirmations + mantis-rubric scores into DEPLOY/HOLD/FAIL.
+Next skill in the chain: **lich-verdict** composes lich-core flags + lich-sandbox confirmations + lich-rubric scores into DEPLOY/HOLD/FAIL.
 
 ## Failure modes
 

@@ -1,4 +1,4 @@
-"""Mantis M2 — Falleri Structural Diff (GumTree-lite, Python-only v2).
+"""Lich M2 — Falleri Structural Diff (GumTree-lite, Python-only v2).
 
 Classifies AST-level edits between two versions of a Python source file so
 M1's attention can be focused on structural change rather than linear line
@@ -557,7 +557,7 @@ def _read_input(file_arg: str | None, text_arg: str | None) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="Mantis M2 structural diff")
+    ap = argparse.ArgumentParser(description="Lich M2 structural diff")
     ap.add_argument("--old-file", help="Path to old source (or '-' for stdin)")
     ap.add_argument("--new-file", help="Path to new source (or '-' for stdin)")
     ap.add_argument("--old-text", help="Inline old source (or '-' for stdin)")

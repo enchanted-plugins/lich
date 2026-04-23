@@ -2,7 +2,7 @@
 
 Brand invariant #7 names enchanted-mcp as the cross-plugin coordination
 surface. Until that transport lands, this module provides a functionally
-equivalent local-file bus so mantis plugins can publish and subscribe
+equivalent local-file bus so lich plugins can publish and subscribe
 without a sibling-plugin dependency.
 
 Every event is a single JSON object appended as one line to
@@ -16,10 +16,10 @@ via the file handle's position lock). Each event is emitted in one
 line.
 
 Schema (persisted line):
-    {"topic": "mantis.review.completed",
+    {"topic": "lich.review.completed",
      "payload": {...},
      "ts": "2026-04-20T12:34:56.789012+00:00",
-     "source": "mantis-verdict",
+     "source": "lich-verdict",
      "uuid": "8c3f5b12-..."}
 
 Phase 2 migration: when enchanted-mcp lands, only the ``publish`` /
@@ -148,7 +148,7 @@ def publish(topic: str, payload: dict, source: str,
 def _matches_topic(event_topic: str, filter_topic: Optional[str]) -> bool:
     if filter_topic is None:
         return True
-    # Prefix match: "mantis." matches "mantis.review.completed"
+    # Prefix match: "lich." matches "lich.review.completed"
     # Exact topic also matches (since a string is a prefix of itself).
     return event_topic == filter_topic or event_topic.startswith(filter_topic)
 
@@ -171,8 +171,8 @@ def subscribe(topic: Optional[str] = None,
 
     Args:
         topic: exact-match or prefix-match filter; ``None`` = all.
-                ``"mantis."`` matches ``"mantis.review.completed"``.
-                ``"mantis.review.completed"`` matches only itself.
+                ``"lich."`` matches ``"lich.review.completed"``.
+                ``"lich.review.completed"`` matches only itself.
         since: ISO timestamp; yields only events with ``ts > since``.
         limit: maximum events to yield. The most recent N are kept.
         bus_path: override for tests.

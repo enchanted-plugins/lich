@@ -8,10 +8,10 @@ correctness-bucket rules into `Flag` records that `m1_walker.py`
 produces.
 
 Contract (brand invariants from CLAUDE.md):
-    - Zero runtime deps on Mantis's side. Clippy is optional in the target
+    - Zero runtime deps on Lich's side. Clippy is optional in the target
       project's toolchain.
-    - Security-framed clippy lints (listed under `security_defer_to_reaper`
-      in the rust.json registry) NEVER map to M1. Reaper R3 owns the CWE
+    - Security-framed clippy lints (listed under `security_defer_to_hydra`
+      in the rust.json registry) NEVER map to M1. Hydra R3 owns the CWE
       taxonomy. A hard `_bucket_is_security` guard refuses to emit an M1
       flag for those rules even if a future registry edit misroutes one.
     - Advisory only. Subprocess crash, timeout, missing crate root, or
@@ -59,7 +59,7 @@ _REGISTRY_REL = os.path.join("shared", "rules", "languages", "rust.json")
 def _repo_root() -> str:
     """Walk up to the repo root (the dir containing `shared/`).
 
-    scripts/adapters -> scripts -> mantis-core -> plugins -> repo_root.
+    scripts/adapters -> scripts -> lich-core -> plugins -> repo_root.
     """
     here = os.path.dirname(os.path.abspath(__file__))
     return os.path.dirname(
@@ -107,7 +107,7 @@ def load_registry(path: Optional[str] = None) -> dict:
     for bucket, body in data.get("categories", {}).items():
         if bucket == "correctness_m1":
             route = "m1"
-        elif bucket == "security_defer_to_reaper":
+        elif bucket == "security_defer_to_hydra":
             route = "defer"
         else:
             route = "m7"
@@ -325,9 +325,9 @@ _WITNESS_HINTS_BY_RULE: dict[str, dict] = {
 
 
 def _bucket_is_security(bucket: str) -> bool:
-    """Hard-coded guard: any rule from `security_defer_to_reaper` is
-    Reaper's lane. Never emit an M1 flag for these."""
-    return bucket == "security_defer_to_reaper"
+    """Hard-coded guard: any rule from `security_defer_to_hydra` is
+    Hydra's lane. Never emit an M1 flag for these."""
+    return bucket == "security_defer_to_hydra"
 
 
 def _extract_line(message: dict) -> int:
@@ -366,7 +366,7 @@ def findings_to_flags(
 
     Only `correctness_m1` rules survive. Security-bucket rules are
     dropped unconditionally by `_bucket_is_security`. Unknown rule IDs
-    are dropped silently (Mantis prefers under-coverage to guessed
+    are dropped silently (Lich prefers under-coverage to guessed
     severity).
     """
     flags: list[Flag] = []

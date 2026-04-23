@@ -6,7 +6,7 @@
     "version_range": ">=0.5.0,<1.0.0",
     "homepage": "https://github.com/astral-sh/ruff"
   },
-  "note": "Normalized from plugins/mantis-python/config/ruff-rule-map.json. Phase 1 covers ~120 of ruff's ~900 rules. Security rules in the S-series (bandit-derived) are deliberately NOT mapped — Reaper R3 owns the CWE lane. Listed here as S-prefix families for provenance.",
+  "note": "Normalized from plugins/lich-python/config/ruff-rule-map.json. Phase 1 covers ~120 of ruff's ~900 rules. Security rules in the S-series (bandit-derived) are deliberately NOT mapped — Hydra R3 owns the CWE lane. Listed here as S-prefix families for provenance.",
   "categories": {
     "correctness_m1": {
       "description": "Rules that flag runtime-failure candidates — routed through M1 (abstract interpretation validates) and potentially M5 (sandbox confirms).",
@@ -44,8 +44,8 @@
         "PT001", "PT002", "PT003", "PT006", "PT007", "PT011", "PT012", "PT013", "PT015", "PT017", "PT018", "PT019", "PT020", "PT021", "PT022", "PT023", "PT026"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "Security rules — Reaper R3 owns these (98 CWEs / 2,011 patterns). Mantis detects the rule fired but does NOT emit a finding; boosts M6 attention weight on the file instead. Listed as S-prefix families for provenance; never mapped to any M-bucket.",
+    "security_defer_to_hydra": {
+      "description": "Security rules — Hydra R3 owns these (98 CWEs / 2,011 patterns). Lich detects the rule fired but does NOT emit a finding; boosts M6 attention weight on the file instead. Listed as S-prefix families for provenance; never mapped to any M-bucket.",
       "rule_ids": [
         "S1**", "S3**", "S5**", "S6**", "S7**",
         "S101", "S102", "S103", "S104", "S105", "S106", "S107", "S108", "S110", "S112", "S113",

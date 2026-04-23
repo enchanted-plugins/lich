@@ -6,7 +6,7 @@
     "version_range": ">=0.1.75",
     "homepage": "https://doc.rust-lang.org/clippy/"
   },
-  "note": "Phase 1 seed. Clippy ships ~600 lints grouped into correctness, style, complexity, perf, pedantic, nursery, suspicious, restriction. Mantis uses the stable clippy name as rule_id (e.g. clippy::unwrap_used). Suspicious/restriction security framings (e.g. clippy::mem_forget with unsafe context) defer to Reaper.",
+  "note": "Phase 1 seed. Clippy ships ~600 lints grouped into correctness, style, complexity, perf, pedantic, nursery, suspicious, restriction. Lich uses the stable clippy name as rule_id (e.g. clippy::unwrap_used). Suspicious/restriction security framings (e.g. clippy::mem_forget with unsafe context) defer to Hydra.",
   "categories": {
     "correctness_m1": {
       "description": "Clippy correctness lints — panic / UB / logical bug candidates. Routed to M1 / M5.",
@@ -60,8 +60,8 @@
         "clippy::bool_assert_comparison"
       ]
     },
-    "security_defer_to_reaper": {
-      "description": "Security-framed clippy + rustsec advisories — Reaper R3 owns these (CWE lane). Listed for provenance; never mapped.",
+    "security_defer_to_hydra": {
+      "description": "Security-framed clippy + rustsec advisories — Hydra R3 owns these (CWE lane). Listed for provenance; never mapped.",
       "rule_ids": [
         "clippy::mem_forget",
         "clippy::unsound_collection_transmute",

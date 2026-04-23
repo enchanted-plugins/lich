@@ -7,12 +7,12 @@ output, and convert correctness-bucket findings (SA-series) into the same
 adapter returns cleanly so callers can fall back.
 
 Contract (brand invariants from CLAUDE.md):
-    - Zero runtime deps on Mantis's side. Staticcheck is optional in the
+    - Zero runtime deps on Lich's side. Staticcheck is optional in the
       target project's toolchain.
     - Security-framed rules (gosec G-series and the crypto SA1018 entry
-      enumerated under `security_defer_to_reaper`) NEVER map to M1.
-      Reaper R3 owns CWEs. We hard-code a guard that refuses to emit an
-      M1 flag for a rule whose bucket is `security_defer_to_reaper`, even
+      enumerated under `security_defer_to_hydra`) NEVER map to M1.
+      Hydra R3 owns CWEs. We hard-code a guard that refuses to emit an
+      M1 flag for a rule whose bucket is `security_defer_to_hydra`, even
       if a registry edit accidentally double-lists one.
     - Advisory only. Subprocess crash, timeout, or malformed JSON -> log
       to stderr as a single JSON object and return None / []; never raise.
@@ -55,7 +55,7 @@ _REGISTRY_REL = os.path.join("shared", "rules", "languages", "go.json")
 def _repo_root() -> str:
     """Walk up from this file to the repo root (dir containing `shared/`).
 
-    scripts/adapters -> scripts -> mantis-core -> plugins -> repo_root.
+    scripts/adapters -> scripts -> lich-core -> plugins -> repo_root.
     """
     here = os.path.dirname(os.path.abspath(__file__))
     return os.path.dirname(
@@ -102,7 +102,7 @@ def load_registry(path: Optional[str] = None) -> dict:
     for bucket, body in data.get("categories", {}).items():
         if bucket == "correctness_m1":
             route = "m1"
-        elif bucket == "security_defer_to_reaper":
+        elif bucket == "security_defer_to_hydra":
             route = "defer"
         else:
             route = "m7"
@@ -232,10 +232,10 @@ _WITNESS_HINTS_BY_RULE: dict[str, dict] = {
 
 
 def _bucket_is_security(bucket: str) -> bool:
-    """Hard-coded guard: any rule from `security_defer_to_reaper` is
-    Reaper's lane. Never emit an M1 flag for these — even if a future
+    """Hard-coded guard: any rule from `security_defer_to_hydra` is
+    Hydra's lane. Never emit an M1 flag for these — even if a future
     registry edit accidentally routes one to M1."""
-    return bucket == "security_defer_to_reaper"
+    return bucket == "security_defer_to_hydra"
 
 
 def _extract_location(finding: dict) -> tuple[int, str]:
@@ -270,7 +270,7 @@ def findings_to_flags(
 
     Only findings whose rule_id routes to M1 (`correctness_m1` bucket) are
     emitted. Security-bucket rules are dropped unconditionally. Unknown
-    rule IDs (not in the registry) are also dropped — Mantis deliberately
+    rule IDs (not in the registry) are also dropped — Lich deliberately
     under-covers in Phase 1 rather than guess at severity.
     """
     flags: list[Flag] = []

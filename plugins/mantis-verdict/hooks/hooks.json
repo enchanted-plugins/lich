@@ -1,5 +1,5 @@
 {
-  "description": "mantis-verdict hooks — advisory-only. Terminal step in the PostToolUse chain; composes the verdict after mantis-core + mantis-sandbox + mantis-rubric have all written their state. See @shared/conduct/hooks.md.",
+  "description": "lich-verdict hooks — advisory-only. Terminal step in the PostToolUse chain; composes the verdict after lich-core + lich-sandbox + lich-rubric have all written their state. See @shared/conduct/hooks.md.",
   "hooks": {
     "PostToolUse": [
       {
@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" mantis-verdict-compose",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" lich-verdict-compose",
             "timeout": 5000
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" mantis-verdict-compose",
+            "command": "bash \"$CLAUDE_PLUGIN_ROOT/hooks/dispatch.sh\" lich-verdict-compose",
             "timeout": 5000
           }
         ]

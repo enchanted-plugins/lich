@@ -1,4 +1,4 @@
-"""Mantis M4 — Type-Reflected Invariant Synthesis.
+"""Lich M4 — Type-Reflected Invariant Synthesis.
 
 Reads the target function's type annotations and synthesizes
 type-compatible boundary-value witnesses that M5's sandboxed runner can

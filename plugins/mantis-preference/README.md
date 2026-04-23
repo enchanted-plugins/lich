@@ -1,4 +1,4 @@
-# mantis-preference
+# lich-preference
 
 *M6 Bayesian Preference Accumulation. Per-(developer, rule) Beta-Binomial posteriors with Thompson sampling and a 5% minimum surfacing floor.*
 
@@ -8,8 +8,8 @@ Learns each developer's rule preferences from their accept/reject signals, witho
 
 - Every `(developer_id, rule_id)` pair has a Beta posterior `Beta(α, β)` starting at `Beta(1, 1)` (uniform).
 - **Accept → α++.** Reject → β++. Override (developer ignored without explicit decision) → split update: `α += 0.5`, `β += 0.5`.
-- On each review, Mantis **Thompson-samples** a surfacing probability from the posterior for every candidate rule. High-mean rules surface often; high-variance rules get exploration.
-- **5% minimum floor.** No rule dies permanently from accumulated rejections. Permanent suppression requires the developer's explicit `/mantis-disable <rule>`.
+- On each review, Lich **Thompson-samples** a surfacing probability from the posterior for every candidate rule. High-mean rules surface often; high-variance rules get exploration.
+- **5% minimum floor.** No rule dies permanently from accumulated rejections. Permanent suppression requires the developer's explicit `/lich-disable <rule>`.
 
 ## Why this matters
 
@@ -19,20 +19,20 @@ M6 is genuinely novel — the first principled per-developer Bayesian posterior 
 
 ## Non-duplication
 
-- Does not override Hornet's trust score — consumes it as a prior *multiplier*, not a replacement.
-- Does not make security findings "preferable" or "unpreferable" — Reaper R3's lane is out of scope.
+- Does not override Raven's trust score — consumes it as a prior *multiplier*, not a replacement.
+- Does not make security findings "preferable" or "unpreferable" — Hydra R3's lane is out of scope.
 
 ## Install
 
 ```bash
-/plugin install mantis-preference@mantis
+/plugin install lich-preference@lich
 ```
 
 ## Skills
 
 | Skill | Purpose |
 |-------|---------|
-| `/mantis-disable <rule_id>` | Permanently suppress a rule (90-day expiry; renewable) |
+| `/lich-disable <rule_id>` | Permanently suppress a rule (90-day expiry; renewable) |
 
 Ambient accept/reject learning happens automatically via the PostToolUse hook — no developer command needed.
 
@@ -54,7 +54,7 @@ Ambient accept/reject learning happens automatically via the PostToolUse hook �
   "repo_id": "path-sha256-12char",
   "last_update": "2026-04-20T...",
   "rules": {
-    "mantis-python:unused-import": {
+    "lich-python:unused-import": {
       "alpha": 3, "beta": 7,
       "surface_count": 10, "accept_count": 2,
       "reject_count": 6, "override_count": 2,

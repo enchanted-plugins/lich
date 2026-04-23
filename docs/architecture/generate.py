@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Mantis Verdict Report Generator (brand invariant #5).
+Lich Verdict Report Generator (brand invariant #5).
 
 Reads the five engine state files and renders a dark-themed HTML document;
 optionally shells out to docs/assets/render.js (puppeteer) for PDF rendering.
@@ -35,12 +35,12 @@ TEMPLATE = ARCH_DIR / "template.html"
 DEFAULT_OUTPUT = ARCH_DIR / "output" / "verdict-report.pdf"
 
 STATE_FILES = {
-    "verdict":  REPO_ROOT / "plugins" / "mantis-verdict"    / "state" / "verdict.jsonl",
-    "flags":    REPO_ROOT / "plugins" / "mantis-core"       / "state" / "review-flags.jsonl",
-    "sandbox":  REPO_ROOT / "plugins" / "mantis-sandbox"    / "state" / "run-log.jsonl",
-    "kappa":    REPO_ROOT / "plugins" / "mantis-rubric"     / "state" / "kappa-log.jsonl",
-    "prefs":    REPO_ROOT / "plugins" / "mantis-preference" / "state" / "learnings.json",
-    "rubric_cfg": REPO_ROOT / "plugins" / "mantis-rubric" / "config" / "rubric-v1.json",
+    "verdict":  REPO_ROOT / "plugins" / "lich-verdict"    / "state" / "verdict.jsonl",
+    "flags":    REPO_ROOT / "plugins" / "lich-core"       / "state" / "review-flags.jsonl",
+    "sandbox":  REPO_ROOT / "plugins" / "lich-sandbox"    / "state" / "run-log.jsonl",
+    "kappa":    REPO_ROOT / "plugins" / "lich-rubric"     / "state" / "kappa-log.jsonl",
+    "prefs":    REPO_ROOT / "plugins" / "lich-preference" / "state" / "learnings.json",
+    "rubric_cfg": REPO_ROOT / "plugins" / "lich-rubric" / "config" / "rubric-v1.json",
     "shared_learnings": REPO_ROOT / "shared" / "learnings.json",
 }
 
@@ -550,7 +550,7 @@ def render_pdf(html_path: Path, pdf_path: Path) -> int:
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Mantis verdict-report PDF/HTML generator.")
+    ap = argparse.ArgumentParser(description="Lich verdict-report PDF/HTML generator.")
     ap.add_argument("--out", default=str(DEFAULT_OUTPUT),
                     help="Output path (.pdf invokes puppeteer; .html writes HTML only).")
     ap.add_argument("--html-only", action="store_true",

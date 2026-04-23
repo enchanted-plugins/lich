@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — POSIX Python runner.
+"""Lich M5 sandbox — POSIX Python runner.
 
 Spawns one subprocess per witness. Caps are installed via `preexec_fn`
 from `limits.apply_in_child` after fork, before exec. Environment is
@@ -143,7 +143,7 @@ class PosixPythonRunner:
         witness: dict,
     ) -> _base.RunResult:
         # Per-run sandbox tempdir — cwd for the child, scrubbed on exit.
-        workdir = tempfile.mkdtemp(prefix="mantis_m5_")
+        workdir = tempfile.mkdtemp(prefix="lich_m5_")
         child_path = Path(workdir) / "_sandbox_child.py"
         child_path.write_text(_CHILD_SCRIPT, encoding="utf-8")
 

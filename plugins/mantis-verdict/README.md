@@ -1,10 +1,10 @@
-# mantis-verdict
+# lich-verdict
 
-*Cross-engine verdict synthesizer. Composes M1/M2/M5/M6/M7 outputs into a single DEPLOY/HOLD/FAIL verdict per Mantis's threshold contract.*
+*Cross-engine verdict synthesizer. Composes M1/M2/M5/M6/M7 outputs into a single DEPLOY/HOLD/FAIL verdict per Lich's threshold contract.*
 
 ## What it does
 
-Reads sibling sub-plugin state files (mantis-core flags, mantis-sandbox run-log, mantis-preference posteriors, mantis-rubric kappa-log) and applies the threshold math defined in `../../CLAUDE.md` § Verdict bar:
+Reads sibling sub-plugin state files (lich-core flags, lich-sandbox run-log, lich-preference posteriors, lich-rubric kappa-log) and applies the threshold math defined in `../../CLAUDE.md` § Verdict bar:
 
 | Verdict | M1 condition | M5 condition | M6 condition | M7 condition |
 |---------|-------------|--------------|--------------|--------------|
@@ -16,21 +16,21 @@ A confirmed M5 runtime failure is a **hard FAIL trigger** — a fact with a conc
 
 ## Event emission
 
-- **Phase 1**: Appends to `state/verdict.jsonl`. Weaver's pre-commit gate reads this file and refuses auto-commit on FAIL.
-- **Phase 2**: Publishes `mantis.review.completed` on the enchanted-mcp event bus. Same consumers, event-driven.
+- **Phase 1**: Appends to `state/verdict.jsonl`. Sylph's pre-commit gate reads this file and refuses auto-commit on FAIL.
+- **Phase 2**: Publishes `lich.review.completed` on the enchanted-mcp event bus. Same consumers, event-driven.
 
 ## Non-duplication
 
 - Doesn't re-score anything — only composes existing sub-plugin outputs.
-- Doesn't mutate sibling state (mantis-core's flags, mantis-sandbox's run-log, etc.). Write access limited to `state/verdict.jsonl`.
+- Doesn't mutate sibling state (lich-core's flags, lich-sandbox's run-log, etc.). Write access limited to `state/verdict.jsonl`.
 
 ## Install
 
 ```bash
-/plugin install mantis-verdict@mantis
+/plugin install lich-verdict@lich
 ```
 
-Terminal piece of the pipeline. Requires mantis-core, mantis-sandbox, mantis-preference, mantis-rubric.
+Terminal piece of the pipeline. Requires lich-core, lich-sandbox, lich-preference, lich-rubric.
 
 ## State
 
@@ -42,6 +42,6 @@ Terminal piece of the pipeline. Requires mantis-core, mantis-sandbox, mantis-pre
 
 | Event | Trigger | Payload |
 |-------|---------|---------|
-| `mantis.review.completed` | End of Mantis review pass | `{pr_id, verdict, engines, rubric_scores, kappa}` |
-| `mantis.rule.disabled` | Developer `/mantis-disable` | `{developer_id, rule_id, expiry_ts}` |
-| `mantis.sandbox.failed` | M5 infra failure | `{file, function, error_class}` |
+| `lich.review.completed` | End of Lich review pass | `{pr_id, verdict, engines, rubric_scores, kappa}` |
+| `lich.rule.disabled` | Developer `/lich-disable` | `{developer_id, rule_id, expiry_ts}` |
+| `lich.sandbox.failed` | M5 infra failure | `{file, function, error_class}` |

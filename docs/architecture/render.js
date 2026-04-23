@@ -1,4 +1,4 @@
-// Mantis verdict-report PDF renderer.
+// Lich verdict-report PDF renderer.
 //
 // Dev-only. Invoked by docs/architecture/generate.py when --out ends in .pdf.
 // Loads puppeteer from docs/assets/node_modules (the single dev-dep registry).

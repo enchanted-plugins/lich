@@ -42,7 +42,7 @@ from pathlib import Path
 
 
 _THIS = Path(__file__).resolve()
-_PLUGIN_DIR = _THIS.parents[1]  # plugins/mantis-rubric
+_PLUGIN_DIR = _THIS.parents[1]  # plugins/lich-rubric
 _REPO_ROOT = _PLUGIN_DIR.parents[1]  # <repo>
 _DEFAULT_CORPUS = _REPO_ROOT / "tests" / "fixtures" / "rubric-corpus"
 _DEFAULT_OUT = _DEFAULT_CORPUS / "scores.json"

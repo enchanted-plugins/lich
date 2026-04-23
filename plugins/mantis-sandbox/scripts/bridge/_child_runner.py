@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — WSL-side child runner.
+"""Lich M5 sandbox — WSL-side child runner.
 
 This file is the *source* of the script body that `wsl.py` pipes into
 `wsl.exe -e python3` via stdin. It is designed to be:
@@ -14,7 +14,7 @@ This file is the *source* of the script body that `wsl.py` pipes into
   stderr on exception, exits non-zero.
 
 The 6 resource-cap constants below are DUPLICATED from
-`plugins/mantis-sandbox/scripts/limits.py`. This is the one place the
+`plugins/lich-sandbox/scripts/limits.py`. This is the one place the
 duplication is tolerated: the child runs across the `wsl.exe` boundary
 in a different Python interpreter (Linux), so it cannot `from .. import
 limits`. The duplication is load-bearing — if these drift from
@@ -25,7 +25,7 @@ limits`. The duplication is load-bearing — if these drift from
 from __future__ import annotations
 
 # ---------------------------------------------------------------------------
-# Load-bearing constants — MUST match plugins/mantis-sandbox/scripts/limits.py
+# Load-bearing constants — MUST match plugins/lich-sandbox/scripts/limits.py
 # ---------------------------------------------------------------------------
 CAP_CPU_S = 5
 CAP_AS_BYTES = 512 * 1024 * 1024

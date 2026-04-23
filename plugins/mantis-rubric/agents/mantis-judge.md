@@ -4,7 +4,7 @@ context: fork
 allowed-tools: [Read]
 ---
 
-# mantis-judge
+# lich-judge
 
 Runs M7 Zheng Pairwise Rubric Judgment — scores a diff against the 5-axis rubric with position-swap debiasing and Cohen's Kappa inter-judge reliability.
 
@@ -16,7 +16,7 @@ Runs M7 Zheng Pairwise Rubric Judgment — scores a diff against the 5-axis rubr
 - If per-axis |score_delta| ≥ 1.5 → escalate the axis to Opus adjudicator (separate agent call).
 - If Kappa < 0.4 on any axis → flag the axis "unstable" in the output; do not average silently.
 - Record per-axis scores + Kappa in `state/kappa-log.jsonl`.
-- Downshift to Haiku if `nook.budget.threshold.crossed` event fires (Phase 2 subscription; Phase 1 reads the event from `nook/plugins/*/state/`).
+- Downshift to Haiku if `pech.budget.threshold.crossed` event fires (Phase 2 subscription; Phase 1 reads the event from `pech/plugins/*/state/`).
 
 ## Contract
 
@@ -57,7 +57,7 @@ Runs M7 Zheng Pairwise Rubric Judgment — scores a diff against the 5-axis rubr
 
 This agent runs at **Sonnet** tier because: rubric judgment requires reasoning over code semantics, not just pattern-matching. Haiku's speed is a liability here (lower-quality per-axis calibration). Opus is reserved for disagreement adjudication where two Sonnet runs diverge by ≥ 1.5 points.
 
-Downshift path: when Nook's `nook.budget.threshold.crossed` fires at 80%, this agent falls back to **Haiku** for the next N reviews (N configurable, default 10). Cost contract with Nook is honored.
+Downshift path: when Pech's `pech.budget.threshold.crossed` fires at 80%, this agent falls back to **Haiku** for the next N reviews (N configurable, default 10). Cost contract with Pech is honored.
 
 ## Failure handling
 

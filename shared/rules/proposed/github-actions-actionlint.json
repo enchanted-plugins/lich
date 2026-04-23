@@ -6,7 +6,7 @@
     "version_range": ">=1.7.0,<2.0.0",
     "homepage": "https://github.com/rhysd/actionlint"
   },
-  "note": "Phase 1 seed covering actionlint's canonical 'kind' identifiers (text-based, not numeric). actionlint emits -format=json with each finding carrying a 'kind' field — stdlib-parseable. Shellcheck / pyflakes kinds are pass-throughs and already covered by shared/rules/languages/shell.json + python.json; listed here for provenance with a pass-through marker-style comment but routed to their home linter's bucket via cross-reference, not duplicated into M-buckets here. Security-framed kinds (credentials, script-injection, permissions-scope-over-broad) defer to Reaper R3, which owns CI-pipeline credential-leak + command-injection taxonomy.",
+  "note": "Phase 1 seed covering actionlint's canonical 'kind' identifiers (text-based, not numeric). actionlint emits -format=json with each finding carrying a 'kind' field — stdlib-parseable. Shellcheck / pyflakes kinds are pass-throughs and already covered by shared/rules/languages/shell.json + python.json; listed here for provenance with a pass-through marker-style comment but routed to their home linter's bucket via cross-reference, not duplicated into M-buckets here. Security-framed kinds (credentials, script-injection, permissions-scope-over-broad) defer to Hydra R3, which owns CI-pipeline credential-leak + command-injection taxonomy.",
   "categories": {
     "correctness_m1": {
       "description": "Workflow runtime-failure candidates — malformed expressions, undefined job dependencies, invalid cron schedules, missing runner labels that will cause a queued job to stall indefinitely. M1 widens on job-graph reachability; M5 cannot spin up a GitHub runner at zero-dep so these stay at static confidence.",
@@ -48,8 +48,8 @@
       "description": "Phase 2 gap — no testability-of-workflow checks in the current actionlint surface. Seeded empty.",
       "rule_ids": []
     },
-    "security_defer_to_reaper": {
-      "description": "CI-pipeline credential and script-injection detectors — Reaper R3 owns CWE-798 (hardcoded credentials), CWE-77 (command injection via unescaped ${{ github.event.*.body }}), CWE-250 (over-broad GITHUB_TOKEN scopes). Mantis records the actionlint fire and boosts M6 attention weight on the workflow file but does NOT emit a finding.",
+    "security_defer_to_hydra": {
+      "description": "CI-pipeline credential and script-injection detectors — Hydra R3 owns CWE-798 (hardcoded credentials), CWE-77 (command injection via unescaped ${{ github.event.*.body }}), CWE-250 (over-broad GITHUB_TOKEN scopes). Lich records the actionlint fire and boosts M6 attention weight on the workflow file but does NOT emit a finding.",
       "rule_ids": [
         "credentials",
         "script-injection",

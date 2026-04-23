@@ -1,9 +1,9 @@
 """Unit tests for the ruff adapter.
 
 Run (from repo root):
-    python plugins/mantis-core/scripts/tests/test_ruff_adapter.py
+    python plugins/lich-core/scripts/tests/test_ruff_adapter.py
 or:
-    python -m unittest discover -s plugins/mantis-core/scripts/tests -p 'test_*.py'
+    python -m unittest discover -s plugins/lich-core/scripts/tests -p 'test_*.py'
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ import unittest
 from unittest import mock
 
 # Make sibling `scripts/` importable regardless of cwd (hyphen in
-# `mantis-core` blocks package import).
+# `lich-core` blocks package import).
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SCRIPTS = os.path.dirname(_HERE)
 if _SCRIPTS not in sys.path:
@@ -217,7 +217,7 @@ class FindingsToFlagsTests(unittest.TestCase):
         flags = findings_to_flags(findings, rigged, self.path)
         self.assertEqual(
             flags, [],
-            "S-series rules must NEVER produce M1 flags — Reaper's lane.",
+            "S-series rules must NEVER produce M1 flags — Hydra's lane.",
         )
 
     def test_idiom_rules_dont_become_m1_flags(self):

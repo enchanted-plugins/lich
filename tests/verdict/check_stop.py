@@ -1,7 +1,7 @@
 """Helper for tests/verdict/test_stop_hook.sh.
 
 Reads the hook log from a caller-supplied byte offset and asserts whether a
-"spawn mantis-verdict-compose" line appears in the tail. Byte-offset slicing
+"spawn lich-verdict-compose" line appears in the tail. Byte-offset slicing
 beats timestamp filtering here because `date -Is` is only second-precision
 and adjacent scenarios can share a second. Exit 0 on pass, 1 on fail.
 
@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 
-_MARKER = "spawn mantis-verdict-compose"
+_MARKER = "spawn lich-verdict-compose"
 
 
 def main() -> int:

@@ -1,4 +1,4 @@
-"""Mantis M5 sandbox — runner protocol.
+"""Lich M5 sandbox — runner protocol.
 
 Each backend (POSIX, WSL, future Job Objects) implements this protocol.
 The orchestrator selects a backend via `bridge.platform_guard.check` and

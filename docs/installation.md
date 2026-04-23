@@ -1,6 +1,6 @@
 # Installation
 
-`mantis` is an @enchanted-plugins product. It installs as a Claude Code plugin.
+`lich` is an @enchanted-plugins product. It installs as a Claude Code plugin.
 
 ## Prerequisites
 
@@ -12,8 +12,8 @@
 ## Recommended: Claude Code marketplace
 
 ```
-/plugin marketplace add enchanted-plugins/mantis
-/plugin install full@mantis
+/plugin marketplace add enchanted-plugins/lich
+/plugin install full@lich
 ```
 
 Claude Code resolves the meta-plugin's dependency list and installs every sub-plugin in one pass. Verify with:
@@ -22,14 +22,14 @@ Claude Code resolves the meta-plugin's dependency list and installs every sub-pl
 /plugin list
 ```
 
-You should see each sub-plugin listed with its version. If a sub-plugin is missing, check `/plugin marketplace list` and confirm the `enchanted-plugins/mantis` entry is present.
+You should see each sub-plugin listed with its version. If a sub-plugin is missing, check `/plugin marketplace list` and confirm the `enchanted-plugins/lich` entry is present.
 
 ## Cherry-pick a single sub-plugin
 
 Some sub-plugins are useful on their own. To install only one:
 
 ```
-/plugin install <sub-plugin-name>@mantis
+/plugin install <sub-plugin-name>@lich
 ```
 
 See [README.md](../README.md) § Plugins for the list of sub-plugin names.
@@ -39,7 +39,7 @@ See [README.md](../README.md) § Plugins for the list of sub-plugin names.
 The shell installer clones the repo, validates the environment, and copies plugins into `~/.claude/plugins/`. Use this path when you need the local `shared/scripts/*.py` available outside Claude Code.
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/enchanted-plugins/mantis/main/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/enchanted-plugins/lich/main/install.sh)
 ```
 
 The installer is idempotent — re-running it upgrades in place.
@@ -47,8 +47,8 @@ The installer is idempotent — re-running it upgrades in place.
 ## From source (for contributors)
 
 ```bash
-git clone https://github.com/enchanted-plugins/mantis.git
-cd mantis
+git clone https://github.com/enchanted-plugins/lich.git
+cd lich
 bash install.sh
 cd docs/assets && npm install     # only if you will touch diagrams / math SVGs
 ```
@@ -64,12 +64,12 @@ If any step fails, see [troubleshooting.md](troubleshooting.md).
 ## Uninstall
 
 ```
-/plugin uninstall full@mantis
-/plugin marketplace remove enchanted-plugins/mantis
+/plugin uninstall full@lich
+/plugin marketplace remove enchanted-plugins/lich
 ```
 
-To remove the shell-installed copies as well: `rm -rf ~/.claude/plugins/mantis-*`.
+To remove the shell-installed copies as well: `rm -rf ~/.claude/plugins/lich-*`.
 
 ## Upgrades
 
-`/plugin upgrade full@mantis` for the marketplace install. Re-run the shell installer for the curl-based install. Before upgrading across a major version, skim [CHANGELOG.md](../CHANGELOG.md) for breaking changes.
+`/plugin upgrade full@lich` for the marketplace install. Re-run the shell installer for the curl-based install. Before upgrading across a major version, skim [CHANGELOG.md](../CHANGELOG.md) for breaking changes.

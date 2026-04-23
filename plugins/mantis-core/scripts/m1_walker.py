@@ -1,8 +1,8 @@
-"""Mantis M1 walker — stdlib `ast`-only static analyzer for runtime-failure flags.
+"""Lich M1 walker — stdlib `ast`-only static analyzer for runtime-failure flags.
 
 Emits flags consumed by Agent 3's M5 sandbox for confirmation. Zero external
 deps (stdlib `ast` only). Scope is correctness (div-zero, index-oob,
-null-deref); security findings are Reaper's lane.
+null-deref); security findings are Hydra's lane.
 
 Abstract interpretation is deliberately lite: per-function, we track names
 that are "possibly None" (assigned from a risky call) or "possibly empty"

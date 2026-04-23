@@ -1,6 +1,6 @@
 # Plugin.json Audit — 2026-04-21
 
-Auditor: config-audit pass per the 7-field contract in root `CLAUDE.md` § Brand invariant 4 (Allay-style marketplace). One line per plugin. JSON round-trip verified on all 8 files.
+Auditor: config-audit pass per the 7-field contract in root `CLAUDE.md` § Brand invariant 4 (Fae-style marketplace). One line per plugin. JSON round-trip verified on all 8 files.
 
 ## Contract
 
@@ -14,13 +14,13 @@ Repo root `LICENSE` is **MIT** (Copyright 2026 enchanted-plugins). All plugin.js
 
 | Plugin | name | version | description | author | license | repository | keywords | Delta |
 |---|---|---|---|---|---|---|---|---|
-| mantis-core | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
-| mantis-sandbox | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
-| mantis-preference | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
-| mantis-rubric | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
-| mantis-verdict | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
-| mantis-python | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
-| mantis-typescript | ok | ok | ok | ok | ok | **added** | ok (5) | +repository |
+| lich-core | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
+| lich-sandbox | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
+| lich-preference | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
+| lich-rubric | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
+| lich-verdict | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
+| lich-python | ok | ok | ok | ok | ok | **added** | ok (4) | +repository |
+| lich-typescript | ok | ok | ok | ok | ok | **added** | ok (5) | +repository |
 | full | ok | ok | ok | ok | ok | **added** | ok (3) | +repository |
 
 ## Findings

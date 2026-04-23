@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # M1 performance benchmark — 50-file sequential walker + dispatcher latency.
 #
-# Generates 50 synthetic .py files in /tmp/mantis-perf-<ts>/, each with a
+# Generates 50 synthetic .py files in /tmp/lich-perf-<ts>/, each with a
 # handful of M1-flaggable patterns (div-zero, index-oob, optional-deref).
 # Then two measurement passes:
 #
-#   (1) M1 walker standalone: `python plugins/mantis-core/scripts/__main__.py
+#   (1) M1 walker standalone: `python plugins/lich-core/scripts/__main__.py
 #       <file>` per file, sequential, wall-clock via `date +%s%N`.
 #
-#   (2) Dispatcher sync-path: `bash shared/hooks/dispatch.sh mantis-analyze`
+#   (2) Dispatcher sync-path: `bash shared/hooks/dispatch.sh lich-analyze`
 #       with a stdin JSON payload — this measures only the synchronous
 #       portion (the dispatcher backgrounds the real M1 work). The sync
 #       budget in CLAUDE.md hooks.md is < 100ms on POSIX; Windows git-bash
@@ -27,13 +27,13 @@ set -uo pipefail
 REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$REPO_ROOT"
 
-DISPATCHER_PY="$REPO_ROOT/plugins/mantis-core/scripts/__main__.py"
+DISPATCHER_PY="$REPO_ROOT/plugins/lich-core/scripts/__main__.py"
 DISPATCHER_SH="$REPO_ROOT/shared/hooks/dispatch.sh"
 RESULTS_JSON="$REPO_ROOT/tests/perf/bench_m1.latest.json"
 
 N_FILES=50
 TS=$(date +%s 2>/dev/null || python -c 'import time; print(int(time.time()))')
-WORKDIR="${TMPDIR:-/tmp}/mantis-perf-$TS"
+WORKDIR="${TMPDIR:-/tmp}/lich-perf-$TS"
 mkdir -p "$WORKDIR"
 echo "[bench-m1] workdir=$WORKDIR"
 
@@ -173,7 +173,7 @@ DISP_MS=()
 for f in "${FILES[@]}"; do
     payload=$(printf '{"tool_name":"Write","tool_input":{"file_path":"%s"}}' "$f")
     t0=$(_now_ms)
-    printf '%s' "$payload" | bash "$DISPATCHER_SH" mantis-analyze >/dev/null 2>&1 || true
+    printf '%s' "$payload" | bash "$DISPATCHER_SH" lich-analyze >/dev/null 2>&1 || true
     t1=$(_now_ms)
     DISP_MS+=("$(( t1 - t0 ))")
 done
