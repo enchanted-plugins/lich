@@ -50,7 +50,7 @@ Not for:
 - [Roadmap](#roadmap)
 - [The Science Behind Lich](#the-science-behind-lich)
 - [vs Everything Else](#vs-everything-else)
-- [Agent Conduct (10 Modules)](#agent-conduct-10-modules)
+- [Agent Conduct (12 Modules)](#agent-conduct-12-modules)
 - [Architecture](#architecture)
 - [Acknowledgments](#acknowledgments)
 - [Versioning & release cadence](#versioning--release-cadence)
@@ -242,7 +242,7 @@ Honest comparison against adjacent tools. Marks `✓` only where the feature is 
 | Auto-generated PR comments | via Sylph | ✓ | ✓ | ✓ |
 | Cross-plugin signal routing (Hydra, Crow, Pech) | ✓ | — | — | — |
 
-## Agent Conduct (10 Modules)
+## Agent Conduct (12 Modules)
 
 Every skill inherits a reusable behavioral contract from [shared/conduct/](shared/conduct/) — loaded once into [CLAUDE.md](CLAUDE.md), applied across all plugins. This is how Claude *acts* inside Lich: deterministic, surgical, verifiable. Not a suggestion; a contract.
 
@@ -258,6 +258,8 @@ Every skill inherits a reusable behavioral contract from [shared/conduct/](share
 | [skill-authoring.md](shared/conduct/skill-authoring.md) | SKILL.md frontmatter discipline, discovery test |
 | [hooks.md](shared/conduct/hooks.md) | Advisory-only hooks, injection over denial, fail-open |
 | [precedent.md](shared/conduct/precedent.md) | Log self-observed failures to `state/precedent-log.md`; consult before risky steps |
+| [tier-sizing.md](shared/conduct/tier-sizing.md) | Prompt verbosity scales inversely with model tier; Haiku needs mechanical steps, Opus runs on intent |
+| [web-fetch.md](shared/conduct/web-fetch.md) | External URL handling: cache, dedup, budget; WebFetch is Haiku-tier-only |
 
 ## Architecture
 
