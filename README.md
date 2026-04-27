@@ -21,7 +21,7 @@ Code review for AI-assisted development that catches runtime failures compile-ti
 
 ## TL;DR
 
-**In plain English:** Code that passes the type-checker and all your tests can still crash at runtime — and after enough noisy style suggestions from AI review tools, developers stop reading the warnings entirely.
+**In plain English:** Tests pass. Types check. The app still crashes at 3am. Lich runs the suspect lines in a sandbox and confirms the bug before warning you — so warnings mean something again.
 
 **Technically:** M1 Cousot Interval Propagation propagates abstract ranges (interval + nullability + container-shape lattices) to flag division-by-zero and null-dereference suspects; M5 Bounded Subprocess Dry-Run executes flagged call sites in a stdlib-only `resource.setrlimit` sandbox to confirm or dismiss each suspicion before surfacing it. M6 Beta-Binomial Thompson sampling per `(developer, rule)` updates a per-developer preference posterior on every accept/reject, dropping rules the developer consistently ignores toward a 5% floor so the signal-to-noise ratio never collapses.
 
