@@ -15,46 +15,46 @@
       "category": "meta"
     },
     {
-      "name": "lich-core",
-      "source": "./plugins/lich-core",
-      "description": "M1 Cousot Interval Propagation + M2 Falleri Structural Diff. The static-analysis substrate — flags division-by-zero, null deref, OOB, overflow via abstract interpretation; isolates semantic edits via GumTree AST diffing.",
-      "category": "analyzer"
+      "name": "mantis-core",
+      "source": "./plugins/mantis-core",
+      "description": "M1 Cousot Interval Propagation + M2 Falleri Structural Diff. The static-analysis substrate that flags division-by-zero, null deref, OOB, overflow via abstract interpretation, and isolates semantic edits via GumTree AST diffing. Paired with lich-sandbox (M5) for confirmation.",
+      "category": "plugin"
     },
     {
-      "name": "lich-sandbox",
-      "source": "./plugins/lich-sandbox",
-      "description": "M5 Bounded Subprocess Dry-Run. Confirms M1's static flags by executing witness inputs in a stdlib-only sandbox (RLIMIT_CPU + RLIMIT_AS + signal.alarm). Unix-only at launch; Windows Phase 2.",
-      "category": "analyzer"
+      "name": "mantis-preference",
+      "source": "./plugins/mantis-preference",
+      "description": "M6 Bayesian Preference Accumulation. Per-(developer, rule) Beta-Binomial posteriors updated on accept/reject signals; Thompson-sampled surfacing with a 5% minimum floor (no rule dies permanently from accumulated rejections). The Gauss Accumulation pattern, academically grounded.",
+      "category": "plugin"
     },
     {
-      "name": "lich-preference",
-      "source": "./plugins/lich-preference",
-      "description": "M6 Bayesian Preference Accumulation. Per-(developer, rule) Beta-Binomial posteriors with Thompson sampling and a 5% surfacing floor. The Gauss Accumulation pattern.",
-      "category": "learning"
+      "name": "mantis-python",
+      "source": "./plugins/mantis-python",
+      "description": "Python language adapter for Lich. Maps ruff rule IDs (~900 rules) into M-engine outputs and contributes Python-specific idiom rules (pyupgrade modernization, typing, async-await patterns, list/dict comprehensions). At launch: ~120 of ruff's 900 rules mapped; remaining tagged as Phase 2 coverage gap.",
+      "category": "plugin"
     },
     {
-      "name": "lich-rubric",
-      "source": "./plugins/lich-rubric",
-      "description": "M7 Zheng Pairwise Rubric Judgment. 5-axis LLM-as-judge with position-swap debiasing and Cohen's Kappa reliability. Catches style/idiom/clarity signals static engines miss.",
-      "category": "judgment"
+      "name": "mantis-rubric",
+      "source": "./plugins/mantis-rubric",
+      "description": "M7 Zheng Pairwise Rubric Judgment. 5-axis LLM-as-judge scoring (Clarity, Correctness-at-glance, Idiom-fit, Testability, Simplicity) with position-swap debiasing and Cohen's Kappa inter-judge reliability. Catches style/idiom/clarity signals static engines miss. Sonnet default judge; Haiku under Pech budget pressure; Opus for disagreement adjudication.",
+      "category": "plugin"
     },
     {
-      "name": "lich-python",
-      "source": "./plugins/lich-python",
-      "description": "Python language adapter. Maps ruff rule IDs into M-engine outputs; contributes Python-only idiom rules (pyupgrade, typing modernization, async-await).",
-      "category": "adapter"
+      "name": "mantis-sandbox",
+      "source": "./plugins/mantis-sandbox",
+      "description": "M5 Bounded Subprocess Dry-Run. Confirms M1-flagged runtime-failure candidates by executing witness inputs in a stdlib-only sandbox (resource.setrlimit for CPU/AS/NOFILE/FSIZE + signal.alarm for wall-clock). Unix-only at launch; Windows skips M5 with platform-unsupported verdict.",
+      "category": "plugin"
     },
     {
-      "name": "lich-typescript",
-      "source": "./plugins/lich-typescript",
-      "description": "TypeScript language adapter. Maps biome rule IDs into M-engine outputs; contributes TS-only idiom rules (hooks exhaustive deps, JSX a11y, narrow-type-guards, any-avoidance).",
-      "category": "adapter"
+      "name": "mantis-typescript",
+      "source": "./plugins/mantis-typescript",
+      "description": "TypeScript / JavaScript language adapter for Lich. Maps biome rule IDs (~423 rules) into M-engine outputs and contributes TS-specific idiom rules (React hooks exhaustive deps, JSX a11y, narrow-type-guards, any-avoidance). At launch: ~80 of biome's 423 rules mapped; remaining tagged as Phase 2 coverage gap.",
+      "category": "plugin"
     },
     {
-      "name": "lich-verdict",
-      "source": "./plugins/lich-verdict",
-      "description": "Cross-engine verdict synthesizer. Composes M1/M2/M5/M6/M7 outputs into DEPLOY/HOLD/FAIL verdicts and publishes lich.review.completed events.",
-      "category": "router"
+      "name": "mantis-verdict",
+      "source": "./plugins/mantis-verdict",
+      "description": "Cross-engine verdict synthesizer. Composes M1/M2/M5/M6/M7 outputs into DEPLOY/HOLD/FAIL verdicts per the threshold contract in CLAUDE.md. Publishes lich.review.completed events (Phase 2) or writes to verdict.jsonl (Phase 1). Sylph's pre-commit gate subscribes; FAIL refuses auto-commit.",
+      "category": "plugin"
     }
   ]
 }
