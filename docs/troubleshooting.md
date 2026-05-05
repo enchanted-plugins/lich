@@ -43,8 +43,8 @@ Most "it doesn't work" reports resolve on this list alone.
 **Fix:**
 
 ```
-/plugin marketplace remove enchanted-plugins/lich
-/plugin marketplace add enchanted-plugins/lich
+/plugin marketplace remove enchanter-ai/lich
+/plugin marketplace add enchanter-ai/lich
 /plugin install full@lich
 ```
 
@@ -93,8 +93,8 @@ Most "it doesn't work" reports resolve on this list alone.
 
 ## When to file a bug vs. ask in Discussions
 
-- **Bug:** reproducible, unexpected behavior. File in [Issues](https://github.com/enchanted-plugins/lich/issues) with the bug template.
-- **Question or "is this expected?":** open a thread in [Discussions](https://github.com/enchanted-plugins/lich/discussions).
+- **Bug:** reproducible, unexpected behavior. File in [Issues](https://github.com/enchanter-ai/lich/issues) with the bug template.
+- **Question or "is this expected?":** open a thread in [Discussions](https://github.com/enchanter-ai/lich/discussions).
 - **Security issue:** never file publicly. See [SECURITY.md](../SECURITY.md).
 
 ## Still stuck?
@@ -106,4 +106,4 @@ Gather these before asking:
 - `claude --version`, `/plugin list`, OS, and shell.
 - Any non-default `settings.json` hook or permission entries relevant to the failure.
 
-Then: [Discussions Q&A](https://github.com/enchanted-plugins/lich/discussions/categories/q-a).
+Then: [Discussions Q&A](https://github.com/enchanter-ai/lich/discussions/categories/q-a).

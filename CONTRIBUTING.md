@@ -1,8 +1,8 @@
 # Contributing to Lich
 
-*An @enchanted-plugins product.*
+*An @enchanter-ai product.*
 
-Thanks for your interest in contributing. This document captures the conventions every sibling in the `enchanted-plugins` ecosystem follows. Read [CLAUDE.md](CLAUDE.md) before opening your first PR — it's the binding behavioral contract for the plugin.
+Thanks for your interest in contributing. This document captures the conventions every sibling in the `enchanter-ai` ecosystem follows. Read [CLAUDE.md](CLAUDE.md) before opening your first PR — it's the binding behavioral contract for the plugin.
 
 ## Ground rules
 
@@ -17,7 +17,7 @@ Thanks for your interest in contributing. This document captures the conventions
 ## Dev setup
 
 ```bash
-git clone https://github.com/enchanted-plugins/lich
+git clone https://github.com/enchanter-ai/lich
 cd lich
 bash install.sh                                  # pre-flight checks, clone to ~/.claude/plugins/
 cd docs/assets && npm install                    # renderer toolchain (mmdc + puppeteer + mathjax)
@@ -28,7 +28,7 @@ cd ../../ && bash tests/run-all.sh               # smoke tests
 
 1. **Run the generator.** `python docs/architecture/generate.py` — regenerates the four `.mmd` diagrams + `index.html`. Commit the result.
 2. **Run the tests.** `bash tests/run-all.sh` — every sub-plugin's `tests/` dir must return zero.
-3. **Verify the conduct modules are current.** `shared/conduct/*.md` are the universal behavioral contract. Compare against upstream (`enchanted-plugins/wixie`); if they've drifted, rebase before proceeding.
+3. **Verify the conduct modules are current.** `shared/conduct/*.md` are the universal behavioral contract. Compare against upstream (`enchanter-ai/wixie`); if they've drifted, rebase before proceeding.
 4. **Check the brand standard.** Every engine named with an `M[1-9]` ID. Every agent tiered. No sibling-identifier leaks (Myers-Diff, Jaccard-Cosine, Aho-Corasick, Markov Drift, etc. — these belong to siblings, not Lich). No hand-edited diagrams.
 5. **Verify non-duplication.** If your PR adds security-taint detection, Hydra R3 is the owner — send the PR there. If it adds change classification, Crow V1/V2 owns that.
 6. **Verify M5 sandbox caps.** Any PR that touches `plugins/lich-sandbox/` must retain or strengthen the resource caps (`RLIMIT_CPU`, `RLIMIT_AS`, `RLIMIT_NOFILE`, `RLIMIT_FSIZE`, `signal.alarm`). Relaxation requires a documented security review.
@@ -49,8 +49,8 @@ Scopes: sub-plugin slug (`lich-core`, `lich-sandbox`, `lich-preference`, `lich-r
 
 ## Reporting issues
 
-Open at https://github.com/enchanted-plugins/lich/issues. Include: plugin version (from `.claude-plugin/marketplace.json#metadata.version`), Claude Code version, platform (POSIX or Windows — relevant for M5), repro steps, expected vs. actual.
+Open at https://github.com/enchanter-ai/lich/issues. Include: plugin version (from `.claude-plugin/marketplace.json#metadata.version`), Claude Code version, platform (POSIX or Windows — relevant for M5), repro steps, expected vs. actual.
 
 ## Code of conduct
 
-Be kind. Debate ideas, not people. The @enchanted-plugins ecosystem is built on mutual trust that each sibling respects the others' contracts and event-bus boundaries — don't smuggle Hydra's job into Lich, don't smuggle Crow's classification into Lich. The siblings compose because each stays in its lane.
+Be kind. Debate ideas, not people. The @enchanter-ai ecosystem is built on mutual trust that each sibling respects the others' contracts and event-bus boundaries — don't smuggle Hydra's job into Lich, don't smuggle Crow's classification into Lich. The siblings compose because each stays in its lane.

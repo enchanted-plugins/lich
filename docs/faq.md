@@ -14,17 +14,17 @@ No. Lich is self-contained — once v0.1.0 ships, installing `full@lich` gets ev
 
 - **Security vulnerability** — private advisory, never a public issue. See [SECURITY.md](../SECURITY.md).
 - **Reproducible bug** — a bug report issue with repro steps + exact versions.
-- **Usage question or half-formed idea** — [Discussions](https://github.com/enchanted-plugins/lich/discussions).
+- **Usage question or half-formed idea** — [Discussions](https://github.com/enchanter-ai/lich/discussions).
 
 The [SUPPORT.md](../SUPPORT.md) page has the exact links for each.
 
 ## Is Lich an official Anthropic product?
 
-No. Lich is an independent open-source plugin for [Claude Code](https://github.com/anthropics/claude-code) (Anthropic's CLI). It's published by [enchanted-plugins](https://github.com/enchanted-plugins) under the MIT license and is not affiliated with, endorsed by, or supported by Anthropic.
+No. Lich is an independent open-source plugin for [Claude Code](https://github.com/anthropics/claude-code) (Anthropic's CLI). It's published by [enchanter-ai](https://github.com/enchanter-ai) under the MIT license and is not affiliated with, endorsed by, or supported by Anthropic.
 
 ## Is Lich available now?
 
-No. Lich is Phase 3 #6 in the @enchanted-plugins rollout and is pre-release. The README and the engine IDs (M1, M2, M5, M6, M7) describe the committed public surface, but no v0.1.0 tag has shipped yet. Track progress in [docs/ROADMAP.md](ROADMAP.md) and the [ecosystem map](https://github.com/enchanted-plugins/wixie/blob/main/docs/ecosystem.md).
+No. Lich is Phase 3 #6 in the @enchanter-ai rollout and is pre-release. The README and the engine IDs (M1, M2, M5, M6, M7) describe the committed public surface, but no v0.1.0 tag has shipped yet. Track progress in [docs/ROADMAP.md](ROADMAP.md) and the [ecosystem map](https://github.com/enchanter-ai/wixie/blob/main/docs/ecosystem.md).
 
 ## What languages does Lich support?
 

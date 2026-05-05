@@ -3,12 +3,12 @@
   "description": "M7 Zheng Pairwise Rubric Judgment. 5-axis LLM-as-judge scoring (Clarity, Correctness-at-glance, Idiom-fit, Testability, Simplicity) with position-swap debiasing and Cohen's Kappa inter-judge reliability. Catches style/idiom/clarity signals static engines miss. Sonnet default judge; Haiku under Pech budget pressure; Opus for disagreement adjudication.",
   "version": "0.1.0",
   "author": {
-    "name": "enchanted-plugins"
+    "name": "enchanter-ai"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/enchanted-plugins/enchanted-skills.git"
+    "url": "https://github.com/enchanter-ai/enchanted-skills.git"
   },
   "keywords": [
     "llm-as-judge",

@@ -3,7 +3,7 @@
 # the `full` meta-plugin pulls them all in via one dependency-resolution pass.
 set -euo pipefail
 
-REPO="https://github.com/enchanted-plugins/lich"
+REPO="https://github.com/enchanter-ai/lich"
 PLUGIN_HOME_DIR="$HOME/.claude/plugins/lich"
 
 step() { printf "\n\033[1;36m▸ %s\033[0m\n" "$*"; }
@@ -59,7 +59,7 @@ cat <<'EOF'
 
   Finish in Claude Code with TWO commands:
 
-    /plugin marketplace add enchanted-plugins/lich
+    /plugin marketplace add enchanter-ai/lich
     /plugin install full@lich
 
   That installs every sub-plugin via dependency resolution. To cherry-pick

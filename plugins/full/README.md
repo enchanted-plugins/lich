@@ -5,7 +5,7 @@
 ## Install
 
 ```bash
-/plugin marketplace add enchanted-plugins/lich
+/plugin marketplace add enchanter-ai/lich
 /plugin install full@lich
 ```
 

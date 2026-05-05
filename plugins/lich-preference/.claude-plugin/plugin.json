@@ -3,12 +3,12 @@
   "description": "M6 Bayesian Preference Accumulation. Per-(developer, rule) Beta-Binomial posteriors updated on accept/reject signals; Thompson-sampled surfacing with a 5% minimum floor (no rule dies permanently from accumulated rejections). The Gauss Accumulation pattern, academically grounded.",
   "version": "0.1.0",
   "author": {
-    "name": "enchanted-plugins"
+    "name": "enchanter-ai"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/enchanted-plugins/enchanted-skills.git"
+    "url": "https://github.com/enchanter-ai/enchanted-skills.git"
   },
   "keywords": [
     "preference-learning",

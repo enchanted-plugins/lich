@@ -13,7 +13,7 @@
   <a href="https://www.repostatus.org/#wip"><img alt="Project Status: WIP" src="https://www.repostatus.org/badges/latest/wip.svg"></a>
 </p>
 
-> **An @enchanted-plugins product — algorithm-driven, agent-managed, self-learning.**
+> **An @enchanter-ai product — algorithm-driven, agent-managed, self-learning.**
 
 Code review for AI-assisted development that catches runtime failures compile-time checks miss.
 
@@ -136,7 +136,7 @@ Lich ships as a 6-sub-plugin marketplace. One meta-plugin — `full` — lists a
 **In Claude Code** (recommended):
 
 ```
-/plugin marketplace add enchanted-plugins/lich
+/plugin marketplace add enchanter-ai/lich
 /plugin install full@lich
 ```
 
@@ -216,7 +216,7 @@ Every review produces a JSONL row in `lich-rubric/state/verdicts.jsonl` with the
 
 ## Roadmap
 
-Tracked in [docs/ROADMAP.md](docs/ROADMAP.md) and the shared [ecosystem map](docs/ecosystem.md). For upcoming work specific to Lich, see issues tagged [roadmap](https://github.com/enchanted-plugins/lich/labels/roadmap).
+Tracked in [docs/ROADMAP.md](docs/ROADMAP.md) and the shared [ecosystem map](docs/ecosystem.md). For upcoming work specific to Lich, see issues tagged [roadmap](https://github.com/enchanter-ai/lich/labels/roadmap).
 
 ## The Science Behind Lich
 
@@ -308,7 +308,7 @@ If you use this project in research or derivative work, please cite it:
   title = {Lich},
   author = {{Klaiderman}},
   year = {2026},
-  url = {https://github.com/enchanted-plugins/lich}
+  url = {https://github.com/enchanter-ai/lich}
 }
 ```
 
@@ -330,4 +330,4 @@ Lich joins Crow and Sylph in the Hollow-Knight cluster — three HK entities for
 
 ---
 
-Repo: https://github.com/enchanted-plugins/lich
+Repo: https://github.com/enchanter-ai/lich

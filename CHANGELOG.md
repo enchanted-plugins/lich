@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [1.0.0] — rename: lich identity, standardized origin format
 
-Lich is Phase 3 #6 in the @enchanted-plugins ecosystem rollout and has not shipped a public release yet. This file captures the scaffolding and docs landing ahead of v0.1.0.
+Lich is Phase 3 #6 in the @enchanter-ai ecosystem rollout and has not shipped a public release yet. This file captures the scaffolding and docs landing ahead of v0.1.0.
 
 ### Added
 - Tier-1 governance docs: `SECURITY.md`, `SUPPORT.md`, `CODE_OF_CONDUCT.md`, `CHANGELOG.md`.
@@ -24,4 +24,4 @@ Lich is Phase 3 #6 in the @enchanted-plugins ecosystem rollout and has not shipp
 
 Track progress in [ROADMAP.md](docs/ROADMAP.md) and the [ecosystem map](docs/ecosystem.md).
 
-[Unreleased]: https://github.com/enchanted-plugins/lich/commits/main
+[Unreleased]: https://github.com/enchanter-ai/lich/commits/main

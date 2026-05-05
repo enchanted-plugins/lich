@@ -1,7 +1,7 @@
 {
   "name": "lich",
   "owner": {
-    "name": "enchanted-plugins"
+    "name": "enchanter-ai"
   },
   "metadata": {
     "description": "Code review for AI-assisted development — catches runtime failures that pass compile time, learns your preferences with Bayesian uncertainty, judges quality with a debiased LLM rubric.",

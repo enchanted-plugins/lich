@@ -8,7 +8,7 @@ Fields required: `name`, `version` (SemVer), `description` (≤120 char), `autho
 
 ## Baseline: repo LICENSE
 
-Repo root `LICENSE` is **MIT** (Copyright 2026 enchanted-plugins). All plugin.json `license` fields match.
+Repo root `LICENSE` is **MIT** (Copyright 2026 enchanter-ai). All plugin.json `license` fields match.
 
 ## Per-plugin state
 
@@ -25,7 +25,7 @@ Repo root `LICENSE` is **MIT** (Copyright 2026 enchanted-plugins). All plugin.js
 
 ## Findings
 
-- **Single gap, 8 plugins:** `repository` missing across every plugin.json. Patched with `{type:"git", url:"https://github.com/enchanted-plugins/enchanted-skills.git"}`.
+- **Single gap, 8 plugins:** `repository` missing across every plugin.json. Patched with `{type:"git", url:"https://github.com/enchanter-ai/enchanted-skills.git"}`.
 - No version bumps (per scope fence — maintainer owns SemVer).
 - No license divergence. No placeholder descriptions. No sub-3 keyword arrays.
 - JSON round-trip via `json.load`: 8/8 parse clean post-edit.

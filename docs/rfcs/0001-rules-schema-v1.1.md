@@ -1,7 +1,7 @@
 # RFC 0001 — Rule-Map Schema v1.1
 
 - **Status:** Draft
-- **Authors:** enchanted-plugins
+- **Authors:** enchanter-ai
 - **Date:** 2026-04-21
 - **Targets:** `shared/rules/_schema.json`
 

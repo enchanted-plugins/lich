@@ -1,6 +1,6 @@
 # Lich — Product Architecture
 
-*Phase 3 · Plugin #6 · enchanted-plugins · answers the developer's sixth question: "Is this code good?"*
+*Phase 3 · Plugin #6 · enchanter-ai · answers the developer's sixth question: "Is this code good?"*
 
 **Name.** Lich. After the Lich Lords of Hollow Knight — gate-reviewers who judge worthiness through trial before letting you pass. Every PR is a supplicant at the gate; every engine is a test the code must survive. Lich joins Crow (change comprehension) and Sylph (git flow) in the Hollow Knight cluster — three HK entities for three related dev-surface plugins is intentional brand signal. This slot previously carried the placeholder name "Athena"; that name is retired because Athena is a pre-existing mythological figure Supergiant borrowed, not a game-native entity. Lich Lords are game-native and pass the naming convention.
 
@@ -8,7 +8,7 @@
 
 **Trigger model.** Hybrid. PostToolUse hook subscribes to Crow's change-classification signal (Phase 1: file-tail of `crow/plugins/change-tracker/state/audit.jsonl`; Phase 2: `crow.change.classified` event via enchanted-mcp) and auto-reviews affected hunks. Skill-invoked commands (`/lich-review`, `/lich-explain`) are the manual handle for ad-hoc deep reviews. Silent on DEPLOY, surfacing on HOLD/FAIL.
 
-**Panel composition.** This document synthesizes four expert lenses: static-analysis researcher, dynamic-analysis & fuzzing engineer, code-review & developer-preference expert, and enchanted-plugins architect. Disagreements are surfaced before resolution.
+**Panel composition.** This document synthesizes four expert lenses: static-analysis researcher, dynamic-analysis & fuzzing engineer, code-review & developer-preference expert, and enchanter-ai architect. Disagreements are surfaced before resolution.
 
 ---
 
@@ -200,7 +200,7 @@ Model tier: Sonnet default judge. Haiku when Pech's `pech.budget.threshold.cross
 
 ## Layer 9: Hydra, Crow, Emu, Pech, Sylph Integration Contract
 
-**Prior art.** The enchanted-plugins ecosystem uses per-plugin `audit.jsonl` files as the Phase 1 source of truth (enchanted-mcp event bus is Phase 2). Hydra's `plugins/vuln-detector/state/audit.jsonl` records are shape `{event:"vuln_detected", ts, file, line, vuln_id, cwe, severity, description, language, tool}` (verified via direct file inspection). Crow's `plugins/change-tracker/state/audit.jsonl` records classify changes. Emu publishes token/cost metrics to `plugins/*/state/metrics.jsonl`. Pech (building) will publish budget-threshold events. Sylph's pre-commit gate already subscribes to `pech.budget.threshold.crossed` and will subscribe to `lich.review.completed` per brand-standard event-envelope convention.
+**Prior art.** The enchanter-ai ecosystem uses per-plugin `audit.jsonl` files as the Phase 1 source of truth (enchanted-mcp event bus is Phase 2). Hydra's `plugins/vuln-detector/state/audit.jsonl` records are shape `{event:"vuln_detected", ts, file, line, vuln_id, cwe, severity, description, language, tool}` (verified via direct file inspection). Crow's `plugins/change-tracker/state/audit.jsonl` records classify changes. Emu publishes token/cost metrics to `plugins/*/state/metrics.jsonl`. Pech (building) will publish budget-threshold events. Sylph's pre-commit gate already subscribes to `pech.budget.threshold.crossed` and will subscribe to `lich.review.completed` per brand-standard event-envelope convention.
 
 **Options comparison.**
 
@@ -586,7 +586,7 @@ Columns: M1 (Cousot Interval Propagation), M5 (Bounded Subprocess Dry-Run), M6 (
 | Trigger model | `{{TRIGGER_MODEL}}` | `hybrid` (PostToolUse hook + skill-invoked) |
 | Events published | `{{EVENT_PUBLISH_LIST}}` | `lich.review.completed, lich.rule.disabled, lich.sandbox.failed` |
 | Events subscribed | `{{EVENT_SUBSCRIBE_LIST}}` | `crow.change.classified, hydra.vuln.detected, pech.budget.threshold.crossed, emu.runway.threshold.crossed` |
-| Repo URL | `{{REPO_URL}}` | `https://github.com/enchanted-plugins/lich` |
+| Repo URL | `{{REPO_URL}}` | `https://github.com/enchanter-ai/lich` |
 | Plugin home dir | `{{PLUGIN_HOME_DIR}}` | `~/.claude/plugins/lich` |
 
 **Placeholder gaps (new tokens to propose adding to schematic):** none. The architecture's 7-sub-plugin breakdown and 5-axis rubric fit within schematic's existing token set — though the `{{SUB_PLUGIN_2_*}}` through `{{SUB_PLUGIN_7_*}}` tokens aren't defined in schematic yet (schematic currently only enumerates sub-plugin 1 placeholders, per pech-architecture's same observation). Recommendation: extend schematic's vocabulary to `{{SUB_PLUGIN_N_*}}` with a max N of 8.

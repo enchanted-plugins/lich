@@ -9,7 +9,7 @@ Lich is code review for AI-assisted development: static suspicion, sandboxed con
 Once v0.1.0 ships:
 
 ```
-/plugin marketplace add enchanted-plugins/lich
+/plugin marketplace add enchanter-ai/lich
 /plugin install full@lich
 /plugin list
 ```
