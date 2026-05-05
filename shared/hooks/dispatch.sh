@@ -30,22 +30,47 @@ if [[ -z "$COMMAND" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Repo-root detection: walk up from $CLAUDE_PLUGIN_ROOT (or this script's dir)
-# until we find a .git directory. Fail-open if none.
+# Repo-root resolution (F-023 hardening): NEVER walk up to find a .git dir.
+# A malicious target project containing both a .git dir AND a planted
+# plugins/lich-core/scripts/__main__.py would have its OWN python script
+# executed by lich's hook (cross-plugin/cross-repo trust violation).
+#
+# Lock REPO_ROOT to the lich plugin tree only:
+#   - Prefer $CLAUDE_PLUGIN_ROOT when set (canonical, runtime-supplied).
+#   - Else derive from this script's location: shared/hooks/dispatch.sh's
+#     parent-of-parent IS the lich repo root.
+# Refuse to spawn any python script whose resolved path lies outside that
+# lich plugin tree. Errors emit a stderr advisory; exit code stays 0 per
+# the advisory contract.
 # ---------------------------------------------------------------------------
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd 2>/dev/null)" || SCRIPT_DIR=""
-START_DIR="${CLAUDE_PLUGIN_ROOT:-$SCRIPT_DIR}"
 REPO_ROOT=""
-_cur="$START_DIR"
-while [[ -n "$_cur" && "$_cur" != "/" ]]; do
-    if [[ -d "$_cur/.git" ]]; then
-        REPO_ROOT="$_cur"
-        break
+if [[ -n "${CLAUDE_PLUGIN_ROOT:-}" && -d "${CLAUDE_PLUGIN_ROOT}" ]]; then
+    REPO_ROOT="$(cd "$CLAUDE_PLUGIN_ROOT" && pwd 2>/dev/null)" || REPO_ROOT=""
+fi
+if [[ -z "$REPO_ROOT" && -n "$SCRIPT_DIR" ]]; then
+    # shared/hooks/dispatch.sh -> shared/hooks -> shared -> <lich-root>
+    _candidate="$(cd "$SCRIPT_DIR/../.." && pwd 2>/dev/null)" || _candidate=""
+    # Sanity: the static lich tree contains a plugins/ dir AND a shared/ dir.
+    if [[ -n "$_candidate" && -d "$_candidate/plugins" && -d "$_candidate/shared" ]]; then
+        REPO_ROOT="$_candidate"
     fi
-    _parent="$(dirname "$_cur")"
-    [[ "$_parent" == "$_cur" ]] && break
-    _cur="$_parent"
-done
+fi
+
+# Path-confinement helper: resolve a candidate script path and confirm it
+# resides under REPO_ROOT/plugins/. Returns 0 on confined, 1 otherwise.
+_is_under_lich_plugins() {
+    local _target="$1"
+    [[ -z "$REPO_ROOT" || -z "$_target" ]] && return 1
+    # Resolve to absolute (no realpath dependency on Windows git-bash).
+    local _abs
+    _abs="$(cd "$(dirname "$_target")" 2>/dev/null && pwd)/$(basename "$_target")"
+    [[ -z "$_abs" ]] && return 1
+    case "$_abs" in
+        "$REPO_ROOT/plugins/"*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
 
 # ---------------------------------------------------------------------------
 # Log path resolution: prefer repo-local .claude/logs/hooks.log; fall back to
@@ -122,6 +147,12 @@ case "$COMMAND" in
             exit 0
         fi
         _script="$REPO_ROOT/plugins/lich-core/scripts/__main__.py"
+        if ! _is_under_lich_plugins "$_script"; then
+            echo "=== lich-dispatch (advisory) ===" >&2
+            echo "Refused to run: $_script — outside lich plugins/ tree" >&2
+            _log "refuse:path-escape script=$_script repo_root=$REPO_ROOT"
+            exit 0
+        fi
         _log "spawn lich-core file=$FILE_PATH"
         # Background spawn keeps us inside the synchronous budget. All three
         # fds are redirected; `disown` detaches from the job table so the
@@ -148,6 +179,12 @@ case "$COMMAND" in
             exit 0
         fi
         _script="$REPO_ROOT/plugins/lich-sandbox/scripts/sandbox.py"
+        if ! _is_under_lich_plugins "$_script"; then
+            echo "=== lich-dispatch (advisory) ===" >&2
+            echo "Refused to run: $_script — outside lich plugins/ tree" >&2
+            _log "refuse:path-escape script=$_script repo_root=$REPO_ROOT"
+            exit 0
+        fi
         _log "spawn lich-sandbox file=$FILE_PATH"
         # sandbox.py's argv[1] is the review-flags.jsonl path, not a source
         # file. Omit the positional arg so it uses its default input
@@ -169,6 +206,12 @@ case "$COMMAND" in
             exit 0
         fi
         _script="$REPO_ROOT/plugins/lich-verdict/scripts/compose.py"
+        if ! _is_under_lich_plugins "$_script"; then
+            echo "=== lich-dispatch (advisory) ===" >&2
+            echo "Refused to run: $_script — outside lich plugins/ tree" >&2
+            _log "refuse:path-escape script=$_script repo_root=$REPO_ROOT"
+            exit 0
+        fi
         _log "spawn lich-verdict-compose file=$FILE_PATH"
         _args=()
         if [[ -n "$FILE_PATH" ]]; then
@@ -194,6 +237,12 @@ case "$COMMAND" in
             exit 0
         fi
         _script="$REPO_ROOT/plugins/lich-preference/scripts/observer.py"
+        if ! _is_under_lich_plugins "$_script"; then
+            echo "=== lich-dispatch (advisory) ===" >&2
+            echo "Refused to run: $_script — outside lich plugins/ tree" >&2
+            _log "refuse:path-escape script=$_script repo_root=$REPO_ROOT"
+            exit 0
+        fi
         if [[ ! -f "$_script" ]]; then
             _log "skip:missing-script $_script"
             exit 0

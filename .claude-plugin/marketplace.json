@@ -21,8 +21,8 @@
       "category": "plugin"
     },
     {
-      "name": "mantis-preference",
-      "source": "./plugins/mantis-preference",
+      "name": "lich-preference",
+      "source": "./plugins/lich-preference",
       "description": "M6 Bayesian Preference Accumulation. Per-(developer, rule) Beta-Binomial posteriors updated on accept/reject signals; Thompson-sampled surfacing with a 5% minimum floor (no rule dies permanently from accumulated rejections). The Gauss Accumulation pattern, academically grounded.",
       "category": "plugin"
     },
