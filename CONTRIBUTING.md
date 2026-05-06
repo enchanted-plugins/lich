@@ -28,7 +28,7 @@ cd ../../ && bash tests/run-all.sh               # smoke tests
 
 1. **Run the generator.** `python docs/architecture/generate.py` — regenerates the four `.mmd` diagrams + `index.html`. Commit the result.
 2. **Run the tests.** `bash tests/run-all.sh` — every sub-plugin's `tests/` dir must return zero.
-3. **Verify the conduct modules are current.** `shared/conduct/*.md` are the universal behavioral contract. Compare against upstream (`enchanter-ai/wixie`); if they've drifted, rebase before proceeding.
+3. **Verify the conduct modules are current.** `shared/foundations/conduct/*.md` are the universal behavioral contract. Compare against upstream (`enchanter-ai/wixie`); if they've drifted, rebase before proceeding.
 4. **Check the brand standard.** Every engine named with an `M[1-9]` ID. Every agent tiered. No sibling-identifier leaks (Myers-Diff, Jaccard-Cosine, Aho-Corasick, Markov Drift, etc. — these belong to siblings, not Lich). No hand-edited diagrams.
 5. **Verify non-duplication.** If your PR adds security-taint detection, Hydra R3 is the owner — send the PR there. If it adds change classification, Crow V1/V2 owns that.
 6. **Verify M5 sandbox caps.** Any PR that touches `plugins/lich-sandbox/` must retain or strengthen the resource caps (`RLIMIT_CPU`, `RLIMIT_AS`, `RLIMIT_NOFILE`, `RLIMIT_FSIZE`, `signal.alarm`). Relaxation requires a documented security review.
