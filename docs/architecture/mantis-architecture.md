@@ -554,7 +554,7 @@ Columns: M1 (Cousot Interval Propagation), M5 (Bounded Subprocess Dry-Run), M6 (
 
 *Fills schematic's 8-section canonical shape. See [CLAUDE.md](../../CLAUDE.md) for the rendered file; this section summarizes the fills.*
 
-- **Shared behavioral modules** — unchanged (10 `@shared/conduct/*.md` references, verbatim from schematic).
+- **Shared behavioral modules** — unchanged (`@shared/foundations/conduct/*.md` references, vendored from agent-foundations).
 - **Lifecycle** — hybrid trigger. PostToolUse hook (Write|Edit|MultiEdit) drives `lich-core`, `lich-sandbox`, `lich-preference` passes. SessionStart hook (rare — only when `config/rubric-v1.json` needs refresh). Skill commands (`/lich-review`, `/lich-explain`, `/lich-disable`).
 - **Algorithms** — M1–M7 named engines; M1+M2 in lich-core, M5 in lich-sandbox, M6 in lich-preference, M7 in lich-rubric. Defining engine: **M5 Bounded Subprocess Dry-Run** (the novel pipeline moat).
 - **Behavioral contracts**:
