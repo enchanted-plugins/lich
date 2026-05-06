@@ -3,7 +3,7 @@
 Brand invariant #6 (CLAUDE.md): "Per-session learnings at
 `plugins/<name>/state/learnings.jsonl`; exported to `shared/learnings.json`."
 
-Schema per entry (tagged with one code from shared/conduct/failure-modes.md):
+Schema per entry (tagged with one code from shared/foundations/conduct/failure-modes.md):
 
     {"ts": "2026-04-20T12:34:56+00:00",
      "plugin": "lich-core",
@@ -42,7 +42,7 @@ from typing import Iterable
 
 
 # -----------------------------------------------------------------------------
-# Canonical F-codes (shared/conduct/failure-modes.md)
+# Canonical F-codes (shared/foundations/conduct/failure-modes.md)
 # -----------------------------------------------------------------------------
 
 VALID_CODES = frozenset({f"F{n:02d}" for n in range(1, 15)})  # F01..F14
@@ -87,7 +87,7 @@ class Learning:
         if self.code not in VALID_CODES:
             raise ValueError(
                 f"invalid code {self.code!r}; expected one of F01..F14 "
-                f"(see shared/conduct/failure-modes.md)"
+                f"(see shared/foundations/conduct/failure-modes.md)"
             )
 
     def to_dict(self) -> dict:

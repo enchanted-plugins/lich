@@ -1,6 +1,6 @@
 # lich-rubric — Precedent Log
 
-Self-observed operational failures for the M7 Zheng Pairwise Rubric Judgment engine. Format per `shared/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
+Self-observed operational failures for the M7 Zheng Pairwise Rubric Judgment engine. Format per `shared/foundations/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
 
 Consult: grep before `print()`-ing any string containing math symbols, Greek letters, or emoji on Windows.
 

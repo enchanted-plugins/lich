@@ -1,5 +1,5 @@
 {
-  "description": "lich-core hooks — advisory-only, never blocking. PostToolUse on file-writing tools triggers the M1 + M2 analysis pass. See @shared/conduct/hooks.md for the contract.",
+  "description": "lich-core hooks — advisory-only, never blocking. PostToolUse on file-writing tools triggers the M1 + M2 analysis pass. See @shared/foundations/conduct/hooks.md for the contract.",
   "hooks": {
     "PostToolUse": [
       {

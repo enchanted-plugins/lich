@@ -65,4 +65,4 @@ If the agent reports axis scores without per-axis Kappa, the parent must reject 
 
 Log failures to `state/precedent-log.md`. Common codes: F05 instruction attenuation (judge drifted from the 5-axis rubric), F11 reward hacking (judge gave high scores on a vague axis to avoid instability flag), F13 distractor pollution (long context bent the score).
 
-See [@shared/conduct/delegation.md](../../../shared/conduct/delegation.md) and [@shared/conduct/failure-modes.md](../../../shared/conduct/failure-modes.md).
+See [@shared/foundations/conduct/delegation.md](../../../shared/foundations/conduct/delegation.md) and [@shared/foundations/conduct/failure-modes.md](../../../shared/foundations/conduct/failure-modes.md).

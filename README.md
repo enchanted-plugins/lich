@@ -258,18 +258,18 @@ Every skill inherits a reusable behavioral contract from [shared/conduct/](share
 
 | Module | What it governs |
 |--------|-----------------|
-| [discipline.md](shared/conduct/discipline.md) | Coding conduct: think-first, simplicity, surgical edits, goal-driven loops |
-| [context.md](shared/conduct/context.md) | Attention-budget hygiene, U-curve placement, checkpoint protocol |
-| [verification.md](shared/conduct/verification.md) | Independent checks, baseline snapshots, dry-run for destructive ops |
-| [delegation.md](shared/conduct/delegation.md) | Subagent contracts, tool whitelisting, parallel vs. serial rules |
-| [failure-modes.md](shared/conduct/failure-modes.md) | 14-code taxonomy for accumulated-learning logs |
-| [tool-use.md](shared/conduct/tool-use.md) | Tool-choice hygiene, error payload contract, parallel-dispatch rules |
-| [formatting.md](shared/conduct/formatting.md) | Per-target format (XML / Markdown sandwich / minimal / few-shot), prefill + stop sequences |
-| [skill-authoring.md](shared/conduct/skill-authoring.md) | SKILL.md frontmatter discipline, discovery test |
-| [hooks.md](shared/conduct/hooks.md) | Advisory-only hooks, injection over denial, fail-open |
-| [precedent.md](shared/conduct/precedent.md) | Log self-observed failures to `state/precedent-log.md`; consult before risky steps |
-| [tier-sizing.md](shared/conduct/tier-sizing.md) | Prompt verbosity scales inversely with model tier; Haiku needs mechanical steps, Opus runs on intent |
-| [web-fetch.md](shared/conduct/web-fetch.md) | External URL handling: cache, dedup, budget; WebFetch is Haiku-tier-only |
+| [discipline.md](shared/foundations/conduct/discipline.md) | Coding conduct: think-first, simplicity, surgical edits, goal-driven loops |
+| [context.md](shared/foundations/conduct/context.md) | Attention-budget hygiene, U-curve placement, checkpoint protocol |
+| [verification.md](shared/foundations/conduct/verification.md) | Independent checks, baseline snapshots, dry-run for destructive ops |
+| [delegation.md](shared/foundations/conduct/delegation.md) | Subagent contracts, tool whitelisting, parallel vs. serial rules |
+| [failure-modes.md](shared/foundations/conduct/failure-modes.md) | 14-code taxonomy for accumulated-learning logs |
+| [tool-use.md](shared/foundations/conduct/tool-use.md) | Tool-choice hygiene, error payload contract, parallel-dispatch rules |
+| [formatting.md](shared/foundations/conduct/formatting.md) | Per-target format (XML / Markdown sandwich / minimal / few-shot), prefill + stop sequences |
+| [skill-authoring.md](shared/foundations/conduct/skill-authoring.md) | SKILL.md frontmatter discipline, discovery test |
+| [hooks.md](shared/foundations/conduct/hooks.md) | Advisory-only hooks, injection over denial, fail-open |
+| [precedent.md](shared/foundations/conduct/precedent.md) | Log self-observed failures to `state/precedent-log.md`; consult before risky steps |
+| [tier-sizing.md](shared/foundations/conduct/tier-sizing.md) | Prompt verbosity scales inversely with model tier; Haiku needs mechanical steps, Opus runs on intent |
+| [web-fetch.md](shared/foundations/conduct/web-fetch.md) | External URL handling: cache, dedup, budget; WebFetch is Haiku-tier-only |
 
 ## Architecture
 

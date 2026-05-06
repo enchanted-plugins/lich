@@ -1,5 +1,5 @@
 {
-  "description": "lich-rubric hooks — advisory-only. PostToolUse chain (after lich-core + lich-sandbox) triggers M7 judgment. See @shared/conduct/hooks.md.",
+  "description": "lich-rubric hooks — advisory-only. PostToolUse chain (after lich-core + lich-sandbox) triggers M7 judgment. See @shared/foundations/conduct/hooks.md.",
   "hooks": {
     "PostToolUse": [
       {

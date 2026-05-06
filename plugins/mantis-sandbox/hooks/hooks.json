@@ -1,5 +1,5 @@
 {
-  "description": "lich-sandbox hooks — advisory-only, never blocking. Chained after lich-core PostToolUse fires (bash dispatch.sh reads review-flags.jsonl and triggers this sub-plugin). See @shared/conduct/hooks.md.",
+  "description": "lich-sandbox hooks — advisory-only, never blocking. Chained after lich-core PostToolUse fires (bash dispatch.sh reads review-flags.jsonl and triggers this sub-plugin). See @shared/foundations/conduct/hooks.md.",
   "hooks": {
     "PostToolUse": [
       {
