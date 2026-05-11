@@ -54,6 +54,6 @@ Do not route this agent's task to a different tier — the cost-or-quality contr
 
 ## Failure handling
 
-If the agent reports "done" without a `flags` array (empty is OK; absent is not), the parent must verify. See [@shared/foundations/conduct/delegation.md](../../../shared/foundations/conduct/delegation.md) § Trust but verify the subagent.
+If the agent reports "done" without a `flags` array (empty is OK; absent is not), the parent must verify. See [@../enchanter-foundations/packages/core/conduct/delegation.md](../../../../enchanter-foundations/packages/core/conduct/delegation.md) § Trust but verify the subagent.
 
-Log operational failures (substrate parse failed, GumTree timeout, Hydra audit.jsonl malformed) to `plugins/lich-core/state/precedent-log.md` per [@shared/foundations/conduct/precedent.md](../../../shared/foundations/conduct/precedent.md).
+Log operational failures (substrate parse failed, GumTree timeout, Hydra audit.jsonl malformed) to `plugins/lich-core/state/precedent-log.md` per [@../enchanter-foundations/packages/core/conduct/precedent.md](../../../../enchanter-foundations/packages/core/conduct/precedent.md).

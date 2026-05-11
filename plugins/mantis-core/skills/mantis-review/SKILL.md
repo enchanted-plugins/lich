@@ -48,7 +48,7 @@ After both skills run, **lich-verdict** composes the final DEPLOY/HOLD/FAIL verd
 
 ## Failure modes
 
-When this skill fails, log to `state/learnings.json` with one of the codes from `@shared/foundations/conduct/failure-modes.md`:
+When this skill fails, log to `state/learnings.json` with one of the codes from `@../enchanter-foundations/packages/core/conduct/failure-modes.md`:
 
 - **F02 fabrication** — if M1 reports a flag the AST walk doesn't actually produce (never do this; soundness is the brand)
 - **F04 task drift** — if the skill strays into security-taint detection (Hydra's lane)

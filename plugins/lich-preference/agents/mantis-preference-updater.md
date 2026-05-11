@@ -50,4 +50,4 @@ If the agent reports "done" but `learnings.json` wasn't atomically renamed in pl
 
 Log operational failures to `state/precedent-log.md`. Common codes: F09 parallel race (two updates to the same (dev, rule) pair), F11 reward hacking (if somehow α is incremented without a verified accept signal).
 
-See [@shared/foundations/conduct/delegation.md](../../../shared/foundations/conduct/delegation.md) and [@shared/foundations/conduct/failure-modes.md](../../../shared/foundations/conduct/failure-modes.md).
+See [@../enchanter-foundations/packages/core/conduct/delegation.md](../../../../enchanter-foundations/packages/core/conduct/delegation.md) and [@../enchanter-foundations/packages/core/conduct/failure-modes.md](../../../../enchanter-foundations/packages/core/conduct/failure-modes.md).

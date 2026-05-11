@@ -53,4 +53,4 @@ If the synthesizer reports a verdict but `state/verdict.jsonl` wasn't updated at
 
 If any sibling state file is malformed, emit `verdict: UNAVAILABLE` with a diagnostic — never silently default to DEPLOY.
 
-Log to `state/precedent-log.md` per `@shared/foundations/conduct/precedent.md`.
+Log to `state/precedent-log.md` per `@../enchanter-foundations/packages/core/conduct/precedent.md`.
