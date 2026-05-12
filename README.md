@@ -146,16 +146,13 @@ Claude Code resolves the dependency list and installs all 6 sub-plugins. Verify 
 
 ## Quickstart
 
-Once v0.1.0 ships, a first review is a single command. Sixty seconds:
-
-```
-/plugin install full@lich
-# ...stage or open a PR...
-/lich-review
+```bash
+git clone https://github.com/enchanter-ai/lich
+cd lich
+./scripts/bootstrap.sh    # canonical first command — installs enchanter-foundations sibling
 ```
 
-Expected: one finding per surviving suspicion, each with M1 interval, M2 diff class, M5 sandbox outcome, M7 rubric score, and M6 per-developer prior. Verdicts are advisory; accept / reject feeds M6 so the next run is quieter. See [docs/getting-started.md](docs/getting-started.md) for the full guided first run once the release lands.
-
+Without `./scripts/bootstrap.sh`, conduct imports will silently miss and Claude Code's `@`-loader will fail-soft. Always bootstrap first.
 ## 6 Sub-Plugins, 3 Agents, 5 Engines
 
 | Sub-plugin | Owns | Trigger | Agent |
