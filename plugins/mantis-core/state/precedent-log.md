@@ -1,6 +1,6 @@
 # lich-core — Precedent Log
 
-Self-observed operational failures for future-self to grep before risky ops in the M1 walker / M2 structural-diff pipeline. Format per `../enchanter-foundations/packages/core/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
+Self-observed operational failures for future-self to grep before risky ops in the M1 walker / M2 structural-diff pipeline. Format per `../foundations/packages/core/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
 
 Consult: grep before composing multi-stage pipelines that pipe M1 flags into another engine's CLI.
 

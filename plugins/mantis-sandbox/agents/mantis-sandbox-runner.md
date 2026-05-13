@@ -39,6 +39,6 @@ Phase 2 M4 (Type-Reflected Invariant Synthesis) may upgrade this to Opus for the
 
 If the agent reports "done" without a run-log entry per flagged site, the parent must verify. A missing outcome is worse than a `no-bug-found` outcome — missing means the flag is silently unresolved.
 
-Log operational failures (Python version incompatibility, resource module absent, temp-dir write denied) to `plugins/lich-sandbox/state/precedent-log.md` per `@../enchanter-foundations/packages/core/conduct/precedent.md`.
+Log operational failures (Python version incompatibility, resource module absent, temp-dir write denied) to `plugins/lich-sandbox/state/precedent-log.md` per `@../foundations/packages/core/conduct/precedent.md`.
 
-See [@../enchanter-foundations/packages/core/conduct/delegation.md](../../../../enchanter-foundations/packages/core/conduct/delegation.md) § Trust but verify the subagent.
+See [@../foundations/packages/core/conduct/delegation.md](../../../../foundations/packages/core/conduct/delegation.md) § Trust but verify the subagent.

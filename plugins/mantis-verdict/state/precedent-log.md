@@ -1,6 +1,6 @@
 # lich-verdict — Precedent Log
 
-Self-observed operational failures for the verdict composer. Format per `../enchanter-foundations/packages/core/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
+Self-observed operational failures for the verdict composer. Format per `../foundations/packages/core/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
 
 Consult: grep before adding or modifying PostToolUse / Stop hook dispatch branches.
 

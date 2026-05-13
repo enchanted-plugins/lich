@@ -1,6 +1,6 @@
 # lich-sandbox — Precedent Log
 
-Self-observed operational failures for the M5 Bounded Subprocess Dry-Run engine. Format per `../enchanter-foundations/packages/core/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
+Self-observed operational failures for the M5 Bounded Subprocess Dry-Run engine. Format per `../foundations/packages/core/conduct/precedent.md`. Append; never delete without marking `RESOLVED YYYY-MM-DD`.
 
 Consult: grep before editing `limits.py`, `sandbox.py`, or anything that crosses the Windows/WSL boundary.
 

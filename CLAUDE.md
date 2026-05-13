@@ -6,19 +6,19 @@ Audience: Claude. Lich answers the developer's sixth question — *"Is this code
 
 These apply to every skill in every plugin. Load once; do not re-derive.
 
-- @../enchanter-foundations/packages/core/conduct/discipline.md — coding conduct: think-first, simplicity, surgical edits, goal-driven loops
-- @../enchanter-foundations/packages/core/conduct/doubt-engine.md — adversarial self-check before agreement; fires on every "yes" and self-claim
-- @../enchanter-foundations/packages/core/conduct/context.md — attention-budget hygiene, U-curve placement, checkpoint protocol
-- @../enchanter-foundations/packages/core/conduct/verification.md — independent checks, baseline snapshots, dry-run for destructive ops
-- @../enchanter-foundations/packages/core/conduct/delegation.md — subagent contracts, tool whitelisting, parallel vs. serial rules
-- @../enchanter-foundations/packages/core/conduct/failure-modes.md — 14-code taxonomy for accumulated-learning logs
-- @../enchanter-foundations/packages/core/conduct/tool-use.md — tool-choice hygiene, error payload contract, parallel-dispatch rules
-- @../enchanter-foundations/packages/skills/conduct/formatting.md — per-target format (XML/Markdown/minimal/few-shot), prefill + stop sequences
-- @../enchanter-foundations/packages/skills/conduct/skill-authoring.md — SKILL.md frontmatter discipline, discovery test
-- @../enchanter-foundations/packages/core/conduct/hooks.md — advisory-only hooks, injection over denial, fail-open
-- @../enchanter-foundations/packages/core/conduct/precedent.md — log self-observed failures to `state/precedent-log.md`; consult before risky steps
-- @../enchanter-foundations/packages/core/conduct/tier-sizing.md — prompt verbosity scales inversely with model tier; Haiku needs mechanical steps, Opus runs on intent
-- @../enchanter-foundations/packages/web/conduct/web-fetch.md — external URL handling: cache, dedup, budget; WebFetch is Haiku-tier-only
+- @../foundations/packages/core/conduct/discipline.md — coding conduct: think-first, simplicity, surgical edits, goal-driven loops
+- @../foundations/packages/core/conduct/doubt-engine.md — adversarial self-check before agreement; fires on every "yes" and self-claim
+- @../foundations/packages/core/conduct/context.md — attention-budget hygiene, U-curve placement, checkpoint protocol
+- @../foundations/packages/core/conduct/verification.md — independent checks, baseline snapshots, dry-run for destructive ops
+- @../foundations/packages/core/conduct/delegation.md — subagent contracts, tool whitelisting, parallel vs. serial rules
+- @../foundations/packages/core/conduct/failure-modes.md — 14-code taxonomy for accumulated-learning logs
+- @../foundations/packages/core/conduct/tool-use.md — tool-choice hygiene, error payload contract, parallel-dispatch rules
+- @../foundations/packages/skills/conduct/formatting.md — per-target format (XML/Markdown/minimal/few-shot), prefill + stop sequences
+- @../foundations/packages/skills/conduct/skill-authoring.md — SKILL.md frontmatter discipline, discovery test
+- @../foundations/packages/core/conduct/hooks.md — advisory-only hooks, injection over denial, fail-open
+- @../foundations/packages/core/conduct/precedent.md — log self-observed failures to `state/precedent-log.md`; consult before risky steps
+- @../foundations/packages/core/conduct/tier-sizing.md — prompt verbosity scales inversely with model tier; Haiku needs mechanical steps, Opus runs on intent
+- @../foundations/packages/web/conduct/web-fetch.md — external URL handling: cache, dedup, budget; WebFetch is Haiku-tier-only
 
 When a module conflicts with a plugin-local instruction, the plugin wins — but log the override.
 
@@ -82,7 +82,7 @@ Markers: **[H]** hook-enforced (deterministic) · **[A]** advisory (relies on yo
 | State file | Owner | Purpose |
 |---|---|---|
 | `plugins/lich-core/state/learnings.json` | lich-core | Per-session learnings for Gauss Accumulation (M1/M2 parameter tuning) |
-| `plugins/lich-core/state/precedent-log.md` | lich-core | Self-observed operational failures (see @../enchanter-foundations/packages/core/conduct/precedent.md) |
+| `plugins/lich-core/state/precedent-log.md` | lich-core | Self-observed operational failures (see @../foundations/packages/core/conduct/precedent.md) |
 | `plugins/lich-sandbox/state/run-log.jsonl` | lich-sandbox | M5 sandbox run history (CPU used, timeouts, confirmed bugs) |
 | `plugins/lich-preference/state/learnings.json` | lich-preference | Per-(developer, rule) Beta(α, β) posteriors |
 | `plugins/lich-preference/state/overrides.json` | lich-preference | Developer-disabled rules with quarterly re-prompt dates |
