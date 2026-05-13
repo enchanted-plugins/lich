@@ -1,5 +1,5 @@
 {
-  "description": "lich-verdict hooks — advisory-only. Terminal step in the PostToolUse chain; composes the verdict after lich-core + lich-sandbox + lich-rubric have all written their state. See @shared/foundations/conduct/hooks.md.",
+  "description": "lich-verdict hooks — advisory-only. Terminal step in the PostToolUse chain; composes the verdict after lich-core + lich-sandbox + lich-rubric have all written their state. See @shared/vis/conduct/hooks.md.",
   "hooks": {
     "PostToolUse": [
       {
